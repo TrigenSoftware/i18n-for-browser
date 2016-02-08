@@ -208,7 +208,7 @@ export function __n(singular, plural, count, ...params) {
 }
 
 /**
- * Set function to call when locale will change.
+ * Set function to call when locale was change.
  * 
  * @param  {Function} listener
  */

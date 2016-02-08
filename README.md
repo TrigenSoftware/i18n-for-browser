@@ -93,7 +93,7 @@ console.log(`${__('Hello')!}`);
 
 ### onLocaleChange(listener)
 
-Set function to call when locale will change.
+Set function to call when locale was change.
 
 For example if you provide only needed translation via `I18N` object.
 ```js
