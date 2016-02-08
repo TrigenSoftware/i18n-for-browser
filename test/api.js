@@ -65,7 +65,7 @@ describe('Module API', () => {
 		});
 	});
 
-	describe('_()', () => {
+	describe('__()', () => {
 
 		it('should return en translations as expected', () => {
 			i18n.setLocale('en');
