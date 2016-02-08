@@ -124,7 +124,7 @@ class App extends React.Component {
 	...
 
 	componentDidMount() {
-		___.onLocaleChange(this.forceUpdate.bind(this));
+		__.onLocaleChange(this.forceUpdate.bind(this));
 	}
 
 	...
