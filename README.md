@@ -68,7 +68,7 @@ const I18N = {
 
 import 'i18n-for-browser';
 
-console.log(`${__('Hello')!}`);
+console.log(`${__('Hello')}!`);
 
 ```
 
