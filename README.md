@@ -117,7 +117,7 @@ $(".language-picker__language__en").click((e) => {
 
 ```
 
-Also it very comfortable use with react:
+Also it very comfortable to use it with react:
 ```js
 class App extends React.Component {
 
