@@ -164,12 +164,11 @@ Remove locale by key.
 
 SailsJS use [`i18n-node`](https://github.com/mashpie/i18n-node) out of the box, it gives us the opportunity to provide client only needed translation.
 
-`views/layout.ejs`
-```ejs
+```html
 <!DOCTYPE html>
 <html>
     <head>
-        <title>SailsJS example</title>
+        <title>views/layout.ejs</title>
         <script>
             <% 
                 var locale  = req.locale;
