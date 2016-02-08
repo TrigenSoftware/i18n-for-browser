@@ -30,24 +30,24 @@ Some options same as in [`i18n-node`](https://github.com/mashpie/i18n-node), exc
 ```js
 i18n.configure({
 	// store of translations
-    locales: {
-    	'en': {...},
-    	'ru': {...}
+	locales: {
+		'en': {...},
+		'ru': {...}
 	},
 
-    // sets a custom cookie name to read/write locale  - defaults to NULL
-    cookie: 'yourcookiename',
+	// sets a custom cookie name to read/write locale  - defaults to NULL
+	cookie: 'yourcookiename',
 
-    // injects `__` and `__n` functions to global scope
-    // some methods like `setLocale` are injected to this functions
-    // e.g. `__.getLocale()`
-    // defaults to false
-    globalize: true,
+	// injects `__` and `__n` functions to global scope
+	// some methods like `setLocale` are injected to this functions
+	// e.g. `__.getLocale()`
+	// defaults to false
+	globalize: true,
 
-    // get default locale from url
-    // e.g. `/path?locale=en`
-    // defaults to false
-    defaultLocaleFromQuery: true
+	// get default locale from url
+	// e.g. `/path?locale=en`
+	// defaults to false
+	defaultLocaleFromQuery: true
 });
 ```
 
@@ -57,9 +57,9 @@ Also you can use auto-configuration: just define variable `I18N` with configurat
 
 ```js
 const I18N = {
-    locales: {
-    	'en': {...},
-    	'ru': {...}
+	locales: {
+		'en': {...},
+		'ru': {...}
 	},
 	globalize: true
 };
