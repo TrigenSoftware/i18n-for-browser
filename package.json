@@ -1,7 +1,7 @@
 {
   "name": "i18n-for-browser",
   "version": "0.5.0",
-  "description": "Implementation of i18n-node module for client-side.",
+  "description": "Implementation of i18n-node designed for client-side.",
   "main": "lib/lib.js",
   "scripts": {
     "test": "mocha -b",

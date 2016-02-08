@@ -61,6 +61,4 @@ describe('Object Notation', () => {
 			should.equal(plural, 'plurals');
 		});
 	});
-
-
 });

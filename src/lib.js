@@ -41,7 +41,7 @@ export function configure(options) {
 
 	// setting defaultLocale
 	if (typeof options.defaultLocale == 'string') {
-		defaultLocale = options.defaultLocale || getCookie(cookiename);
+		defaultLocale = options.defaultLocale;
 	}
 
 	// enable object notation?
@@ -62,6 +62,8 @@ export function configure(options) {
 	if (options.globalize === true) {
 		globalize();
 	}
+
+	defaultLocale = getCookie(cookiename) || defaultLocale;
 
 	// get default locale from url
 	if (options.defaultLocaleFromQuery === true && typeof location != "undefined") {
@@ -231,14 +233,14 @@ export function setLocale(locale) {
 	// called like setLocale('en')
 	if (typeof locales[locale] == "object") {
 
-		localeChangeListener(defaultLocale = locale);
-
 		if (cookiename !== null) {
 			setCookie(cookiename, defaultLocale, {
 			    expires: 3600 * 24 * 31 * 12 * 100,
 			    path:    "/"
 			});
 		}
+
+		localeChangeListener(defaultLocale = locale);
 	}
 
 	return defaultLocale;
@@ -365,7 +367,7 @@ function setCookie(name, value, options) {
 
 function getCookie(name) {
 
-	if (typeof document == "undefined") {
+	if (typeof document == "undefined" || name == null) {
 		return false;
 	}
 
@@ -373,7 +375,7 @@ function getCookie(name) {
 		"(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
 	));
 
-	return matches ? decodeURIComponent(matches[1]) : undefined;
+	return matches ? decodeURIComponent(matches[1]) : false;
 }
 
 
