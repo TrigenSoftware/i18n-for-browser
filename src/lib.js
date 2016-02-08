@@ -64,7 +64,7 @@ export function configure(options) {
 	}
 
 	// get default locale from url
-	if (options.defaultLocaleFromQuery === true) {
+	if (options.defaultLocaleFromQuery === true && typeof location != "undefined") {
 
 		var localeFromQuery = Url(location.href).query.locale;
 
@@ -323,6 +323,11 @@ function applyAPItoObject(object) {
 }
 
 function setCookie(name, value, options) {
+
+	if (typeof document == "undefined") {
+		return;
+	}
+
 	options = options || {};
 
 	var expires = options.expires;
@@ -358,6 +363,10 @@ function setCookie(name, value, options) {
 }
 
 function getCookie(name) {
+
+	if (typeof document == "undefined") {
+		return false;
+	}
 
 	var matches = document.cookie.match(new RegExp(
 		"(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
