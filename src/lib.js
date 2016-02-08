@@ -233,6 +233,8 @@ export function setLocale(locale) {
 	// called like setLocale('en')
 	if (typeof locales[locale] == "object") {
 
+		defaultLocale = locale;
+
 		if (cookiename !== null) {
 			setCookie(cookiename, defaultLocale, {
 			    expires: 3600 * 24 * 31 * 12 * 100,
@@ -240,7 +242,7 @@ export function setLocale(locale) {
 			});
 		}
 
-		localeChangeListener(defaultLocale = locale);
+		localeChangeListener(defaultLocale);
 	}
 
 	return defaultLocale;
