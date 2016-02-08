@@ -89,7 +89,7 @@ export function globalize() {
  * 
  * @param  {String}    phrase
  * @param  {...Object} params
- * @return {String}
+ * @return {String}    translate
  */
 export function __(phrase, ...params) {
 
@@ -136,7 +136,7 @@ export function __(phrase, ...params) {
  * @param  {String}    plural  
  * @param  {Number}    count   
  * @param  {...Object} params  
- * @return {String}            
+ * @return {String}    translate
  */
 export function __n(singular, plural, count, ...params) {
 
@@ -217,7 +217,8 @@ export function onLocaleChange(listener) {
 /**
  * Set current locale.
  * 
- * @param {String} locale
+ * @param  {String} locale
+ * @return {String} locale
  */
 export function setLocale(locale) {
 
