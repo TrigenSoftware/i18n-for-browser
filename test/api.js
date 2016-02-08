@@ -4,7 +4,6 @@ import should    from 'should';
 describe('Module API', () => {
 
 	beforeEach(() => {
-
 		i18n.configure({
 			locales:   {
 				en: require("./locales/en.json"),
