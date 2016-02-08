@@ -88,7 +88,7 @@ console.log(`${__('Hello')!}`);
 
 ### setLocale(locale)
 
-[See i18n-node.](https://github.com/mashpie/i18n-node#setlocale). Also this function write new locale to cookies if `cookiename` is setted.
+[See i18n-node.](https://github.com/mashpie/i18n-node#setlocale) Also this function write new locale to cookies if `cookiename` is setted.
 
 
 ### onLocaleChange(listener)
