@@ -66,9 +66,14 @@ export function configure(options) {
 	defaultLocale = getCookie(cookiename) || defaultLocale;
 
 	// get default locale from url
-	if (options.defaultLocaleFromQuery === true && typeof location != "undefined") {
+	var typeofQueryParameter = typeof options.queryParameter;
+	if (typeofQueryParameter != 'undefined' && typeof location != "undefined") {
 
-		var localeFromQuery = Url(location.href).query.locale;
+		var queryParameter = typeofQueryParameter == 'string' 
+			? options.queryParameter
+			: 'locale'; 
+
+		var localeFromQuery = Url(location.href).query['queryParameter'];
 
 		if (typeof localeFromQuery == "string") {
 			defaultLocale = localeFromQuery;

@@ -42,12 +42,7 @@ i18n.configure({
 	// some methods like `setLocale` are injected to this functions
 	// e.g. `__.getLocale()`
 	// defaults to false
-	globalize: true,
-
-	// get default locale from url
-	// e.g. `/path?locale=en`
-	// defaults to false
-	defaultLocaleFromQuery: true
+	globalize: true
 });
 ```
 
