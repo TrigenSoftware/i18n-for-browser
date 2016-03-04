@@ -7,7 +7,9 @@ describe('Module API', () => {
 		i18n.configure({
 			locales:   {
 				en: require("./locales/en.json"),
-				de: require("./locales/de.json")
+				de: require("./locales/de.json"),
+				fr: require("./locales/fr.json"),
+				ru: require("./locales/ru.json")
 			},
 			fallbacks: {'nl': 'de'},
 			globalize: true
@@ -88,8 +90,19 @@ describe('Module API', () => {
 
 		it('should return de translations as expected, using mustached messages', () => {
 			i18n.setLocale('de');
+        	// named only
 			should.equal(__('Hello {{name}}', { name: 'Marcus' }), 'Hallo Marcus');
+        	// named + sprintf
 			should.equal(__('Hello {{name}}, how was your %s?', __('weekend'), { name: 'Marcus' }), 'Hallo Marcus, wie war dein Wochenende?');
+	        // nested
+	        should.equal(__(__('Hello {{name}}, how was your %s?', { name: 'Marcus' }), __('weekend')), 'Hallo Marcus, wie war dein Wochenende?');
+		});
+
+		it('simple translation should work on global', () => {
+			i18n.setLocale('en');
+			should.equal(__('Hello'), 'Hello');
+			i18n.setLocale('de');
+			should.equal(__('Hello'), 'Hallo');
 		});
 
 		it('should test the ordering in sprintf' , () => {
@@ -288,6 +301,118 @@ describe('Module API', () => {
 
 			should.equal(singular, '1 cat');
 			should.equal(plural, '3 cats');
+		});
+
+		it('should return correctly in russian', () => {
+			i18n.setLocale('ru');
+			should.deepEqual(__n('%s cat', 0), '0 кошек');
+			should.deepEqual(__n('%s cat', 1), '1 кошка');
+			should.deepEqual(__n('%s cat', 2), '2 кошки');
+			should.deepEqual(__n('%s cat', 5), '5 кошек');
+			should.deepEqual(__n('%s cat', 6), '6 кошек');
+			should.deepEqual(__n('%s cat', 21), '21 кошка');
+		});
+	});
+
+	describe('__mf()', () => {
+
+		it('should work with simple strings', () => {
+
+			i18n.setLocale('en');
+			should.equal('Hello', __mf('Hello'));
+
+			i18n.setLocale('de');
+			should.equal('Hallo', __mf('Hello'));
+			should.equal('Hallo', __mf('Hello'));
+			should.equal('Hallo Marcus, wie geht es dir heute?', __mf('Hello %s, how are you today?', 'Marcus'));
+			should.equal('Hello', i18n.__mf({ phrase: 'Hello', locale: 'en' }));
+			should.equal('Hello', __mf({ phrase: 'Hello', locale: 'en' }));
+		});
+
+		it('should work with basic replacements', () => {
+			
+			i18n.setLocale('en');
+			should.equal('Hello Marcus', __mf('Hello {name}', { name: 'Marcus' }));
+
+			i18n.setLocale('de');
+			should.equal('Hallo Marcus', __mf('Hello {name}', { name: 'Marcus' }));
+			should.equal('Hallo Marcus, wie war dein test?', __mf('Hello {name}, how was your %s?', 'test', { name: 'Marcus' }));
+		});
+
+		it('should work with plurals', () => {
+
+			var msg = 'In {lang} there {NUM, plural,';
+				msg += 'zero{are zero for #}';
+				msg += 'one{is one for #}';
+				msg += 'two{is two for #}';
+				msg += 'few{are a few for #}';
+				msg += 'many{are many for #}';
+				msg += 'other{others for #}}';
+
+			i18n.setLocale('en');
+			should.equal('In english there others for 0', __mf(msg, { NUM: 0, lang: 'english' }));
+			should.equal('In english there is one for 1', __mf(msg, { NUM: 1, lang: 'english' }));
+			should.equal('In english there others for 2', __mf(msg, { NUM: 2, lang: 'english' }));
+			should.equal('In english there others for 3', __mf(msg, { NUM: 3, lang: 'english' }));
+			should.equal('In english there others for 4', __mf(msg, { NUM: 4, lang: 'english' }));
+			should.equal('In english there others for 5', __mf(msg, { NUM: 5, lang: 'english' }));
+			should.equal('In english there others for 6', __mf(msg, { NUM: 6, lang: 'english' }));
+
+			i18n.setLocale('de');
+			should.equal('In german there others for 0', __mf(msg, { NUM: 0, lang: 'german' }));
+			should.equal('In german there is one for 1', __mf(msg, { NUM: 1, lang: 'german' }));
+			should.equal('In german there others for 2', __mf(msg, { NUM: 2, lang: 'german' }));
+			should.equal('In german there others for 3', __mf(msg, { NUM: 3, lang: 'german' }));
+			should.equal('In german there others for 4', __mf(msg, { NUM: 4, lang: 'german' }));
+			should.equal('In german there others for 5', __mf(msg, { NUM: 5, lang: 'german' }));
+			should.equal('In german there others for 6', __mf(msg, { NUM: 6, lang: 'german' }));
+
+			i18n.setLocale('fr');
+			should.equal('In french there is one for 0', __mf(msg, { NUM: 0, lang: 'french' }));
+			should.equal('In french there is one for 1', __mf(msg, { NUM: 1, lang: 'french' }));
+			should.equal('In french there others for 2', __mf(msg, { NUM: 2, lang: 'french' }));
+			should.equal('In french there others for 3', __mf(msg, { NUM: 3, lang: 'french' }));
+			should.equal('In french there others for 4', __mf(msg, { NUM: 4, lang: 'french' }));
+			should.equal('In french there others for 5', __mf(msg, { NUM: 5, lang: 'french' }));
+			should.equal('In french there others for 6', __mf(msg, { NUM: 6, lang: 'french' }));
+
+			i18n.setLocale('ru');
+			should.equal('In russian there are many for 0', __mf(msg, { NUM: 0, lang: 'russian' }));
+			should.equal('In russian there is one for 1', __mf(msg, { NUM: 1, lang: 'russian' }));
+			should.equal('In russian there are a few for 2', __mf(msg, { NUM: 2, lang: 'russian' }));
+			should.equal('In russian there are a few for 3', __mf(msg, { NUM: 3, lang: 'russian' }));
+			should.equal('In russian there are a few for 4', __mf(msg, { NUM: 4, lang: 'russian' }));
+			should.equal('In russian there are many for 5', __mf(msg, { NUM: 5, lang: 'russian' }));
+			should.equal('In russian there are many for 6', __mf(msg, { NUM: 6, lang: 'russian' }));
+			should.equal('In russian there is one for 21', __mf(msg, { NUM: 21, lang: 'russian' }));
+		});
+	});
+
+	describe('__l()', () => {
+
+		it('should return a list of translations', () => {
+
+			i18n.setLocale('en');
+		    should.deepEqual(__l('Hello'), ['Hallo', 'Hello', 'Bonjour', 'Привет']);
+		    should.deepEqual(__l('Hello'), ['Hallo', 'Hello', 'Bonjour', 'Привет']);
+
+		    i18n.setLocale('fr');
+		    should.deepEqual(__l('Hello'), ['Hallo', 'Hello', 'Bonjour', 'Привет']);
+		    should.deepEqual(__l('Hello'), ['Hallo', 'Hello', 'Bonjour', 'Привет']);
+		});
+	});
+
+	describe('__h()', () => {
+
+		it('should return a hash of translations', () => {
+
+			i18n.setLocale('en');
+		    should.deepEqual(__h('Hello'), [{ de: 'Hallo' }, { en: 'Hello' }, { fr: 'Bonjour' }, { ru: 'Привет' }]);
+		    should.deepEqual(__h('Hello'), [{ de: 'Hallo' }, { en: 'Hello' }, { fr: 'Bonjour' }, { ru: 'Привет' }]);
+
+		    i18n.setLocale('fr');
+		    should.deepEqual(__h('Hello'), [{ de: 'Hallo' }, { en: 'Hello' }, { fr: 'Bonjour' }, { ru: 'Привет' }]);
+		    should.deepEqual(__h('Hello'), [{ de: 'Hallo' }, { en: 'Hello' }, { fr: 'Bonjour' }, { ru: 'Привет' }]);
 		});
 	});
 });

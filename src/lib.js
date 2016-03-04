@@ -6,16 +6,25 @@
  * @version     0.1.0
  */
 
-import { vsprintf } from 'sprintf-js';
-import Mustache     from 'mustache';
-import Url          from 'url';
+import { vsprintf }  from 'sprintf-js';
+import ParseInterval from 'math-interval-parser';
+import MakePlural    from 'make-plural/make-plural';
+import Plurals       from 'make-plural/data/plurals.json';
+import MessageFormat from 'messageformat';
+import Mustache      from 'mustache';
+import Url           from 'url';
+
+MakePlural.load(Plurals);
 
 var localeChangeListener = () => {},
 	defaultLocale  = 'en',
 	locales        = {},  
 	fallbacks      = {}, 
 	cookiename     = null, 
-	objectNotation = false;
+	objectNotation = false,
+
+	MessageFormatInstanceForLocale = {},
+	PluralsForLocale = {};
 
 // Silent configure if I18N object is exist.
 if (typeof global.I18N == "object") {
@@ -82,13 +91,17 @@ export function configure(options) {
 }
 
 /**
- * Inject `__` and `__n` functions to global scope.
+ * Inject `__`, `__n` and other functions to global scope.
  * 
  */
 export function globalize() {
-	global.__  = applyAPItoObject(__);
-	global.__n = applyAPItoObject(__n);
+	global.__   = applyAPItoObject(__);
+	global.__n  = applyAPItoObject(__n);
+	global.__l  = applyAPItoObject(__l);
+	global.__h  = applyAPItoObject(__h);
+	global.__mf = applyAPItoObject(__mf);
 }
+
 
 /**
  * Translates a single phrase and adds it to locales if unknown. 
@@ -120,18 +133,73 @@ export function __(phrase, ...params) {
 		translated = translate(defaultLocale, phrase);
 	}
 
-	// if the translated string contains {{Mustache}} patterns we render it as a mini tempalate
-	if (/\{\{.*\}\}/.test(translated)) {
-		translated = Mustache.render(translated, namedValues);
+    // postprocess to get compatible to plurals
+    if (typeof translated === 'object' && typeof translated.one != 'undefined') {
+    	translated = translated.one;
+    }
+
+    // in case there is no 'one' but an 'other' rule
+    if (typeof translated === 'object' && typeof translated.other != 'undefined') {
+    	translated = translated.other;
+    }
+
+    return postProcess(translated, namedValues, params);
+}
+
+/**
+ * Supports the advanced MessageFormat as provided by excellent messageformat module. 
+ * You should definetly head over to messageformat.github.io for a guide to MessageFormat. 
+ * i18n takes care of new MessageFormat('en').compile(msg); 
+ * with the current msg loaded from it's json files and cache that complied fn in memory. 
+ * So in short you might use it similar to __() plus extra object to accomblish MessageFormat's formating.
+ * 
+ * @param  {String}    phrase
+ * @param  {...Object} params
+ * @return {String}    translate
+ */
+export function __mf(phrase, ...params) {
+
+	var targetLocale = defaultLocale,
+		translated, namedValues,
+		mf, f;
+
+	// Accept an object with named values as the last parameter
+	if (typeof params[params.length - 1] == "object") {
+		namedValues = params.pop();
 	}
 
-	// if we have extra arguments with values to get replaced,
-	// an additional substition injects those strings afterwards
-	if (/%/.test(translated) && params && params.length > 0) {
-		translated = vsprintf(translated, params);
-	}
+	// called like __mf({phrase: "Hello", locale: "en"})
+	if (typeof phrase === 'object') {
 
-	return translated;
+		if (typeof phrase.locale === 'string' && typeof phrase.phrase === 'string') {
+			targetLocale = phrase.locale;
+			phrase       = phrase.phrase;
+		}
+	}
+	// else called like __mf("Hello")
+
+	translated = translate(targetLocale, phrase);
+    // --- end get translate
+
+    // now head over to MessageFormat
+    // and try to cache instance
+    if (MessageFormatInstanceForLocale[targetLocale]) {
+    	mf = MessageFormatInstanceForLocale[targetLocale];
+    } else {
+    	mf = new MessageFormat(targetLocale);
+    	mf.compiledFunctions = {};
+    	MessageFormatInstanceForLocale[targetLocale] = mf;
+    }
+
+    // let's try to cache that function
+    if (mf.compiledFunctions[translated]) {
+    	f = mf.compiledFunctions[translated];
+    } else {
+    	f = mf.compile(translated);
+    	mf.compiledFunctions[translated] = f;
+    }
+
+    return postProcess(f(namedValues), namedValues, params);
 }
 
 /**
@@ -147,7 +215,7 @@ export function __(phrase, ...params) {
  */
 export function __n(singular, plural, count, ...params) {
 
-	var translated, namedValues;
+	var translated, namedValues, targetLocale;
 
 	// Accept an object with named values as the last parameter
 	if (typeof params[params.length - 1] == "object") {
@@ -158,13 +226,13 @@ export function __n(singular, plural, count, ...params) {
 	if (typeof singular === 'object') {
 
 		if (typeof singular.locale === 'string' && typeof singular.singular === 'string' && typeof singular.plural === 'string') {
-			translated = translate(singular.locale, singular.singular, singular.plural);
+			translated = translate(targetLocale = singular.locale, singular.singular, singular.plural);
 		}
 
 		params.unshift(count);
 
 		// some template engines pass all values as strings -> so we try to convert them to numbers
-		if (typeof plural === 'number' || parseInt(plural, 10)+"" === plural) {
+		if (typeof plural === 'number' || parseInt(plural, 10) + '' === plural) {
 			count = plural;
 		}
 
@@ -176,40 +244,74 @@ export function __n(singular, plural, count, ...params) {
 	}
 	else {
 		// called like	__n('cat', 3)
-		if (typeof plural === 'number' || parseInt(plural, 10)+"" === plural) {
+		if (typeof plural === 'number' || parseInt(plural, 10) + '' === plural) {
 			count = plural;
+
+	        // we add same string as default
+	        // which efectivly copies the key to the plural.value
+	        // this is for initialization of new empty translations
+	        plural = singular;
+
 			params.unshift(count);
 			params.unshift(plural);
 		}
 		// called like __n('%s cat', '%s cats', 3)
 		// get translated message with locale from scope (deprecated) or object
-		translated = translate(defaultLocale, singular, plural);
+		translated = translate(targetLocale = defaultLocale, singular, plural);
 	}
+
 	if (count === null) {
 		count = namedValues.count;
 	}
 
-	// parse translation and replace all digets '%d' by `count`
-	// this also replaces extra strings '%%s' to parseble '%s' for next step
-	// simplest 2 form implementation of plural, like https://developer.mozilla.org/en/docs/Localization_and_Plurals#Plural_rule_.231_.282_forms.29
-	if (count > 1) {
-		translated = vsprintf(translated.other, [parseInt(count, 10)]);
-	} else {
-		translated = vsprintf(translated.one, [parseInt(count, 10)]);
-	}
+    // enforce number
+    count = parseInt(count, 10);
 
-	// if the translated string contains {{Mustache}} patterns we render it as a mini tempalate
-	if (/\{\{.*\}\}/.test(translated)) {
-		translated = Mustache.render(translated, namedValues);
-	}
+    // find the correct plural rule for given locale
+    if (typeof translated === 'object') {
 
-	// if we have extra arguments with strings to get replaced,
-	// an additional substition injects those strings afterwards
-	if (/%/.test(translated) && params.length) {
-		translated = vsprintf(translated, params);
-	}
+    	var p;
 
-	return translated;
+		// create a new Plural for locale
+		// and try to cache instance
+		if (PluralsForLocale[targetLocale]) {
+			p = PluralsForLocale[targetLocale];
+		} else {
+			p = new MakePlural(targetLocale);
+			PluralsForLocale[targetLocale] = p;
+		}
+
+		// fallback to 'other' on case of missing translations
+		translated = translated[p(count)] || translated.other;
+    }
+
+    return postProcess(translated, namedValues, params, count);
+}
+
+/**
+ * Returns a list of translations for a given phrase in each language.
+ * 
+ * @param  {String} phrase
+ * @return {Array<String>}
+ */
+export function __l(phrase) {
+    return getLocales().sort().map( locale => __({ 
+    	phrase, locale 
+    }));
+}
+
+/**
+ * Returns a hashed list of translations for a given phrase in each language.
+ * 
+ * @param  {String} phrase
+ * @return {Array<Object>}
+ */
+export function __h(phrase) {
+    return getLocales().sort().map( locale => ({ 
+    	[locale] : __({ 
+    		phrase, locale 
+    	})
+    }));
 }
 
 /**
@@ -383,6 +485,104 @@ function getCookie(name) {
 	));
 
 	return matches ? decodeURIComponent(matches[1]) : false;
+}
+
+
+function postProcess(text, namedValues, params, count) {
+
+    // test for parsable interval string
+    if (/\|/.test(text)) {
+    	text = parsePluralInterval(text, count);
+    }
+
+    // replace the counter
+    if (typeof count == "number") {
+    	text = vsprintf(text, [parseInt(count, 10)]);
+    }
+
+    // if the text string contains {{Mustache}} patterns we render it as a mini tempalate
+    if (/\{\{.*\}\}/.test(text)) {
+    	text = Mustache.render(text, namedValues);
+    }
+
+    // if we have extra arguments with values to get replaced,
+    // an additional substition injects those strings afterwards
+    if (/%/.test(text) && params.length) {
+    	text = vsprintf(text, params);
+    }
+
+    return text;
+}
+
+/**
+ * splits and parses a phrase for mathematical interval expressions
+ */
+function parsePluralInterval(phrase, count) {
+
+	var returnPhrase = phrase,
+		phrases = phrase.split(/\|/);
+
+	// some() breaks on 1st true
+	phrases.some((p) => {
+
+		var [m1, m2] = p.match(/^\s*([\(\)\[\]\d,]+)?\s*(.*)$/);
+
+		// not the same as in combined condition
+		if (m1) {
+
+			if (matchInterval(count, m1) === true) {
+    			returnPhrase = m2;
+    			return true;
+			}
+
+		} else {
+			returnPhrase = p;
+		}
+	});
+
+	return returnPhrase;
+}
+
+/**
+ * test a number to match mathematical interval expressions
+ * [0,2] - 0 to 2 (including, matches: 0, 1, 2)
+ * ]0,3[ - 0 to 3 (excluding, matches: 1, 2)
+ * [1]   - 1 (matches: 1)
+ * [20,] - all numbers ≥20 (matches: 20, 21, 22, ...)
+ * [,20] - all numbers ≤20 (matches: 20, 21, 22, ...)
+ */
+function matchInterval(number, interval) {
+
+	interval = ParseInterval(interval);
+
+	if (interval && typeof number == 'number') {
+
+		var { 
+			from: {
+				included: fromIncluded,
+				value:    fromValue
+			}, 
+			to: {
+				included: toIncluded,
+				value:    toValue
+			}
+		} = interval;
+
+		if (fromValue === number) {
+			return fromIncluded;
+		}
+
+		if (toValue === number) {
+			return toIncluded;
+		}
+
+		return (
+			Math.min(fromValue, number) === fromValue &&
+			Math.max(toValue,   number) === toValue
+		);
+	}
+
+	return false;
 }
 
 
