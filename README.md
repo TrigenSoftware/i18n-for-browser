@@ -73,32 +73,32 @@ console.log(`${__('Hello')}!`);
 
 ### __(phrase, ...params)
 
-[See i18n-node.](https://github.com/mashpie/i18n-node#__)
+[See i18n-node.](https://github.com/mashpie/i18n-node#i18n__)
 
 
 ### __n(singular, plural, count, ...params)
 
-[See i18n-node.](https://github.com/mashpie/i18n-node#__n)
+[See i18n-node.](https://github.com/mashpie/i18n-node#i18n__n)
 
 
 ### __mf(phrase, ...params)
 
-[See i18n-node.](https://github.com/mashpie/i18n-node#__mf)
+[See i18n-node.](https://github.com/mashpie/i18n-node#i18n__mf)
 
 
 ### __l(phrase)
 
-[See i18n-node.](https://github.com/mashpie/i18n-node#__l)
+[See i18n-node.](https://github.com/mashpie/i18n-node#i18n__l)
 
 
 ### __h(phrase)
 
-[See i18n-node.](https://github.com/mashpie/i18n-node#__h)
+[See i18n-node.](https://github.com/mashpie/i18n-node#i18n__h)
 
 
 ### setLocale(locale)
 
-[See i18n-node.](https://github.com/mashpie/i18n-node#setlocale) Also this function write new locale to cookies if `cookiename` is setted.
+[See i18n-node.](https://github.com/mashpie/i18n-node#i18nsetlocale) Also this function write new locale to cookies if `cookiename` is setted.
 
 
 ### onLocaleChange(listener)
@@ -145,7 +145,7 @@ class App extends React.Component {
 
 ### getLocale()
 
-[See i18n-node.](https://github.com/mashpie/i18n-node#getlocale)
+[See i18n-node.](https://github.com/mashpie/i18n-node#i18ngetlocale)
 
 
 ### getLocales()
@@ -155,7 +155,7 @@ Get list of available locales.
 
 ### getCatalog(locale)
 
-[See i18n-node.](https://github.com/mashpie/i18n-node#getcatalog)
+[See i18n-node.](https://github.com/mashpie/i18n-node#i18ngetcatalog)
 
 
 ### addLocale(locale, catalog)
