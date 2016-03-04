@@ -3,7 +3,7 @@
  * @link        https://github.com/TrigenSoftware/i18n-for-browser
  * @license     http://opensource.org/licenses/MIT
  *
- * @version     0.1.0
+ * @version     0.5.3
  */
 
 import { vsprintf }  from 'sprintf-js';
