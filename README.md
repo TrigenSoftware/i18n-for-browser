@@ -168,37 +168,24 @@ Dynamically adding/replacing of locale
 Remove locale by key.
 
 
-## Examples
+## Express middleware helper
 
-### SailsJS
+To provide translations to client from your express app you can use this helper.
 
-SailsJS use [`i18n-node`](https://github.com/mashpie/i18n-node) out of the box, it gives us the opportunity to provide client only needed translation.
+```js
+import i18nExpressHelper from 'i18n-for-browser/lib/middleware';
+...
+app.use(i18nExpressHelper);
+...
+```
 
 ```html
 <!DOCTYPE html>
 <html>
     <head>
         <title>views/layout.ejs</title>
-        <script>
-            <% 
-                var locale  = req.locale;
-                // there is no `getLocales` method in SailsJS's request
-                // getting all available translations via `getCatalog`
-                req.locale = false;
-                var catalog = req.getCatalog();
-                req.locale = locale; 
-            %>
-            var I18N = {
-                locales: {
-                    <% Object.keys(catalog).forEach(function(_locale) { %>
-                        "<%- _locale %>": <%- _locale == locale ? JSON.stringify(catalog[_locale]) : "{}" %>,
-                    <% }); %>
-                },
-                defaultLocale: "<%- locale %>",
-                cookie:        "<%- sails.config.i18n.cookie %>",
-                globalize:     true
-            };
-        </script>
+        <%- initI18nForBrowser() %>
+        <script src="js-file-with-imported-18n-for-browser.js"></script>
     </head>
     <body>
         <%- body %>
