@@ -186,7 +186,7 @@ app.use(i18nExpressHelper(i18nNodeConfig));
     <head>
         <title>views/layout.ejs</title>
         <%- initI18nForBrowser() %>
-        <script src="js-file-with-imported-18n-for-browser.js"></script>
+        <script src="js-file-with-imported-i18n-for-browser.js"></script>
     </head>
     <body>
         <%- body %>
