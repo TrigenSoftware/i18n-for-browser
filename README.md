@@ -1,4 +1,4 @@
-[![NPM](https://nodei.co/npm/i18n-for-browser.png?compact=true)](https://nodei.co/npm/i18n-for-browser/)
+[![NPM](https://nodei.co/npm/i18n-for-browser.png?compact=true&downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/i18n-for-browser/)
 
 # i18n-for-browser
 Implementation of [`i18n-node`](https://github.com/mashpie/i18n-node) designed for client-side.
