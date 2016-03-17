@@ -174,6 +174,8 @@ To provide translations to client from your express app you can use this helper.
 
 ```js
 import i18nExpressHelper from 'i18n-for-browser/lib/middleware';
+// or 
+// const i18nExpressHelper = require('i18n-for-browser/lib/middleware’).default;
 ...
 // Before this `i18n` should already initialized.
 app.use(i18nExpressHelper(i18nNodeConfig));
