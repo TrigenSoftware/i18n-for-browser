@@ -216,7 +216,7 @@ export function __mf(phrase, ...params) {
  */
 export function __n(_singular, plural, count, ...params) {
 
-	var singular = preProcess(singular),
+	var singular = preProcess(_singular),
 		translated, namedValues, targetLocale;
 
 	// Accept an object with named values as the last parameter
