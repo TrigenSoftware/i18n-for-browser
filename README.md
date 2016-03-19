@@ -20,7 +20,11 @@ npm test
 import * as i18n from 'i18n-for-browser';
 ```
 
-now you are ready to use a `i18n.__('Hello')`. 
+now you are ready to use a `i18n.__('Hello')`. Also `__` and `__n` available as [tags for template literals](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals#Tagged_template_literals), example:
+
+```js
+console.log(__`Hello ${name}`);
+```
 
 
 ## Configure
