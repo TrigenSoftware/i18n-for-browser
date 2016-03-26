@@ -19,16 +19,17 @@ export default function i18nForBrowser(config) {
 
 		response.locals.initI18nForBrowser = () => {
 			
-			var locale = request.locale;
+			var locale     = request.locale;
 	        request.locale = false;
-	        var catalog    = request.getCatalog();
+	        var _catalog   = request.getCatalog();
 	        request.locale = locale; 
 
-	        Object.keys(catalog).forEach((_locale) => {
-                
-                if (_locale != locale) {
-                	catalog[_locale] = {};
-                }
+	        var catalog = {};
+
+	        Object.keys(_catalog).forEach((_locale) => {
+                catalog[_locale] = _locale == locale 
+                	? _catalog[_locale] 
+                	: {};
             });
 
 	        configForBrowser.defaultLocale = locale;
