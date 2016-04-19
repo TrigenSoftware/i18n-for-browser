@@ -742,6 +742,8 @@ function localeMutator(locale, singular, allowBranching) {
 		var accessor = null;
 		// An accessor that takes one argument and returns null.
 		var nullAccessor = () => null;
+		// Fix object path.
+		var fixObject = () => ({});
 		// Are we going to need to re-traverse the tree when the mutator is invoked?
 		var reTraverse = false;
 
@@ -754,6 +756,10 @@ function localeMutator(locale, singular, allowBranching) {
 			if (null === object || !object.hasOwnProperty(index)) {
 				// ...check if we're allowed to create new branches.
 				if (allowBranching) {
+					// Fix `object` if `object` is not Object.
+					if (null === object || typeof object != "object") {
+						object = fixObject();
+					}
 					// If we are allowed to, create a new object along the path.
 					object[index] = {};
 				} else {
@@ -765,6 +771,8 @@ function localeMutator(locale, singular, allowBranching) {
 			}
 			// Generate a mutator for the current level.
 			accessor = value => object[index] = value;
+			// Generate a fixer for the current level.
+			fixObject = () => (object[index] = {});
 			// Return a reference to the next deeper level in the locale tree.
 			return object[index];
 
