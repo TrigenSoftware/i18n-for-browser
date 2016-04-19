@@ -1,4 +1,4 @@
-[![NPM](https://nodei.co/npm/i18n-for-browser.png?compact=true)](https://nodei.co/npm/i18n-for-browser/)
+[![NPM](https://nodei.co/npm/i18n-for-browser.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/i18n-for-browser/)
 
 # i18n-for-browser
 Implementation of [`i18n-node`](https://github.com/mashpie/i18n-node) designed for client-side.
@@ -20,7 +20,11 @@ npm test
 import * as i18n from 'i18n-for-browser';
 ```
 
-now you are ready to use a `i18n.__('Hello')`. 
+now you are ready to use a `i18n.__('Hello')`. Also `__` and `__n` available as [tags for template literals](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals#Tagged_template_literals), example:
+
+```js
+console.log(__`Hello ${name}`);
+```
 
 
 ## Configure
@@ -174,6 +178,8 @@ To provide translations to client from your express app you can use this helper.
 
 ```js
 import i18nExpressHelper from 'i18n-for-browser/lib/middleware';
+// or 
+// const i18nExpressHelper = require('i18n-for-browser/lib/middleware’).default;
 ...
 // Before this `i18n` should already initialized.
 app.use(i18nExpressHelper(i18nNodeConfig));

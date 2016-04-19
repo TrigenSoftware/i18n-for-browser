@@ -111,9 +111,10 @@ export function globalize() {
  * @param  {...Object} params
  * @return {String}    translate
  */
-export function __(phrase, ...params) {
+export function __(_phrase, ...params) {
 
-	var translated, namedValues;
+	var phrase = preProcess(_phrase),
+		translated, namedValues;
 
 	// Accept an object with named values as the last parameter
 	if (typeof params[params.length - 1] == "object") {
@@ -213,9 +214,10 @@ export function __mf(phrase, ...params) {
  * @param  {...Object} params  
  * @return {String}    translate
  */
-export function __n(singular, plural, count, ...params) {
+export function __n(_singular, plural, count, ...params) {
 
-	var translated, namedValues, targetLocale;
+	var singular = preProcess(_singular),
+		translated, namedValues, targetLocale;
 
 	// Accept an object with named values as the last parameter
 	if (typeof params[params.length - 1] == "object") {
@@ -487,6 +489,15 @@ function getCookie(name) {
 	return matches ? decodeURIComponent(matches[1]) : false;
 }
 
+
+function preProcess(text) {
+
+	if (Array.isArray(text) && text.hasOwnProperty('raw')) {
+		return text.join("%s");
+	}
+
+	return text;
+}
 
 function postProcess(text, namedValues, params, count) {
 
