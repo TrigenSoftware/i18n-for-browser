@@ -1,6 +1,6 @@
 {
   "name": "i18n-for-browser",
-  "version": "0.6.5",
+  "version": "0.6.7",
   "description": "Implementation of i18n-node designed for client-side.",
   "main": "lib/lib.js",
   "scripts": {
