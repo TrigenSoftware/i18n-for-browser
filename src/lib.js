@@ -671,7 +671,7 @@ function localeAccessor(locale, singular, allowDelayedTraversal) {
 	}
 
 	// Handle object lookup notation
-	var indexOfDot = objectNotation && singular.indexOf(objectNotation);
+	var indexOfDot = objectNotation && singular.lastIndexOf(objectNotation);
 
 	if (objectNotation && (0 < indexOfDot && indexOfDot < singular.length - 1)) {
 
@@ -740,7 +740,7 @@ function localeMutator(locale, singular, allowBranching) {
 	}
 
 	// Handle object lookup notation
-	var indexOfDot = objectNotation && singular.indexOf(objectNotation);
+	var indexOfDot = objectNotation && singular.lastIndexOf(objectNotation);
 
 	if (objectNotation && (0 < indexOfDot && indexOfDot < singular.length - 1)) {
 

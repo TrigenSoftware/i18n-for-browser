@@ -32,6 +32,11 @@ describe('Object Notation', () => {
 
 	describe('__() and __n()', () => {
 
+		beforeEach(() => {
+			var catalog = i18n.getCatalog('en');
+			delete catalog.nested.path;
+		});
+
 		it('should return en translations as expected, using object traversal notation', () => {
 			i18n.setLocale('en');
 			should.equal(__('greeting.formal'), 'Hello');
@@ -52,13 +57,31 @@ describe('Object Notation', () => {
 			should.equal(plural, '3 Katzen');
 		});
 
+		it('should return en translations as expected, when dot is first or last character', () => {
+			i18n.setLocale('en');
+			should.equal(__('. is first character'), 'Dot is first character');
+			should.equal(__('last character is .'), 'last character is Dot');
+			should.equal(__('few sentences. with .'), 'few sentences with Dot');
+		});
+
 		it('should allow for simple pluralization', () => {
+
+			i18n.setLocale('en');
 
 			var singular = __n("nested.deep.plural", 1),
 				plural   = __n("nested.deep.plural", 3);
 
 			should.equal(singular, 'plural');
 			should.equal(plural, 'plurals');
+		});
+
+		it('should correctly update files', () => {
+			i18n.setLocale('en');
+			should.equal(__("nested.path"), "nested.path");
+			should.equal(__("nested.path.sub"), "nested.path.sub");
+			should.deepEqual(__("nested.path"), {
+				sub: "nested.path.sub"
+			});
 		});
 	});
 });
