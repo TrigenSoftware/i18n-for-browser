@@ -1,36 +1,36 @@
 [![NPM](https://nodei.co/npm/i18n-for-browser.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/i18n-for-browser/)
 
 # i18n-for-browser
+
 Implementation of [`i18n-node`](https://github.com/mashpie/i18n-node) designed for client-side.
 
-
 ## Install
+
 ```sh
 npm install i18n-for-browser
 ```
 
 ## Test
+
 ```sh
 npm test
 ```
 
 ## Load
+
 ```js
 // load modules
 import * as i18n from 'i18n-for-browser';
 ```
 
 now you are ready to use a `i18n.__('Hello')`. Also `__` and `__n` available as [tags for template literals](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals#Tagged_template_literals), example:
-
 ```js
 console.log(__`Hello ${name}`);
 ```
 
-
 ## Configure
 
 Some options same as in [`i18n-node`](https://github.com/mashpie/i18n-node), except
-
 ```js
 i18n.configure({
 	// store of translations
@@ -53,7 +53,6 @@ i18n.configure({
 Properties necessary for work with fs (`directory`, `updateFiles`, `indent`, `extenstion`, `prefix`) are skipped.
 
 Also you can use auto-configuration: just define variable `I18N` with configuration before importing the module.
-
 ```js
 const I18N = {
 	locales: {
@@ -71,39 +70,31 @@ console.log(`${__('Hello')}!`);
 
 ```
 
-
 ## API
-
 
 ### __(phrase, ...params)
 
 [See i18n-node.](https://github.com/mashpie/i18n-node#i18n__)
 
-
 ### __n(singular, plural, count, ...params)
 
 [See i18n-node.](https://github.com/mashpie/i18n-node#i18n__n)
-
 
 ### __mf(phrase, ...params)
 
 [See i18n-node.](https://github.com/mashpie/i18n-node#i18n__mf)
 
-
 ### __l(phrase)
 
 [See i18n-node.](https://github.com/mashpie/i18n-node#i18n__l)
-
 
 ### __h(phrase)
 
 [See i18n-node.](https://github.com/mashpie/i18n-node#i18n__h)
 
-
 ### setLocale(locale)
 
 [See i18n-node.](https://github.com/mashpie/i18n-node#i18nsetlocale) Also this function write new locale to cookies if `cookiename` is setted.
-
 
 ### onLocaleChange(listener)
 
@@ -146,36 +137,29 @@ class App extends React.Component {
 }
 ```
 
-
 ### getLocale()
 
 [See i18n-node.](https://github.com/mashpie/i18n-node#i18ngetlocale)
-
 
 ### getLocales()
 
 Get list of available locales.
 
-
 ### getCatalog(locale)
 
 [See i18n-node.](https://github.com/mashpie/i18n-node#i18ngetcatalog)
-
 
 ### addLocale(locale, catalog)
 
 Dynamically adding/replacing of locale
 
-
 ### removeLocale(locale)
 
 Remove locale by key.
 
-
 ## Express middleware helper
 
 To provide translations to client from your express app you can use this helper.
-
 ```js
 import i18nExpressHelper from 'i18n-for-browser/lib/middleware';
 // or 
