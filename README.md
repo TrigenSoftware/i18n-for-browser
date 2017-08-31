@@ -9,11 +9,19 @@ Implementation of [`i18n-node`](https://github.com/mashpie/i18n-node) designed f
 ```sh
 npm install i18n-for-browser
 ```
+or
+```sh
+yarn add i18n-for-browser
+```
 
 ## Test
 
 ```sh
 npm test
+```
+or
+```sh
+yarn test
 ```
 
 ## Load
