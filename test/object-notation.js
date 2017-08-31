@@ -1,5 +1,5 @@
-import * as i18n from '../src/lib';
-import should    from 'should';
+import * as i18n from '../src';
+import should from 'should';
 
 describe('Object Notation', () => {
 
