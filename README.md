@@ -41,7 +41,7 @@ console.log(__`Hello ${name}`);
 
 # CDN
 
-Also `i18n-for-browser` available on [unpkg.com](https://unpkg.com/i18n-for-browser) as UMD, which exposes global object `i18n`.
+Also `i18n-for-browser` is available on [unpkg.com](https://unpkg.com/i18n-for-browser) as UMD, which exposes global object `i18n`.
 
 ```html
 <script src="https://unpkg.com/i18n-for-browser"></script>
