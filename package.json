@@ -13,7 +13,7 @@
   "scripts": {
     "lint": "eslint --cache 'src/*.js'",
     "test": "npm run lint && mocha -b",
-    "build": "rollup -c",
+    "build": "npm run lint && rollup -c",
     "watch": "rollup -c -w",
     "prepublishOnly": "npm run build"
   },
