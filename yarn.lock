@@ -1556,9 +1556,12 @@ escope@^3.6.0:
     esrecurse "^4.1.0"
     estraverse "^4.1.1"
 
-eslint-config-trigen@^1.2.2:
-  version "1.2.2"
-  resolved "https://registry.yarnpkg.com/eslint-config-trigen/-/eslint-config-trigen-1.2.2.tgz#8314b30a75f0754dce2c721a1414ae67321eebb9"
+eslint-config-trigen@^1.2.3:
+  version "1.2.3"
+  resolved "https://registry.yarnpkg.com/eslint-config-trigen/-/eslint-config-trigen-1.2.3.tgz#249bde72fa5ca655177e909714cc64c0804316ac"
+  dependencies:
+    babel-eslint "^8.0.1"
+    eslint-plugin-react "^7.4.0"
 
 eslint-plugin-react@^7.4.0:
   version "7.4.0"
