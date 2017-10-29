@@ -1,11 +1,3 @@
-/**
- * @author      Created by Dan Green <danon0404@gmail.com> on 2016-01-05.
- * @link        https://github.com/TrigenSoftware/i18n-for-browser
- * @license     http://opensource.org/licenses/MIT
- *
- * @version     0.5.3
- */
-
 import { vsprintf }  from 'sprintf-js';
 import ParseInterval from 'math-interval-parser';
 import MakePlural    from 'make-plural/make-plural';

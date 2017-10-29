@@ -342,11 +342,7 @@ describe('Module API', () => {
 		it('should work with plurals', () => {
 
 			var msg = 'In {lang} there {NUM, plural,';
-				msg += 'zero{are zero for #}';
 				msg += 'one{is one for #}';
-				msg += 'two{is two for #}';
-				msg += 'few{are a few for #}';
-				msg += 'many{are many for #}';
 				msg += 'other{others for #}}';
 
 			i18n.setLocale('en');
@@ -357,6 +353,10 @@ describe('Module API', () => {
 			should.equal('In english there others for 4', __mf(msg, { NUM: 4, lang: 'english' }));
 			should.equal('In english there others for 5', __mf(msg, { NUM: 5, lang: 'english' }));
 			should.equal('In english there others for 6', __mf(msg, { NUM: 6, lang: 'english' }));
+			
+			msg = 'In {lang} there {NUM, plural,';
+			msg += 'one{is one for #}';
+			msg += 'other{others for #}}';
 
 			i18n.setLocale('de');
 			should.equal('In german there others for 0', __mf(msg, { NUM: 0, lang: 'german' }));
@@ -366,6 +366,10 @@ describe('Module API', () => {
 			should.equal('In german there others for 4', __mf(msg, { NUM: 4, lang: 'german' }));
 			should.equal('In german there others for 5', __mf(msg, { NUM: 5, lang: 'german' }));
 			should.equal('In german there others for 6', __mf(msg, { NUM: 6, lang: 'german' }));
+			
+			msg = 'In {lang} there {NUM, plural,';
+			msg += 'one{is one for #}';
+			msg += 'other{others for #}}';
 
 			i18n.setLocale('fr');
 			should.equal('In french there is one for 0', __mf(msg, { NUM: 0, lang: 'french' }));
@@ -375,6 +379,12 @@ describe('Module API', () => {
 			should.equal('In french there others for 4', __mf(msg, { NUM: 4, lang: 'french' }));
 			should.equal('In french there others for 5', __mf(msg, { NUM: 5, lang: 'french' }));
 			should.equal('In french there others for 6', __mf(msg, { NUM: 6, lang: 'french' }));
+			
+			msg = 'In {lang} there {NUM, plural,';
+			msg += 'one{is one for #}';
+			msg += 'few{are a few for #}';
+			msg += 'many{are many for #}';
+			msg += 'other{others for #}}';
 
 			i18n.setLocale('ru');
 			should.equal('In russian there are many for 0', __mf(msg, { NUM: 0, lang: 'russian' }));

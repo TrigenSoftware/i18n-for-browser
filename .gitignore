@@ -34,3 +34,9 @@ node_modules
 
 # OS X stuff
 .DS_Store
+
+# Some caches
+.eslintcache
+
+# Compiled dist
+lib

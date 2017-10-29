@@ -6,6 +6,7 @@ node_js:
   - "5.0"
   - "4.4"
   - "4.0"
-  - "0.12"
-  - "iojs"
-cache: yarn
+cache:
+  yarn: true
+  directories:
+    - node_modules

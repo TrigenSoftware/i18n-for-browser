@@ -1,6 +1,21 @@
-[![NPM](https://nodei.co/npm/i18n-for-browser.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/i18n-for-browser/)
-
 # i18n-for-browser
+
+[![npm][npm]][npm-url]
+[![node][node]][node-url]
+[![deps][deps]][deps-url]
+[![tests][tests]][tests-url]
+
+[npm]: https://img.shields.io/npm/v/i18n-for-browser.svg
+[npm-url]: https://npmjs.com/package/i18n-for-browser
+
+[node]: https://img.shields.io/node/v/i18n-for-browser.svg
+[node-url]: https://nodejs.org
+
+[deps]: https://david-dm.org/TrigenSoftware/i18n-for-browser.svg
+[deps-url]: https://david-dm.org/TrigenSoftware/i18n-for-browser
+
+[tests]: http://img.shields.io/travis/TrigenSoftware/i18n-for-browser.svg
+[tests-url]: https://travis-ci.org/TrigenSoftware/i18n-for-browser
 
 Implementation of [`i18n-node`](https://github.com/mashpie/i18n-node) designed for client-side.
 
@@ -8,37 +23,34 @@ Implementation of [`i18n-node`](https://github.com/mashpie/i18n-node) designed f
 
 ```sh
 npm install i18n-for-browser
-```
-or
-```sh
+# or
 yarn add i18n-for-browser
-```
-
-## Test
-
-```sh
-npm test
-```
-or
-```sh
-yarn test
 ```
 
 ## Load
 
 ```js
-// load modules
 import * as i18n from 'i18n-for-browser';
 ```
 
 now you are ready to use a `i18n.__('Hello')`. Also `__` and `__n` available as [tags for template literals](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals#Tagged_template_literals), example:
+
 ```js
 console.log(__`Hello ${name}`);
+```
+
+# CDN
+
+Also `i18n-for-browser` available on [unpkg.com](https://unpkg.com/i18n-for-browser) as UMD, which exposes global object `i18n`.
+
+```html
+<script src="https://unpkg.com/i18n-for-browser"></script>
 ```
 
 ## Configure
 
 Some options same as in [`i18n-node`](https://github.com/mashpie/i18n-node), except
+
 ```js
 i18n.configure({
 	// store of translations
@@ -61,6 +73,7 @@ i18n.configure({
 Properties necessary for work with fs (`directory`, `updateFiles`, `indent`, `extenstion`, `prefix`) are skipped.
 
 Also you can use auto-configuration: just define variable `I18N` with configuration before importing the module.
+
 ```js
 const I18N = {
 	locales: {
@@ -109,6 +122,7 @@ console.log(`${__('Hello')}!`);
 Set function to call when locale was change.
 
 For example if you provide only needed translation via `I18N` object.
+
 ```js
 const I18N = {
 	cookiename: 'locale',
@@ -131,6 +145,7 @@ $(".language-picker__language__en").click((e) => {
 ```
 
 Also it very comfortable to use it with react:
+
 ```js
 class App extends React.Component {
 
@@ -168,6 +183,7 @@ Remove locale by key.
 ## Express middleware helper
 
 To provide translations to client from your express app you can use this helper.
+
 ```js
 import i18nExpressHelper from 'i18n-for-browser/lib/middleware';
 // or 
@@ -191,3 +207,6 @@ app.use(i18nExpressHelper(i18nNodeConfig));
     </body>
 </html>
 ```
+
+---
+[![NPM](https://nodei.co/npm/i18n-for-browser.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/i18n-for-browser/)
