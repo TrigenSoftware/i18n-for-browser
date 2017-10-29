@@ -53,7 +53,7 @@ export default [{
 	}]
 }, {
 	input:   'src/index.js',
-	plugins: plugins.concat([minify()]),
+	plugins: [...plugins, minify()],
 	output:  {
 		file:      pkg.browser,
 		format:    'umd',

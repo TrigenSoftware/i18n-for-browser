@@ -15,7 +15,7 @@
     "test": "npm run lint && mocha -b",
     "build": "rollup -c",
     "watch": "rollup -c -w",
-    "prepublish": "yarn build"
+    "prepublishOnly": "yarn build"
   },
   "repository": {
     "type": "git",
