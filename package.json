@@ -1,15 +1,12 @@
 {
   "name": "i18n-for-browser",
-  "version": "0.9.2",
+  "version": "0.9.3",
   "description": "Implementation of i18n-node designed for client-side.",
   "author": "dangreen",
   "license": "MIT",
   "main": "lib/index.js",
   "module": "lib/index.es.js",
   "browser": "lib/umd.js",
-  "engines": {
-    "node": ">=4.0.0"
-  },
   "scripts": {
     "lint": "eslint --cache 'src/*.js'",
     "test": "npm run lint && mocha -b",

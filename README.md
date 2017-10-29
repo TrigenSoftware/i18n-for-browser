@@ -1,15 +1,11 @@
 # i18n-for-browser
 
 [![npm][npm]][npm-url]
-[![node][node]][node-url]
 [![deps][deps]][deps-url]
 [![tests][tests]][tests-url]
 
 [npm]: https://img.shields.io/npm/v/i18n-for-browser.svg
 [npm-url]: https://npmjs.com/package/i18n-for-browser
-
-[node]: https://img.shields.io/node/v/i18n-for-browser.svg
-[node-url]: https://nodejs.org
 
 [deps]: https://david-dm.org/TrigenSoftware/i18n-for-browser.svg
 [deps-url]: https://david-dm.org/TrigenSoftware/i18n-for-browser
