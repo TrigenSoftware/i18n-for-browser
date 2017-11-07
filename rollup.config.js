@@ -15,8 +15,9 @@ const plugins = [
 		preferConst: true
 	}),
 	babel(Object.assign({
-		babelrc: false,
-		exclude: 'node_modules/**'
+		runtimeHelpers: true,
+		babelrc:        false,
+		exclude:        'node_modules/**'
 	}, pkg.babel, {
 		presets: pkg.babel.presets.map((preset) => {
 
