@@ -1,8 +1,9 @@
 # i18n-for-browser
 
-[![npm][npm]][npm-url]
-[![deps][deps]][deps-url]
-[![tests][tests]][tests-url]
+[![NPM version][npm]][npm-url]
+[![Dependency status][deps]][deps-url]
+[![Build status][build]][build-url]
+[![Coverage status][coverage]][coverage-url]
 
 [npm]: https://img.shields.io/npm/v/i18n-for-browser.svg
 [npm-url]: https://npmjs.com/package/i18n-for-browser
@@ -10,8 +11,11 @@
 [deps]: https://david-dm.org/TrigenSoftware/i18n-for-browser.svg
 [deps-url]: https://david-dm.org/TrigenSoftware/i18n-for-browser
 
-[tests]: http://img.shields.io/travis/TrigenSoftware/i18n-for-browser.svg
-[tests-url]: https://travis-ci.org/TrigenSoftware/i18n-for-browser
+[build]: http://img.shields.io/travis/TrigenSoftware/i18n-for-browser.svg
+[build-url]: https://travis-ci.org/TrigenSoftware/i18n-for-browser
+
+[coverage]: https://img.shields.io/coveralls/TrigenSoftware/i18n-for-browser.svg
+[coverage-url]: https://coveralls.io/r/TrigenSoftware/i18n-for-browser
 
 Implementation of [`i18n-node`](https://github.com/mashpie/i18n-node) designed for client-side.
 

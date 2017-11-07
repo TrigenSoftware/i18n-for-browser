@@ -6,12 +6,12 @@ describe('Module API', () => {
 	beforeEach(() => {
 		i18n.configure({
 			locales:   {
-				en: require("./locales/en.json"),
-				de: require("./locales/de.json"),
-				fr: require("./locales/fr.json"),
-				ru: require("./locales/ru.json")
+				en: require('./locales/en.json'),
+				de: require('./locales/de.json'),
+				fr: require('./locales/fr.json'),
+				ru: require('./locales/ru.json')
 			},
-			fallbacks: {'nl': 'de'},
+			fallbacks: { 'nl': 'de' },
 			globalize: true
 		});
 	});
@@ -41,8 +41,8 @@ describe('Module API', () => {
 
 		it('should return all catalogs when invoked with empty parameters', () => {
 
-			var catalogs = i18n.getCatalog();
-			
+			const catalogs = i18n.getCatalog();
+
 			catalogs.should.have.property('en');
 			catalogs.en.should.have.property('Hello', 'Hello');
 			catalogs.should.have.property('de');
@@ -90,12 +90,12 @@ describe('Module API', () => {
 
 		it('should return de translations as expected, using mustached messages', () => {
 			i18n.setLocale('de');
-        	// named only
+			// named only
 			should.equal(__('Hello {{name}}', { name: 'Marcus' }), 'Hallo Marcus');
-        	// named + sprintf
+			// named + sprintf
 			should.equal(__('Hello {{name}}, how was your %s?', __('weekend'), { name: 'Marcus' }), 'Hallo Marcus, wie war dein Wochenende?');
-	        // nested
-	        should.equal(__(__('Hello {{name}}, how was your %s?', { name: 'Marcus' }), __('weekend')), 'Hallo Marcus, wie war dein Wochenende?');
+			// nested
+			should.equal(__(__('Hello {{name}}, how was your %s?', { name: 'Marcus' }), __('weekend')), 'Hallo Marcus, wie war dein Wochenende?');
 		});
 
 		it('simple translation should work on global', () => {
@@ -105,30 +105,31 @@ describe('Module API', () => {
 			should.equal(__('Hello'), 'Hallo');
 		});
 
-		it('should test the ordering in sprintf' , () => {
+		it('should test the ordering in sprintf', () => {
 			i18n.setLocale('en');
-			should.equal(__('ordered arguments', "First", "Second"), 'Second then First');
+			should.equal(__('ordered arguments', 'First', 'Second'), 'Second then First');
 			i18n.setLocale('de');
-			should.equal(__('ordered arguments', "First", "Second"), 'First then Second');
+			should.equal(__('ordered arguments', 'First', 'Second'), 'First then Second');
 		});
 
-		it('should test more complex sprintf examples' , () => {
+		it('should test more complex sprintf examples', () => {
 			i18n.setLocale('en');
-			should.equal(__('ordered arguments with numbers', "First", 2, 123.456), '2 then First then 123.46');
+			should.equal(__('ordered arguments with numbers', 'First', 2, 123.456), '2 then First then 123.46');
 			i18n.setLocale('de');
-			should.equal(__('ordered arguments with numbers', "First", 2, 123.456), 'First then 2 then 123.46');
+			should.equal(__('ordered arguments with numbers', 'First', 2, 123.456), 'First then 2 then 123.46');
 		});
 
-		it('should allow for repeated references to the same argument.' , () => {
+		it('should allow for repeated references to the same argument.', () => {
 			i18n.setLocale('en');
-			should.equal(__('repeated argument', "repeated"), 'repeated, repeated, repeated');
+			should.equal(__('repeated argument', 'repeated'), 'repeated, repeated, repeated');
 		});
 
 		it('should also return translations when iterating thru variables values', () => {
 
-			var i           = 0, 
-				greetings   = ['Hi', 'Hello', 'Howdy'], 
+			const greetings = ['Hi', 'Hello', 'Howdy'],
 				greetingsDE = ['Hi', 'Hallo', 'Hallöchen'];
+
+			let i = 0;
 
 			i18n.setLocale('en');
 			for (i = 0; i < greetings.length; i++) {
@@ -144,37 +145,37 @@ describe('Module API', () => {
 		it('should be possible to use an json object as 1st parameter to specifiy a certain locale for that lookup', () => {
 
 			should.equal(__({
-				phrase: "Hello",
-				locale: "en"
+				phrase: 'Hello',
+				locale: 'en'
 			}), 'Hello');
 
 			should.equal(__({
-				phrase: "Hello",
-				locale: "de"
+				phrase: 'Hello',
+				locale: 'de'
 			}), 'Hallo');
 
 			should.equal(__({
-				locale: "en",
-				phrase: "Hello"
+				locale: 'en',
+				phrase: 'Hello'
 			}), 'Hello');
 
 			should.equal(__({
-				locale: "de",
-				phrase: "Hello"
+				locale: 'de',
+				phrase: 'Hello'
 			}), 'Hallo');
 
 			// passing specific locale
-			should.equal(__({phrase: 'Hello', locale: 'de'}), 'Hallo');
-			should.equal(__({phrase: 'Hello %s', locale: 'de'}, 'Marcus'), 'Hallo Marcus');
-			should.equal(__({phrase: 'Hello {{name}}', locale: 'de'}, { name: 'Marcus' }), 'Hallo Marcus');
+			should.equal(__({ phrase: 'Hello', locale: 'de' }), 'Hallo');
+			should.equal(__({ phrase: 'Hello %s', locale: 'de' }, 'Marcus'), 'Hallo Marcus');
+			should.equal(__({ phrase: 'Hello {{name}}', locale: 'de' }, { name: 'Marcus' }), 'Hallo Marcus');
 
-			should.equal(__({phrase: 'Hello', locale: 'en'}), 'Hello');
-			should.equal(__({phrase: 'Hello %s', locale: 'en'}, 'Marcus'), 'Hello Marcus');
-			should.equal(__({phrase: 'Hello {{name}}', locale: 'en'}, { name: 'Marcus' }), 'Hello Marcus');
+			should.equal(__({ phrase: 'Hello', locale: 'en' }), 'Hello');
+			should.equal(__({ phrase: 'Hello %s', locale: 'en' }, 'Marcus'), 'Hello Marcus');
+			should.equal(__({ phrase: 'Hello {{name}}', locale: 'en' }, { name: 'Marcus' }), 'Hello Marcus');
 
-			should.equal(__({phrase: 'Hello', locale: 'nl'}), 'Hallo');
-			should.equal(__({phrase: 'Hello %s', locale: 'nl'}, 'Marcus'), 'Hallo Marcus');
-			should.equal(__({phrase: 'Hello {{name}}', locale: 'nl'}, { name: 'Marcus' }), 'Hallo Marcus');
+			should.equal(__({ phrase: 'Hello', locale: 'nl' }), 'Hallo');
+			should.equal(__({ phrase: 'Hello %s', locale: 'nl' }, 'Marcus'), 'Hallo Marcus');
+			should.equal(__({ phrase: 'Hello {{name}}', locale: 'nl' }, { name: 'Marcus' }), 'Hallo Marcus');
 
 			i18n.setLocale('en');
 			should.equal(__('Hello'), 'Hello');
@@ -194,7 +195,7 @@ describe('Module API', () => {
 
 			i18n.setLocale('en');
 
-			var singular = __n('%s cat', '%s cats', 1),
+			let singular = __n('%s cat', '%s cats', 1),
 				plural   = __n('%s cat', '%s cats', 3);
 
 			should.equal(singular, '1 cat');
@@ -211,7 +212,7 @@ describe('Module API', () => {
 
 			i18n.setLocale('en');
 
-			var singular = __n('There is one monkey in the %%s', 'There are %d monkeys in the %%s', 1, __('tree')),
+			let singular = __n('There is one monkey in the %%s', 'There are %d monkeys in the %%s', 1, __('tree')),
 				plural   = __n('There is one monkey in the %%s', 'There are %d monkeys in the %%s', 3, __('tree'));
 
 			should.equal(singular, 'There is one monkey in the tree');
@@ -227,8 +228,8 @@ describe('Module API', () => {
 		it('won\'t return substitutions when not masked by an extra % (%% issue #49)', () => {
 
 			i18n.setLocale('en');
-			
-			var singular = __n('There is one monkey in the %s', 'There are %d monkeys in the %s', 1, __('tree')),
+
+			let singular = __n('There is one monkey in the %s', 'There are %d monkeys in the %s', 1, __('tree')),
 				plural   = __n('There is one monkey in the %s', 'There are %d monkeys in the %s', 3, __('tree'));
 
 			should.equal(singular, 'There is one monkey in the 1');
@@ -243,61 +244,62 @@ describe('Module API', () => {
 
 		it('should be possible to use an json object as 1st parameter to specifiy a certain locale for that lookup', () => {
 
-			var singular, plural;
+			let singular = '',
+				plural   = '';
 
 			i18n.setLocale('en');
-			singular = __n({singular: "%s cat", plural: "%s cats", locale: "nl"}, 1);
-			plural = __n({singular: "%s cat", plural: "%s cats", locale: "nl"}, 3);
+			singular = __n({ singular: '%s cat', plural: '%s cats', locale: 'nl' }, 1);
+			plural = __n({ singular: '%s cat', plural: '%s cats', locale: 'nl' }, 3);
 			should.equal(singular, '1 Katze');
 			should.equal(plural, '3 Katzen');
 
-			singular = __n({singular: "%s cat", plural: "%s cats", locale: "en"}, 1);
-			plural = __n({singular: "%s cat", plural: "%s cats", locale: "en"}, 3);
+			singular = __n({ singular: '%s cat', plural: '%s cats', locale: 'en' }, 1);
+			plural = __n({ singular: '%s cat', plural: '%s cats', locale: 'en' }, 3);
 			should.equal(singular, '1 cat');
 			should.equal(plural, '3 cats');
 
-			singular = __n({singular: "%s cat", plural: "%s cats", locale: "de"}, 1);
-			plural = __n({singular: "%s cat", plural: "%s cats", locale: "de"}, 3);
-			should.equal(singular, '1 Katze');
-			should.equal(plural, '3 Katzen');
-
-			i18n.setLocale('en');
-			singular = __n({singular: "%s cat", plural: "%s cats", locale: "nl", count: 1});
-			plural = __n({singular: "%s cat", plural: "%s cats", locale: "nl", count: 3});
-			should.equal(singular, '1 Katze');
-			should.equal(plural, '3 Katzen');
-
-			singular = __n({singular: "%s cat", plural: "%s cats", locale: "en", count: 1});
-			plural = __n({singular: "%s cat", plural: "%s cats", locale: "en", count: 3});
-			should.equal(singular, '1 cat');
-			should.equal(plural, '3 cats');
-
-			singular = __n({singular: "%s cat", plural: "%s cats", locale: "de", count: 1});
-			plural = __n({singular: "%s cat", plural: "%s cats", locale: "de", count: 3});
+			singular = __n({ singular: '%s cat', plural: '%s cats', locale: 'de' }, 1);
+			plural = __n({ singular: '%s cat', plural: '%s cats', locale: 'de' }, 3);
 			should.equal(singular, '1 Katze');
 			should.equal(plural, '3 Katzen');
 
 			i18n.setLocale('en');
-			singular = __n({singular: "%s cat", plural: "%s cats", locale: "nl", count: "1"});
-			plural = __n({singular: "%s cat", plural: "%s cats", locale: "nl", count: "3"});
+			singular = __n({ singular: '%s cat', plural: '%s cats', locale: 'nl', count: 1 });
+			plural = __n({ singular: '%s cat', plural: '%s cats', locale: 'nl', count: 3 });
 			should.equal(singular, '1 Katze');
 			should.equal(plural, '3 Katzen');
 
-			singular = __n({singular: "%s cat", plural: "%s cats", locale: "en", count: "1"});
-			plural = __n({singular: "%s cat", plural: "%s cats", locale: "en", count: "3"});
+			singular = __n({ singular: '%s cat', plural: '%s cats', locale: 'en', count: 1 });
+			plural = __n({ singular: '%s cat', plural: '%s cats', locale: 'en', count: 3 });
 			should.equal(singular, '1 cat');
 			should.equal(plural, '3 cats');
 
-			singular = __n({singular: "%s cat", plural: "%s cats", locale: "de", count: "1"});
-			plural = __n({singular: "%s cat", plural: "%s cats", locale: "de", count: "3"});
+			singular = __n({ singular: '%s cat', plural: '%s cats', locale: 'de', count: 1 });
+			plural = __n({ singular: '%s cat', plural: '%s cats', locale: 'de', count: 3 });
+			should.equal(singular, '1 Katze');
+			should.equal(plural, '3 Katzen');
+
+			i18n.setLocale('en');
+			singular = __n({ singular: '%s cat', plural: '%s cats', locale: 'nl', count: '1' });
+			plural = __n({ singular: '%s cat', plural: '%s cats', locale: 'nl', count: '3' });
+			should.equal(singular, '1 Katze');
+			should.equal(plural, '3 Katzen');
+
+			singular = __n({ singular: '%s cat', plural: '%s cats', locale: 'en', count: '1' });
+			plural = __n({ singular: '%s cat', plural: '%s cats', locale: 'en', count: '3' });
+			should.equal(singular, '1 cat');
+			should.equal(plural, '3 cats');
+
+			singular = __n({ singular: '%s cat', plural: '%s cats', locale: 'de', count: '1' });
+			plural = __n({ singular: '%s cat', plural: '%s cats', locale: 'de', count: '3' });
 			should.equal(singular, '1 Katze');
 			should.equal(plural, '3 Katzen');
 		});
 
 		it('should allow two arguments', () => {
 
-			var singular = __n("cat", 1),
-				plural = __n("cat", 3);
+			const singular = __n('cat', 1),
+				plural = __n('cat', 3);
 
 			should.equal(singular, '1 cat');
 			should.equal(plural, '3 cats');
@@ -330,7 +332,7 @@ describe('Module API', () => {
 		});
 
 		it('should work with basic replacements', () => {
-			
+
 			i18n.setLocale('en');
 			should.equal('Hello Marcus', __mf('Hello {name}', { name: 'Marcus' }));
 
@@ -341,9 +343,10 @@ describe('Module API', () => {
 
 		it('should work with plurals', () => {
 
-			var msg = 'In {lang} there {NUM, plural,';
-				msg += 'one{is one for #}';
-				msg += 'other{others for #}}';
+			let msg = 'In {lang} there {NUM, plural,';
+
+			msg += 'one{is one for #}';
+			msg += 'other{others for #}}';
 
 			i18n.setLocale('en');
 			should.equal('In english there others for 0', __mf(msg, { NUM: 0, lang: 'english' }));
@@ -353,7 +356,7 @@ describe('Module API', () => {
 			should.equal('In english there others for 4', __mf(msg, { NUM: 4, lang: 'english' }));
 			should.equal('In english there others for 5', __mf(msg, { NUM: 5, lang: 'english' }));
 			should.equal('In english there others for 6', __mf(msg, { NUM: 6, lang: 'english' }));
-			
+
 			msg = 'In {lang} there {NUM, plural,';
 			msg += 'one{is one for #}';
 			msg += 'other{others for #}}';
@@ -366,7 +369,7 @@ describe('Module API', () => {
 			should.equal('In german there others for 4', __mf(msg, { NUM: 4, lang: 'german' }));
 			should.equal('In german there others for 5', __mf(msg, { NUM: 5, lang: 'german' }));
 			should.equal('In german there others for 6', __mf(msg, { NUM: 6, lang: 'german' }));
-			
+
 			msg = 'In {lang} there {NUM, plural,';
 			msg += 'one{is one for #}';
 			msg += 'other{others for #}}';
@@ -379,7 +382,7 @@ describe('Module API', () => {
 			should.equal('In french there others for 4', __mf(msg, { NUM: 4, lang: 'french' }));
 			should.equal('In french there others for 5', __mf(msg, { NUM: 5, lang: 'french' }));
 			should.equal('In french there others for 6', __mf(msg, { NUM: 6, lang: 'french' }));
-			
+
 			msg = 'In {lang} there {NUM, plural,';
 			msg += 'one{is one for #}';
 			msg += 'few{are a few for #}';
@@ -403,12 +406,12 @@ describe('Module API', () => {
 		it('should return a list of translations', () => {
 
 			i18n.setLocale('en');
-		    should.deepEqual(__l('Hello'), ['Hallo', 'Hello', 'Bonjour', 'Привет']);
-		    should.deepEqual(__l('Hello'), ['Hallo', 'Hello', 'Bonjour', 'Привет']);
+			should.deepEqual(__l('Hello'), ['Hallo', 'Hello', 'Bonjour', 'Привет']);
+			should.deepEqual(__l('Hello'), ['Hallo', 'Hello', 'Bonjour', 'Привет']);
 
-		    i18n.setLocale('fr');
-		    should.deepEqual(__l('Hello'), ['Hallo', 'Hello', 'Bonjour', 'Привет']);
-		    should.deepEqual(__l('Hello'), ['Hallo', 'Hello', 'Bonjour', 'Привет']);
+			i18n.setLocale('fr');
+			should.deepEqual(__l('Hello'), ['Hallo', 'Hello', 'Bonjour', 'Привет']);
+			should.deepEqual(__l('Hello'), ['Hallo', 'Hello', 'Bonjour', 'Привет']);
 		});
 	});
 
@@ -417,12 +420,12 @@ describe('Module API', () => {
 		it('should return a hash of translations', () => {
 
 			i18n.setLocale('en');
-		    should.deepEqual(__h('Hello'), [{ de: 'Hallo' }, { en: 'Hello' }, { fr: 'Bonjour' }, { ru: 'Привет' }]);
-		    should.deepEqual(__h('Hello'), [{ de: 'Hallo' }, { en: 'Hello' }, { fr: 'Bonjour' }, { ru: 'Привет' }]);
+			should.deepEqual(__h('Hello'), [{ de: 'Hallo' }, { en: 'Hello' }, { fr: 'Bonjour' }, { ru: 'Привет' }]);
+			should.deepEqual(__h('Hello'), [{ de: 'Hallo' }, { en: 'Hello' }, { fr: 'Bonjour' }, { ru: 'Привет' }]);
 
-		    i18n.setLocale('fr');
-		    should.deepEqual(__h('Hello'), [{ de: 'Hallo' }, { en: 'Hello' }, { fr: 'Bonjour' }, { ru: 'Привет' }]);
-		    should.deepEqual(__h('Hello'), [{ de: 'Hallo' }, { en: 'Hello' }, { fr: 'Bonjour' }, { ru: 'Привет' }]);
+			i18n.setLocale('fr');
+			should.deepEqual(__h('Hello'), [{ de: 'Hallo' }, { en: 'Hello' }, { fr: 'Bonjour' }, { ru: 'Привет' }]);
+			should.deepEqual(__h('Hello'), [{ de: 'Hallo' }, { en: 'Hello' }, { fr: 'Bonjour' }, { ru: 'Привет' }]);
 		});
 	});
 });

@@ -8,13 +8,9 @@ import pkg from './package.json';
 
 const plugins = [
 	eslint({
-		exclude:      'node_modules/**',
+		exclude:      ['**/*.json', 'node_modules/**'],
 		throwOnError: process.env.ROLLUP_WATCH != 'true'
 	}),
-	resolve({
-		preferBuiltins: false
-	}),
-	commonjs(),
 	json({
 		preferConst: true
 	}),
@@ -22,12 +18,19 @@ const plugins = [
 		babelrc: false,
 		exclude: 'node_modules/**'
 	}, pkg.babel, {
-		presets: pkg.babel.presets.map(_ => (
-			_ == 'es2015'
-				? 'es2015-rollup'
-				: _
-		))
-	}))
+		presets: pkg.babel.presets.map((preset) => {
+
+			if (Array.isArray(preset) && preset[0] == 'env') {
+				preset[1].modules = false;
+			}
+
+			return preset
+		})
+	})),
+	resolve({
+		preferBuiltins: false
+	}),
+	commonjs()
 ];
 
 const dependencies = Object.keys(pkg.dependencies);

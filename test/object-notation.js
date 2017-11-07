@@ -6,10 +6,10 @@ describe('Object Notation', () => {
 	beforeEach(() => {
 		i18n.configure({
 			locales:   {
-				en: require("./locales/en.json"),
-				de: require("./locales/de.json")
+				en: require('./locales/en.json'),
+				de: require('./locales/de.json')
 			},
-			globalize: true,
+			globalize:      true,
 			objectNotation: true
 		});
 	});
@@ -29,12 +29,12 @@ describe('Object Notation', () => {
 		});
 	});
 
-
 	describe('__() and __n()', () => {
 
 		beforeEach(() => {
-			var catalog = i18n.getCatalog('en');
-			delete catalog.nested.path;
+			const catalog = i18n.getCatalog('en');
+
+			Reflect.deleteProperty(catalog.nested, 'path');
 		});
 
 		it('should return en translations as expected, using object traversal notation', () => {
@@ -50,8 +50,8 @@ describe('Object Notation', () => {
 
 			i18n.setLocale('en');
 
-			var singular = __n({singular: "cat", plural: "cat", locale: "de"}, 1),
-				plural   = __n({singular: "cat", plural: "cat", locale: "de"}, 3);
+			const singular = __n({ singular: 'cat', plural: 'cat', locale: 'de' }, 1),
+				plural = __n({ singular: 'cat', plural: 'cat', locale: 'de' }, 3);
 
 			should.equal(singular, '1 Katze');
 			should.equal(plural, '3 Katzen');
@@ -68,8 +68,8 @@ describe('Object Notation', () => {
 
 			i18n.setLocale('en');
 
-			var singular = __n("nested.deep.plural", 1),
-				plural   = __n("nested.deep.plural", 3);
+			const singular = __n('nested.deep.plural', 1),
+				plural = __n('nested.deep.plural', 3);
 
 			should.equal(singular, 'plural');
 			should.equal(plural, 'plurals');
@@ -77,10 +77,10 @@ describe('Object Notation', () => {
 
 		it('should correctly update files', () => {
 			i18n.setLocale('en');
-			should.equal(__("nested.path"), "nested.path");
-			should.equal(__("nested.path.sub"), "nested.path.sub");
-			should.deepEqual(__("nested.path"), {
-				sub: "nested.path.sub"
+			should.equal(__('nested.path'), 'nested.path');
+			should.equal(__('nested.path.sub'), 'nested.path.sub');
+			should.deepEqual(__('nested.path'), {
+				sub: 'nested.path.sub'
 			});
 		});
 	});

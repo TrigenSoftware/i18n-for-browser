@@ -1,6 +1,6 @@
 {
   "name": "i18n-for-browser",
-  "version": "0.9.4",
+  "version": "0.9.5",
   "description": "Implementation of i18n-node designed for client-side.",
   "author": "dangreen",
   "license": "MIT",
@@ -8,10 +8,11 @@
   "module": "lib/index.es.js",
   "browser": "lib/umd.js",
   "scripts": {
-    "lint": "eslint --cache 'src/*.js'",
-    "test": "npm run lint && mocha -b",
+    "lint": "eslint --cache 'src/**/*.js' 'test/**/*.js'",
+    "test": "npm run lint && nyc mocha -b",
     "build": "rollup -c",
     "watch": "rollup -c -w",
+    "coverage": "nyc report --reporter=text-lcov | coveralls",
     "prepublishOnly": "npm run build"
   },
   "repository": {
@@ -41,14 +42,14 @@
   "devDependencies": {
     "babel-core": "^6.26.0",
     "babel-plugin-add-module-exports": "^0.2.1",
-    "babel-preset-es2015": "^6.24.1",
-    "babel-preset-es2015-rollup": "^3.0.0",
+    "babel-preset-env": "^1.6.1",
     "babel-preset-stage-0": "^6.3.13",
     "babel-register": "^6.26.0",
     "escope": "^3.6.0",
     "eslint": "^4.10.0",
-    "eslint-config-trigen": "^1.2.3",
+    "eslint-config-trigen": "^1.2.4",
     "mocha": "*",
+    "nyc": "^11.3.0",
     "rollup": "^0.50.0",
     "rollup-plugin-babel": "^3.0.2",
     "rollup-plugin-babel-minify": "^3.1.2",
@@ -60,7 +61,20 @@
   },
   "babel": {
     "presets": [
-      "es2015",
+      [
+        "env",
+        {
+          "targets": {
+            "browsers": [
+              "> 1%",
+              "last 2 versions",
+              "iOS > 7",
+              "Android > 4.4",
+              "not OperaMini all"
+            ]
+          }
+        }
+      ],
       "stage-0"
     ],
     "plugins": [
