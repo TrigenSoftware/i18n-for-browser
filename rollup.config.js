@@ -1,8 +1,9 @@
-import resolve from 'rollup-plugin-node-resolve';
+import globals from 'rollup-plugin-node-globals';
 import commonjs from 'rollup-plugin-commonjs';
-import json from 'rollup-plugin-json';
+import resolve from 'rollup-plugin-node-resolve';
 import babel from 'rollup-plugin-babel';
 import minify from 'rollup-plugin-babel-minify';
+import json from 'rollup-plugin-json';
 import eslint from 'rollup-plugin-eslint';
 import pkg from './package.json';
 
@@ -29,9 +30,11 @@ const plugins = [
 		})
 	})),
 	resolve({
+		browser:        true,
 		preferBuiltins: false
 	}),
-	commonjs()
+	commonjs(),
+	globals()
 ];
 
 const dependencies = Object.keys(pkg.dependencies);
@@ -59,7 +62,7 @@ export default [{
 	input:   'src/index.js',
 	plugins: [...plugins, minify()],
 	output:  {
-		file:      pkg.browser,
+		file:      pkg.umd,
 		format:    'umd',
 		name:      'i18n',
 		sourcemap: true

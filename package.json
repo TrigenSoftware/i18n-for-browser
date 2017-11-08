@@ -1,12 +1,12 @@
 {
   "name": "i18n-for-browser",
-  "version": "0.9.6",
+  "version": "0.9.7",
   "description": "Implementation of i18n-node designed for client-side.",
   "author": "dangreen",
   "license": "MIT",
   "main": "lib/index.js",
   "module": "lib/index.es.js",
-  "browser": "lib/umd.js",
+  "umd": "lib/umd.js",
   "scripts": {
     "lint": "eslint --cache 'src/**/*.js' 'test/**/*.js'",
     "test": "npm run lint && nyc mocha -b",
@@ -59,6 +59,7 @@
     "rollup-plugin-commonjs": "^8.2.5",
     "rollup-plugin-eslint": "^4.0.0",
     "rollup-plugin-json": "^2.3.0",
+    "rollup-plugin-node-globals": "^1.1.0",
     "rollup-plugin-node-resolve": "^3.0.0",
     "should": "^13.1.3"
   },

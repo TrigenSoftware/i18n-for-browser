@@ -44,7 +44,7 @@ console.log(__`Hello ${name}`);
 Also `i18n-for-browser` is available on [unpkg.com](https://unpkg.com/i18n-for-browser) as UMD, which exposes global object `i18n`.
 
 ```html
-<script src="https://unpkg.com/i18n-for-browser"></script>
+<script src="https://unpkg.com/i18n-for-browser?main=umd"></script>
 ```
 
 ## Configure
