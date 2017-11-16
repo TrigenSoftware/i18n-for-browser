@@ -4,6 +4,13 @@
   "description": "Implementation of i18n-node designed for client-side.",
   "author": "dangreen",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TrigenSoftware/i18n-for-browser.git"
+  },
+  "bugs": {
+    "url": "https://github.com/TrigenSoftware/i18n-for-browser/issues"
+  },
   "main": "lib/index.js",
   "module": "lib/index.es.js",
   "umd": "lib/umd.js",
@@ -14,13 +21,6 @@
     "watch": "rollup -c -w",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "prepublishOnly": "npm run build"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/TrigenSoftware/i18n-for-browser.git"
-  },
-  "bugs": {
-    "url": "https://github.com/TrigenSoftware/i18n-for-browser/issues"
   },
   "keywords": [
     "template",
