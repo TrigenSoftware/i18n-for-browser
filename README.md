@@ -22,7 +22,7 @@ Implementation of [`i18n-node`](https://github.com/mashpie/i18n-node) designed f
 ## Install
 
 ```sh
-npm install i18n-for-browser
+npm i -S i18n-for-browser
 # or
 yarn add i18n-for-browser
 ```
