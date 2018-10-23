@@ -209,4 +209,4 @@ app.use(i18nExpressHelper(i18nNodeConfig));
 ```
 
 ---
-[![NPM](https://nodei.co/npm/i18n-for-browser.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/i18n-for-browser/)
+[![NPM](https://nodei.co/npm/i18n-for-browser.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/i18n-for-browser/) [![Greenkeeper badge](https://badges.greenkeeper.io/TrigenSoftware/i18n-for-browser.svg)](https://greenkeeper.io/)
