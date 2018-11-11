@@ -51,7 +51,6 @@
   "devDependencies": {
     "@babel/core": "^7.1.5",
     "@types/jest": "^23.3.9",
-    "babel-plugin-add-module-exports": "^1.0.0",
     "babel-preset-trigen": "^1.7.1",
     "browserslist-config-trigen": "^1.1.0",
     "coveralls": "^3.0.0",
