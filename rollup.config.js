@@ -2,41 +2,36 @@ import globals from 'rollup-plugin-node-globals';
 import commonjs from 'rollup-plugin-commonjs';
 import resolve from 'rollup-plugin-node-resolve';
 import babel from 'rollup-plugin-babel';
+import typescript from 'rollup-plugin-typescript2';
 import minify from 'rollup-plugin-babel-minify';
 import json from 'rollup-plugin-json';
-import eslint from 'rollup-plugin-eslint';
+import tslint from 'rollup-plugin-tslint';
+import { DEFAULT_EXTENSIONS } from '@babel/core';
 import pkg from './package.json';
 
 const plugins = [
-	eslint({
-		exclude:      ['**/*.json', 'node_modules/**'],
-		throwOnError: process.env.ROLLUP_WATCH != 'true'
+	tslint({
+		exclude:    ['**/*.json', 'node_modules/**'],
+		throwError: process.env.ROLLUP_WATCH != 'true'
 	}),
 	json({
 		preferConst: true
 	}),
-	babel(Object.assign({
-		runtimeHelpers: true,
-		babelrc:        false,
-		exclude:        'node_modules/**'
-	}, pkg.babel, {
-		presets: pkg.babel.presets.map((preset) => {
-
-			if (Array.isArray(preset) && preset[0] == 'env') {
-				preset[1].modules = false;
-			}
-
-			return preset;
-		})
-	})),
+	commonjs(),
+	typescript(),
+	babel({
+		extensions: [
+			...DEFAULT_EXTENSIONS,
+			'ts',
+			'tsx'
+		],
+		runtimeHelpers: true
+	}),
 	resolve({
-		browser:        true,
 		preferBuiltins: false
 	}),
-	commonjs(),
 	globals()
 ];
-
 const dependencies = Object.keys(pkg.dependencies);
 
 function external(id) {
@@ -46,34 +41,36 @@ function external(id) {
 }
 
 export default [{
-	input:  'src/index.js',
+	input:     'src/index.ts',
 	plugins,
 	external,
-	output: [{
+	output:    [{
 		file:      pkg.main,
 		format:    'cjs',
-		sourcemap: true
+		exports:   'named',
+		sourcemap: 'inline'
 	}, {
 		file:      pkg.module,
 		format:    'es',
-		sourcemap: true
+		sourcemap: 'inline'
 	}]
 }, {
-	input:   'src/index.js',
+	input:   'src/index.ts',
 	plugins: [...plugins, minify()],
 	output:  {
 		file:      pkg.umd,
 		format:    'umd',
+		exports:   'named',
 		name:      'i18n',
-		sourcemap: true
+		sourcemap: 'inline'
 	}
 }, {
-	input:  'src/middleware.js',
+	input:  'src/middleware.ts',
 	plugins,
 	external,
 	output: [{
-		file:      'lib/middleware.js',
+		file:      'lib/middleware.ts',
 		format:    'cjs',
-		sourcemap: true
+		sourcemap: 'inline'
 	}]
 }];

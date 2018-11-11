@@ -1,0 +1,9 @@
+{
+	"exclude": "node_modules/**",
+	"presets": [
+		"babel-preset-trigen"
+	],
+	"plugins": [
+		"babel-plugin-add-module-exports"
+	]
+}
