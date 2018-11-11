@@ -4,6 +4,7 @@
 [![Dependency status][deps]][deps-url]
 [![Build status][build]][build-url]
 [![Coverage status][coverage]][coverage-url]
+[![Greenkeeper badge][greenkeeper]][greenkeeper-url]
 
 [npm]: https://img.shields.io/npm/v/i18n-for-browser.svg
 [npm-url]: https://npmjs.com/package/i18n-for-browser
@@ -16,6 +17,9 @@
 
 [coverage]: https://img.shields.io/coveralls/TrigenSoftware/i18n-for-browser.svg
 [coverage-url]: https://coveralls.io/r/TrigenSoftware/i18n-for-browser
+
+[greenkeeper]: https://badges.greenkeeper.io/TrigenSoftware/i18n-for-browser.svg
+[greenkeeper-url]: https://greenkeeper.io/
 
 Implementation of [`i18n-node`](https://github.com/mashpie/i18n-node) designed for client-side.
 
@@ -209,4 +213,4 @@ app.use(i18nExpressHelper(i18nNodeConfig));
 ```
 
 ---
-[![NPM](https://nodei.co/npm/i18n-for-browser.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/i18n-for-browser/) [![Greenkeeper badge](https://badges.greenkeeper.io/TrigenSoftware/i18n-for-browser.svg)](https://greenkeeper.io/)
+[![NPM](https://nodei.co/npm/i18n-for-browser.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/i18n-for-browser/)
