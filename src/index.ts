@@ -60,10 +60,9 @@ function getConfigFromContext(context: any): Config {
 
 /**
  * Translates a single phrase and adds it to locales if unknown.
- * Returns translated parsed and substituted string.
  * @param  phraseOrParams - Phrase to translate or params.
  * @param  values - Values to print.
- * @return Translate.
+ * @return Returns translated parsed and substituted string.
  */
 export function __(phraseOrParams: string|IParams, ...values) {
 
@@ -108,9 +107,9 @@ export function __(phraseOrParams: string|IParams, ...values) {
 /**
  * Supports the advanced MessageFormat as provided by excellent messageformat module.
  * You should definetly head over to messageformat.github.io for a guide to MessageFormat.
- * i18n takes care of new MessageFormat('en').compile(msg);
+ * `i18n-for-browser` takes care of `new MessageFormat('en').compile(msg);`
  * with the current msg loaded from it's json files and cache that complied fn in memory.
- * So in short you might use it similar to __() plus extra object to accomblish MessageFormat's formating.
+ * So in short you might use it similar to `__()` plus extra object to accomblish MessageFormat's formating.
  * @param  phraseOrParams - Phrase to translate or params.
  * @param  values - Values to print.
  * @return Translate.
