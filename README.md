@@ -96,13 +96,13 @@ import i18n, {
 } from 'i18n-for-browser';
 
 i18n.configure({
-	// store of translations
-	locales: {
-		'en': {...},
-		'ru': {...}
-	},
-	// sets a custom cookie name to read/write locale  - defaults to NULL
-	cookieName: 'yourcookiename',
+    // store of translations
+    locales: {
+        'en': {...},
+        'ru': {...}
+    },
+    // sets a custom cookie name to read/write locale  - defaults to NULL
+    cookieName: 'yourcookiename',
 });
 
 console.log(__('cat'));
