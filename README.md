@@ -21,7 +21,7 @@
 [greenkeeper]: https://badges.greenkeeper.io/TrigenSoftware/i18n-for-browser.svg
 [greenkeeper-url]: https://greenkeeper.io/
 
-Implementation of [`i18n-node`](https://github.com/mashpie/i18n-node) designed for client-side.
+Modern translation module for web.
 
 ## Install
 
@@ -29,6 +29,14 @@ Implementation of [`i18n-node`](https://github.com/mashpie/i18n-node) designed f
 npm i i18n-for-browser
 # or
 yarn add i18n-for-browser
+```
+
+# CDN
+
+`i18n-for-browser` is also available on [unpkg.com](https://unpkg.com/i18n-for-browser) as UMD, which exposes global object `i18n`.
+
+```html
+<script src="https://unpkg.com/i18n-for-browser?main=umd"></script>
 ```
 
 ## Load
@@ -41,14 +49,6 @@ now you are ready to use a `i18n.__('Hello')`. Also `__` and `__n` available as 
 
 ```js
 console.log(__`Hello ${name}`);
-```
-
-# CDN
-
-Also `i18n-for-browser` is available on [unpkg.com](https://unpkg.com/i18n-for-browser) as UMD, which exposes global object `i18n`.
-
-```html
-<script src="https://unpkg.com/i18n-for-browser?main=umd"></script>
 ```
 
 ## Configure

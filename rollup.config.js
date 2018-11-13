@@ -1,6 +1,7 @@
 import globals from 'rollup-plugin-node-globals';
 import commonjs from 'rollup-plugin-commonjs';
 import resolve from 'rollup-plugin-node-resolve';
+import builtins from 'rollup-plugin-node-builtins';
 import babel from 'rollup-plugin-babel';
 import typescript from 'rollup-plugin-typescript2';
 import minify from 'rollup-plugin-babel-minify';
@@ -9,29 +10,34 @@ import tslint from 'rollup-plugin-tslint';
 import { DEFAULT_EXTENSIONS } from '@babel/core';
 import pkg from './package.json';
 
-const plugins = [
-	tslint({
-		exclude:    ['**/*.json', 'node_modules/**'],
-		throwError: process.env.ROLLUP_WATCH != 'true'
-	}),
-	json({
-		preferConst: true
-	}),
-	commonjs(),
-	typescript(),
-	babel({
-		extensions: [
-			...DEFAULT_EXTENSIONS,
-			'ts',
-			'tsx'
-		],
-		runtimeHelpers: true
-	}),
-	resolve({
-		preferBuiltins: false
-	}),
-	globals()
-];
+function getPlugins(standalone) {
+	return [
+		tslint({
+			exclude:    ['**/*.json', 'node_modules/**'],
+			throwError: process.env.ROLLUP_WATCH != 'true'
+		}),
+		json({
+			preferConst: true
+		}),
+		commonjs(),
+		standalone && globals(),
+		standalone && builtins(),
+		typescript(),
+		babel({
+			extensions: [
+				...DEFAULT_EXTENSIONS,
+				'ts',
+				'tsx'
+			],
+			runtimeHelpers: true
+		}),
+		standalone && resolve({
+			preferBuiltins: false
+		}),
+		standalone && minify()
+	].filter(Boolean);
+}
+
 const dependencies = Object.keys(pkg.dependencies);
 
 function external(id) {
@@ -42,7 +48,7 @@ function external(id) {
 
 export default [{
 	input:     'src/index.ts',
-	plugins,
+	plugins:   getPlugins(),
 	external,
 	output:    [{
 		file:      pkg.main,
@@ -56,7 +62,7 @@ export default [{
 	}]
 }, {
 	input:   'src/index.ts',
-	plugins: [...plugins, minify()],
+	plugins: getPlugins(true),
 	output:  {
 		file:      pkg.umd,
 		format:    'umd',
@@ -65,10 +71,10 @@ export default [{
 		sourcemap: 'inline'
 	}
 }, {
-	input:  'src/middleware.ts',
-	plugins,
+	input:   'src/middleware.ts',
+	plugins: getPlugins(),
 	external,
-	output: [{
+	output:  [{
 		file:      'lib/middleware.ts',
 		format:    'cjs',
 		sourcemap: 'inline'
