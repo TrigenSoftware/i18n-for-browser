@@ -46,10 +46,10 @@ Module exposes next API:
 ```js
 export default globalConfig;
 export {
-	IConfig,
-	ILocales,
-	IFallbacks,
-	IUnknownPhraseListener,
+    IConfig,
+    ILocales,
+    IFallbacks,
+    IUnknownPhraseListener,
     IProcessor,
     IParams,
     IPluralParams,
