@@ -318,14 +318,4 @@ export default class Config implements IConfig {
 		Reflect.deleteProperty(this.locales, locale);
 		return this;
 	}
-
-	/**
-	 * Add text post processor.
-	 * @param  processor - Text post processor.
-	 * @return Config.
-	 */
-	addProcessor(processor: IProcessor) {
-		this.processors.push(processor);
-		return this;
-	}
 }
