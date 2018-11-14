@@ -76,7 +76,7 @@ export default class Config implements IConfig {
 	unknownPhraseListener: IUnknownPhraseListener = null;
 	processors: IProcessor[] = [];
 	isDestroyed = false;
-	private isConstructed = false;
+	private readonly isConstructed = false;
 	private isFork = false;
 	private forks: Config[] = [];
 	private forkLinkedFields: IForkLinkedFields = {
