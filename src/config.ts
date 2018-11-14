@@ -47,6 +47,20 @@ export interface IConfig {
 	processors?: IProcessor[];
 }
 
+type IForkConfig = Pick<
+	IConfig,
+	Exclude<
+		keyof IConfig,
+		'objectNotation'|'cookieName'|'queryParameter'
+	>
+>;
+
+interface IForkLinkedFields {
+	defaultLocale: boolean;
+	locales: boolean;
+	unknownPhraseListener: boolean;
+}
+
 const COOKIES_LIFE_TIME = 3600;
 const IS_BROWSER = typeof document !== 'undefined'
 	&& typeof location !== 'undefined';
@@ -61,9 +75,17 @@ export default class Config implements IConfig {
 	queryParameter = 'locale';
 	unknownPhraseListener: IUnknownPhraseListener = null;
 	processors: IProcessor[] = [];
+	isDestroyed = false;
+	private isConstructed = false;
+	private isFork = false;
+	private forks: Config[] = [];
+	private forkLinkedFields: IForkLinkedFields = {
+		defaultLocale:         true, // - configure, setLocale
+		locales:               true, // - configure, addLocale, removeLocale
+		unknownPhraseListener: true  // - configure, onUnknownPhrase
+	};
 
-	constructor(config: IConfig = {}) {
-		this.configure(config);
+	constructor(config: IConfig = {}, isFork = false) {
 		this.onUnknownPhrase = this.onUnknownPhrase.bind(this);
 		this.setLocale = this.setLocale.bind(this);
 		this.getLocale = this.getLocale.bind(this);
@@ -71,6 +93,9 @@ export default class Config implements IConfig {
 		this.getCatalog = this.getCatalog.bind(this);
 		this.addLocale = this.addLocale.bind(this);
 		this.removeLocale = this.removeLocale.bind(this);
+		this.isFork = isFork;
+		this.configure(config);
+		this.isConstructed = true;
 	}
 
 	/**
@@ -89,14 +114,23 @@ export default class Config implements IConfig {
 		processors
 	}: IConfig) {
 
+		const {
+			isConstructed,
+			isFork,
+			forkLinkedFields
+		} = this;
+		const linkedField = !isConstructed || !isFork;
+
 		// setting defaultLocale
 		if (typeof defaultLocale === 'string') {
 			this.defaultLocale = defaultLocale;
+			forkLinkedFields.defaultLocale = linkedField;
 		}
 
 		// read languages locales
 		if (typeof locales === 'object') {
 			this.locales = locales;
+			forkLinkedFields.locales = linkedField;
 		}
 
 		// read language fallback map
@@ -104,34 +138,40 @@ export default class Config implements IConfig {
 			this.fallbacks = fallbacks;
 		}
 
-		// enable object notation?
-		if (typeof objectNotation === 'boolean') {
-			this.objectNotation = objectNotation;
+		if (!isFork || !isConstructed) {
+
+			// enable object notation?
+			if (typeof objectNotation === 'boolean') {
+				this.objectNotation = objectNotation;
+			}
+
+			// sets a custom cookie name to parse locale settings from
+			if (typeof cookieName === 'string') {
+				this.cookieName = cookieName;
+			}
 		}
 
-		// sets a custom cookie name to parse locale settings from
-		if (typeof cookieName === 'string') {
-			this.cookieName = cookieName;
-		}
+		if (!isFork) {
 
-		const localeFromCookies = IS_BROWSER && Cookies.get(this.cookieName);
+			const localeFromCookies = IS_BROWSER && Cookies.get(this.cookieName);
 
-		if (typeof localeFromCookies === 'string') {
-			this.defaultLocale = localeFromCookies;
-		}
+			if (typeof localeFromCookies === 'string') {
+				this.defaultLocale = localeFromCookies;
+			}
 
-		// get default locale from url
-		const typeofQueryParameter = typeof queryParameter;
+			// get default locale from url
+			const typeofQueryParameter = typeof queryParameter;
 
-		if (IS_BROWSER && typeofQueryParameter !== 'undefined') {
+			if (IS_BROWSER && typeofQueryParameter !== 'undefined') {
 
-			const key = typeofQueryParameter === 'string'
-				? queryParameter
-				: 'locale';
-			const localeFromQuery = parseUrl(location.href, true).query[key];
+				const key = typeofQueryParameter === 'string'
+					? queryParameter
+					: 'locale';
+				const localeFromQuery = parseUrl(location.href, true).query[key];
 
-			if (typeof localeFromQuery === 'string') {
-				this.defaultLocale = localeFromQuery;
+				if (typeof localeFromQuery === 'string') {
+					this.defaultLocale = localeFromQuery;
+				}
 			}
 		}
 
@@ -141,14 +181,19 @@ export default class Config implements IConfig {
 
 		if (typeof unknownPhraseListener === 'function') {
 			this.unknownPhraseListener = unknownPhraseListener;
+			forkLinkedFields.unknownPhraseListener = linkedField;
 		}
 
+		const defaultLocaleIsLinked = forkLinkedFields.defaultLocale;
+
 		this.setLocale(this.defaultLocale);
+		forkLinkedFields.defaultLocale = defaultLocaleIsLinked;
 
 		return this;
 	}
 
 	destroy() {
+		this.isDestroyed = true;
 		this.defaultLocale = null;
 		this.locales = null;
 		this.fallbacks = null;
@@ -157,6 +202,9 @@ export default class Config implements IConfig {
 		this.queryParameter = null;
 		this.unknownPhraseListener = null;
 		this.processors = null;
+		this.forks = null;
+		this.isFork = null;
+		this.forkLinkedFields = null;
 	}
 
 	/**
@@ -164,8 +212,52 @@ export default class Config implements IConfig {
 	 * @param  config - Config with overrides.
 	 * @return Forked config.
 	 */
-	fork(config: IConfig) {
-		return new Config(this).configure(config);
+	fork(config: IForkConfig, hard?: false);
+
+	/**
+	 * Copy current config with some overrides.
+	 * @param  config - Config with overrides.
+	 * @param  hard - Do hard fork without linked fields.
+	 * @return Forked config.
+	 */
+	fork(config: IConfig, hard: true);
+
+	/**
+	 * Copy current config with some overrides.
+	 * @param  config - Config with overrides.
+	 * @param  hard - Do hard fork without linked fields.
+	 * @return Forked config.
+	 */
+	fork(config: IConfig, hard = false) {
+
+		const soft = !hard;
+		const forkedConfig = new Config(this, soft).configure(config);
+
+		if (soft) {
+			this.forks.push(forkedConfig);
+		}
+
+		return forkedConfig;
+	}
+
+	private callForkMethod(
+		caller: (fork: Config) => void,
+		flagName: keyof IForkLinkedFields
+	) {
+		this.forks = this.forks.filter((fork) => {
+
+			if (fork.isDestroyed) {
+				return false;
+			}
+
+			if (fork.forkLinkedFields[flagName]) {
+				fork.isFork = false;
+				caller(fork);
+				fork.isFork = true;
+			}
+
+			return true;
+		});
 	}
 
 	bind<T extends (...args: any[]) => any>(fn: T): T {
@@ -187,7 +279,21 @@ export default class Config implements IConfig {
 	 * @return Config.
 	 */
 	onUnknownPhrase(listener: IUnknownPhraseListener) {
+
+		const {
+			isFork,
+			forkLinkedFields
+		} = this;
+		const linkedField = !isFork;
+
+		forkLinkedFields.unknownPhraseListener = linkedField;
 		this.unknownPhraseListener = listener;
+
+		this.callForkMethod(
+			fork => fork.onUnknownPhrase(listener),
+			'unknownPhraseListener'
+		);
+
 		return this;
 	}
 
@@ -199,10 +305,15 @@ export default class Config implements IConfig {
 	setLocale(locale: string) {
 
 		const {
+			isFork,
+			forkLinkedFields,
 			locales,
 			cookieName
 		} = this;
+		const linkedField = !isFork;
 		const nextLocale = this.getLocale(true, locale, true);
+
+		forkLinkedFields.defaultLocale = linkedField;
 
 		// called like setLocale('en')
 		if (typeof locales[nextLocale] === 'object') {
@@ -216,6 +327,11 @@ export default class Config implements IConfig {
 				});
 			}
 		}
+
+		this.callForkMethod(
+			fork => fork.setLocale(locale),
+			'defaultLocale'
+		);
 
 		return this;
 	}
@@ -305,7 +421,19 @@ export default class Config implements IConfig {
 	 * @return Config.
 	 */
 	addLocale(locale: string, catalog: ILocales) {
-		this.locales[locale] = catalog;
+
+		const {
+			isFork,
+			forkLinkedFields,
+			locales
+		} = this;
+		const linkedField = !isFork;
+
+		forkLinkedFields.locales = linkedField;
+		locales[locale] = catalog;
+
+		// No need `callForkMethod` due to `locales` is object.
+
 		return this;
 	}
 
@@ -315,7 +443,19 @@ export default class Config implements IConfig {
 	 * @return Config.
 	 */
 	removeLocale(locale: string) {
-		Reflect.deleteProperty(this.locales, locale);
+
+		const {
+			isFork,
+			forkLinkedFields,
+			locales
+		} = this;
+		const linkedField = !isFork;
+
+		forkLinkedFields.locales = linkedField;
+		Reflect.deleteProperty(locales, locale);
+
+		// No need `callForkMethod` due to `locales` is object.
+
 		return this;
 	}
 }

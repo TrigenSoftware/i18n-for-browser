@@ -86,9 +86,72 @@ describe('Config', () => {
 		it('should create correct fork', () => {
 
 			const nlI18n = i18n.fork({
+				fallbacks: { 'nl': 'en' }
+			});
+
+			i18n.setLocale('ru');
+
+			expect(nlI18n.getLocale()).toBe('ru');
+			expect(i18n.getLocale()).toBe('ru');
+		});
+
+		it('should unlink fields from fork by config', () => {
+
+			const nlI18n = i18n.fork({
 				defaultLocale: 'nl',
 				fallbacks:     { 'nl': 'en' }
 			});
+
+			i18n.setLocale('ru');
+
+			expect(nlI18n.getLocale()).toBe('en');
+			expect(i18n.getLocale()).toBe('ru');
+
+			const fn = jest.fn();
+
+			i18n.onUnknownPhrase(fn);
+
+			expect(nlI18n.unknownPhraseListener).toBe(fn);
+			expect(i18n.unknownPhraseListener).toBe(fn);
+		});
+
+		it('should unlink fields from fork by methods', () => {
+
+			const nlI18n = i18n.fork({
+				fallbacks: { 'nl': 'en' }
+			});
+
+			i18n.setLocale('nl');
+
+			expect(nlI18n.getLocale()).toBe('en');
+			expect(i18n.getLocale()).toBe('de');
+
+			nlI18n.setLocale('ru');
+
+			expect(nlI18n.getLocale()).toBe('ru');
+			expect(i18n.getLocale()).toBe('de');
+
+			const fn = jest.fn();
+			const fn2 = jest.fn();
+
+			i18n.onUnknownPhrase(fn);
+
+			expect(nlI18n.unknownPhraseListener).toBe(fn);
+			expect(i18n.unknownPhraseListener).toBe(fn);
+
+			nlI18n.onUnknownPhrase(fn2);
+
+			expect(nlI18n.unknownPhraseListener).toBe(fn2);
+			expect(i18n.unknownPhraseListener).toBe(fn);
+		});
+
+		it('should create correct hard fork', () => {
+
+			const nlI18n = i18n.fork({
+				defaultLocale: 'nl',
+				fallbacks:     { 'nl': 'en' },
+				objectNotation: true
+			}, true);
 
 			i18n.setLocale('ru');
 
