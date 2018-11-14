@@ -80,9 +80,9 @@ export default class Config implements IConfig {
 	private isFork = false;
 	private forks: Config[] = [];
 	private forkLinkedFields: IForkLinkedFields = {
-		defaultLocale:         true, // - configure, setLocale
-		locales:               true, // - configure, addLocale, removeLocale
-		unknownPhraseListener: true  // - configure, onUnknownPhrase
+		defaultLocale:         true,
+		locales:               true,
+		unknownPhraseListener: true
 	};
 
 	constructor(config: IConfig = {}, isFork = false) {
