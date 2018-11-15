@@ -75,7 +75,7 @@ export default [{
 	plugins: getPlugins(),
 	external,
 	output:  [{
-		file:      'lib/middleware.ts',
+		file:      'lib/middleware.js',
 		format:    'cjs',
 		sourcemap: 'inline'
 	}]
