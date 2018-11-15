@@ -212,7 +212,7 @@ export default class Config implements IConfig {
 	 * @param  config - Config with overrides.
 	 * @return Forked config.
 	 */
-	fork(config: IForkConfig, hard?: false);
+	fork(config: IForkConfig, hard?: false): Config;
 
 	/**
 	 * Copy current config with some overrides.
@@ -220,7 +220,7 @@ export default class Config implements IConfig {
 	 * @param  hard - Do hard fork without linked fields.
 	 * @return Forked config.
 	 */
-	fork(config: IConfig, hard: true);
+	fork(config: IConfig, hard: true): Config;
 
 	/**
 	 * Copy current config with some overrides.
