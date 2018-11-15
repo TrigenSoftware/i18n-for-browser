@@ -1,6 +1,6 @@
 {
   "name": "i18n-for-browser",
-  "version": "0.9.7",
+  "version": "1.0.0",
   "description": "Implementation of i18n-node designed for client-side.",
   "author": "dangreen",
   "license": "MIT",
@@ -15,12 +15,15 @@
   "module": "lib/index.es.js",
   "umd": "lib/umd.js",
   "scripts": {
-    "lint": "eslint --cache 'src/**/*.js' 'test/**/*.js'",
-    "test": "npm run lint && nyc mocha -b",
+    "generateDocs": "typedoc ./src --out ./docs --ignoreCompilerErrors --excludeExternals --mode modules; touch docs/.nojekyll",
+    "lint": "tslint -p . -t stylish 'src/**/*.{ts,tsx}' 'test/**/*.{ts,tsx}'",
+    "jest": "NODE_ENV=test jest -c jest.config.json",
+    "checkSize": "size-limit",
+    "test": "npm run lint && npm run jest && npm run build && npm run checkSize",
     "build": "rollup -c",
     "watch": "rollup -c -w",
-    "coverage": "nyc report --reporter=text-lcov | coveralls",
-    "prepublishOnly": "npm run build"
+    "coverage": "cat ./coverage/lcov.info | coveralls",
+    "cleanPublish": "npm run test && clean-publish"
   },
   "keywords": [
     "template",
@@ -31,60 +34,47 @@
     "client-side"
   ],
   "dependencies": {
+    "@babel/runtime": "^7.1.5",
+    "@types/js-cookie": "^2.2.0",
+    "@types/mustache": "^0.8.32",
+    "@types/node": "^10.12.6",
+    "@types/sprintf-js": "^1.1.1",
     "assert": "^1.4.1",
-    "babel-runtime": "^6.26.0",
+    "js-cookie": "^2.2.0",
     "make-plural": "^4.0.1",
     "math-interval-parser": "^2.0.0",
-    "messageformat": "^1.0.2",
-    "mustache": "^2.3.0",
+    "messageformat": "^2.0.4",
+    "mustache": "^3.0.1",
     "sprintf-js": ">=1.0.3",
     "url": "^0.11.0"
   },
   "devDependencies": {
-    "babel-core": "^6.26.0",
-    "babel-plugin-add-module-exports": "^0.2.1",
-    "babel-plugin-transform-runtime": "^6.23.0",
-    "babel-preset-env": "^1.6.1",
-    "babel-preset-stage-0": "^6.3.13",
-    "babel-register": "^6.26.0",
+    "@babel/core": "^7.1.5",
+    "@types/jest": "^23.3.9",
+    "babel-preset-trigen": "^1.7.1",
+    "browserslist-config-trigen": "^1.1.0",
+    "clean-publish": "^1.1.0",
     "coveralls": "^3.0.0",
-    "escope": "^3.6.0",
-    "eslint": "^4.10.0",
-    "eslint-config-trigen": "^1.2.4",
-    "mocha": "*",
-    "nyc": "^11.3.0",
-    "rollup": "^0.50.0",
-    "rollup-plugin-babel": "^3.0.2",
-    "rollup-plugin-babel-minify": "^3.1.2",
-    "rollup-plugin-commonjs": "^8.2.5",
-    "rollup-plugin-eslint": "^4.0.0",
-    "rollup-plugin-json": "^2.3.0",
-    "rollup-plugin-node-globals": "^1.1.0",
+    "eslint": "^5.9.0",
+    "eslint-config-trigen": "^3.2.0",
+    "husky": "^1.1.4",
+    "jest": "^23.6.0",
+    "rollup": "^0.67.1",
+    "rollup-plugin-babel": "^4.0.3",
+    "rollup-plugin-babel-minify": "^6.1.1",
+    "rollup-plugin-commonjs": "^9.2.0",
+    "rollup-plugin-json": "^3.1.0",
+    "rollup-plugin-node-builtins": "^2.1.2",
+    "rollup-plugin-node-globals": "^1.4.0",
     "rollup-plugin-node-resolve": "^3.0.0",
-    "should": "^13.1.3"
-  },
-  "babel": {
-    "presets": [
-      [
-        "env",
-        {
-          "targets": {
-            "browsers": [
-              "> 1%",
-              "last 2 versions",
-              "iOS > 7",
-              "Android > 4.4",
-              "not OperaMini all"
-            ]
-          }
-        }
-      ],
-      "stage-0"
-    ],
-    "plugins": [
-      "add-module-exports",
-      "transform-runtime"
-    ]
+    "rollup-plugin-tslint": "^0.1.36",
+    "rollup-plugin-typescript2": "^0.18.0",
+    "size-limit": "^0.21.0",
+    "ts-jest": "^23.10.4",
+    "tslint": "^5.11.0",
+    "tslint-config-trigen": "^3.0.6",
+    "typedoc": "^0.13.0",
+    "typescript": "^3.1.6"
   },
   "files": [
     "lib"

@@ -1,41 +1,42 @@
 import globals from 'rollup-plugin-node-globals';
 import commonjs from 'rollup-plugin-commonjs';
 import resolve from 'rollup-plugin-node-resolve';
+import builtins from 'rollup-plugin-node-builtins';
 import babel from 'rollup-plugin-babel';
+import typescript from 'rollup-plugin-typescript2';
 import minify from 'rollup-plugin-babel-minify';
 import json from 'rollup-plugin-json';
-import eslint from 'rollup-plugin-eslint';
+import tslint from 'rollup-plugin-tslint';
+import { DEFAULT_EXTENSIONS } from '@babel/core';
 import pkg from './package.json';
 
-const plugins = [
-	eslint({
-		exclude:      ['**/*.json', 'node_modules/**'],
-		throwOnError: process.env.ROLLUP_WATCH != 'true'
-	}),
-	json({
-		preferConst: true
-	}),
-	babel(Object.assign({
-		runtimeHelpers: true,
-		babelrc:        false,
-		exclude:        'node_modules/**'
-	}, pkg.babel, {
-		presets: pkg.babel.presets.map((preset) => {
-
-			if (Array.isArray(preset) && preset[0] == 'env') {
-				preset[1].modules = false;
-			}
-
-			return preset;
-		})
-	})),
-	resolve({
-		browser:        true,
-		preferBuiltins: false
-	}),
-	commonjs(),
-	globals()
-];
+function getPlugins(standalone) {
+	return [
+		tslint({
+			exclude:    ['**/*.json', 'node_modules/**'],
+			throwError: process.env.ROLLUP_WATCH != 'true'
+		}),
+		json({
+			preferConst: true
+		}),
+		commonjs(),
+		standalone && globals(),
+		standalone && builtins(),
+		typescript(),
+		babel({
+			extensions: [
+				...DEFAULT_EXTENSIONS,
+				'ts',
+				'tsx'
+			],
+			runtimeHelpers: true
+		}),
+		standalone && resolve({
+			preferBuiltins: false
+		}),
+		standalone && minify()
+	].filter(Boolean);
+}
 
 const dependencies = Object.keys(pkg.dependencies);
 
@@ -46,34 +47,36 @@ function external(id) {
 }
 
 export default [{
-	input:  'src/index.js',
-	plugins,
+	input:     'src/index.ts',
+	plugins:   getPlugins(),
 	external,
-	output: [{
+	output:    [{
 		file:      pkg.main,
 		format:    'cjs',
-		sourcemap: true
+		exports:   'named',
+		sourcemap: 'inline'
 	}, {
 		file:      pkg.module,
 		format:    'es',
-		sourcemap: true
+		sourcemap: 'inline'
 	}]
 }, {
-	input:   'src/index.js',
-	plugins: [...plugins, minify()],
+	input:   'src/index.ts',
+	plugins: getPlugins(true),
 	output:  {
 		file:      pkg.umd,
 		format:    'umd',
+		exports:   'named',
 		name:      'i18n',
-		sourcemap: true
+		sourcemap: 'inline'
 	}
 }, {
-	input:  'src/middleware.js',
-	plugins,
+	input:   'src/middleware.ts',
+	plugins: getPlugins(),
 	external,
-	output: [{
+	output:  [{
 		file:      'lib/middleware.js',
 		format:    'cjs',
-		sourcemap: true
+		sourcemap: 'inline'
 	}]
 }];

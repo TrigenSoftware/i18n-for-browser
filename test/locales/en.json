@@ -5,6 +5,10 @@
 	"Hello %s, how are you today? How was your %s.": "Hello %s, how are you today? How was your %s.",
 	"Hi": "Hi",
 	"Howdy": "Howdy",
+	"%s dollar": {
+		"one": "%s dollar",
+		"other": "%s dollars"
+	},
 	"%s cat": {
 		"one": "%s cat",
 		"other": "%s cats"
@@ -12,6 +16,10 @@
 	"cat": {
 		"one": "%s cat",
 		"other": "%s cats"
+	},
+	"dogs": {
+		"one": "one dog",
+		"other": "[0] no dog|[2,5] some dogs|[6,11] many dogs|[12,36] dozens of dogs|a horde of %s dogs|[100,] too many dogs"
 	},
 	"nested": {
 		"deep": {

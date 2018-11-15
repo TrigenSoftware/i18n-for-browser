@@ -5,6 +5,29 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [1.0.0] - 2018-11-XX
+### Added
+- `size-limit`
+- [Greenkeeper](https://greenkeeper.io/)
+- `__m` instead of `__l` and `__h`.
+- `unknownPhraseListener`
+
+### Changed
+- Rewritten to TypeScript.
+- Improvements for tree-shaking: `__`, `__n`, `__mf` and `__m` now are importable functions; Mustaches and plural intervals moved to pluggable postprocessor-functions.  
+- Tests and code coverage with `jest`.
+- `cookie` option -> `cookieName`.
+- `objectNotation` option now is `boolean`, `.` is constant separator.
+
+### Fixed
+- `parsePluralInterval`
+
+### Removed
+- `__l` and `__h`.
+- `localeChangeListener`
+- Getting `count` for plurals from named values.
+- `globalize` option.
+
 ## [0.9.7] - 2017-11-08
 ### Added
 - Code coverage with `nyc`.
