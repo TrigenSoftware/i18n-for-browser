@@ -4,6 +4,7 @@
 [![Dependency status][deps]][deps-url]
 [![Build status][build]][build-url]
 [![Coverage status][coverage]][coverage-url]
+[![Greenkeeper badge][greenkeeper]][greenkeeper-url]
 
 [npm]: https://img.shields.io/npm/v/i18n-for-browser.svg
 [npm-url]: https://npmjs.com/package/i18n-for-browser
@@ -17,7 +18,10 @@
 [coverage]: https://img.shields.io/coveralls/TrigenSoftware/i18n-for-browser.svg
 [coverage-url]: https://coveralls.io/r/TrigenSoftware/i18n-for-browser
 
-Implementation of [`i18n-node`](https://github.com/mashpie/i18n-node) designed for client-side.
+[greenkeeper]: https://badges.greenkeeper.io/TrigenSoftware/i18n-for-browser.svg
+[greenkeeper-url]: https://greenkeeper.io/
+
+Modern translation module for web.
 
 ## Install
 
@@ -27,158 +31,104 @@ npm i i18n-for-browser
 yarn add i18n-for-browser
 ```
 
-## Load
+## CDN
 
-```js
-import * as i18n from 'i18n-for-browser';
-```
-
-now you are ready to use a `i18n.__('Hello')`. Also `__` and `__n` available as [tags for template literals](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals#Tagged_template_literals), example:
-
-```js
-console.log(__`Hello ${name}`);
-```
-
-# CDN
-
-Also `i18n-for-browser` is available on [unpkg.com](https://unpkg.com/i18n-for-browser) as UMD, which exposes global object `i18n`.
+`i18n-for-browser` is also available on [unpkg.com](https://unpkg.com/i18n-for-browser) as UMD, which exposes global object `i18n`.
 
 ```html
 <script src="https://unpkg.com/i18n-for-browser?main=umd"></script>
 ```
 
-## Configure
-
-Some options same as in [`i18n-node`](https://github.com/mashpie/i18n-node), except
-
-```js
-i18n.configure({
-	// store of translations
-	locales: {
-		'en': {...},
-		'ru': {...}
-	},
-
-	// sets a custom cookie name to read/write locale  - defaults to NULL
-	cookie: 'yourcookiename',
-
-	// injects `__` and `__n` functions to global scope
-	// some methods like `setLocale` are injected to this functions
-	// e.g. `__.getLocale()`
-	// defaults to false
-	globalize: true
-});
-```
-
-Properties necessary for work with fs (`directory`, `updateFiles`, `indent`, `extenstion`, `prefix`) are skipped.
-
-Also you can use auto-configuration: just define variable `I18N` with configuration before importing the module.
-
-```js
-const I18N = {
-	locales: {
-		'en': {...},
-		'ru': {...}
-	},
-	globalize: true
-};
-
-...
-
-import 'i18n-for-browser';
-
-console.log(`${__('Hello')}!`);
-
-```
-
 ## API
 
-### __(phrase, ...params)
-
-[See i18n-node.](https://github.com/mashpie/i18n-node#i18n__)
-
-### __n(singular, plural, count, ...params)
-
-[See i18n-node.](https://github.com/mashpie/i18n-node#i18n__n)
-
-### __mf(phrase, ...params)
-
-[See i18n-node.](https://github.com/mashpie/i18n-node#i18n__mf)
-
-### __l(phrase)
-
-[See i18n-node.](https://github.com/mashpie/i18n-node#i18n__l)
-
-### __h(phrase)
-
-[See i18n-node.](https://github.com/mashpie/i18n-node#i18n__h)
-
-### setLocale(locale)
-
-[See i18n-node.](https://github.com/mashpie/i18n-node#i18nsetlocale) Also this function write new locale to cookies if `cookiename` is setted.
-
-### onLocaleChange(listener)
-
-Set function to call when locale was change.
-
-For example if you provide only needed translation via `I18N` object.
+Module exposes next API:
 
 ```js
-const I18N = {
-	cookiename: 'locale',
-	globalize:  true
-	...
+export default globalConfig;
+export {
+    IConfig,
+    ILocales,
+    IFallbacks,
+    IUnknownPhraseListener,
+    IProcessor,
+    IParams,
+    IPluralParams,
+    pluralIntervalProcessor,
+    mustacheProcessor,
+    __,
+    __mf,
+    __n,
+    __m
 };
+```
 
-...
+[Description of this methods you can find in Documentation.](https://trigensoftware.github.io/i18n-for-browser/index.html)
 
-import 'i18n-for-browser';
+Shirt description:
 
-__.onLocaleChange(location.reload.bind(location));
+### [i18n](https://trigensoftware.github.io/i18n-for-browser/modules/_index_.html#globalconfig)
 
-...
+Global config. Instanse of [`Config`](https://trigensoftware.github.io/i18n-for-browser/classes/_config_.config.html).
 
-$(".language-picker__language__en").click((e) => {
-	__.setLocale('en');
+### [__()](https://trigensoftware.github.io/i18n-for-browser/modules/_index_.html#__)
+
+Translates a single phrase and adds it to locales if unknown.
+
+### [__mf()](https://trigensoftware.github.io/i18n-for-browser/modules/_index_.html#__mf)
+
+Supports the advanced MessageFormat as provided by excellent messageformat module. You should definetly head over to messageformat.github.io for a guide to MessageFormat. `i18n-for-browser` takes care of `new MessageFormat('en').compile(msg);` with the current msg loaded from it's json files and cache that complied fn in memory. So in short you might use it similar to `__()` plus extra object to accomblish MessageFormat's formating.
+
+### [__n()](https://trigensoftware.github.io/i18n-for-browser/modules/_index_.html#__n)
+
+Plurals translation of a single phrase. Singular and plural forms will get added to locales if unknown. Returns translated parsed and substituted string based on `count` parameter.
+
+### [__m()](https://trigensoftware.github.io/i18n-for-browser/modules/_index_.html#__m)
+
+Returns a map of translations for a given phrase in each language.
+
+## Usage example
+
+```js
+import i18n, {
+    pluralIntervalProcessor,
+    __,
+    __n
+} from 'i18n-for-browser';
+
+i18n.configure({
+    // store of translations
+    locales: {
+        'en': {...},
+        'ru': {...}
+    },
+    // sets a custom cookie name to read/write locale  - defaults to NULL
+    cookieName: 'yourcookiename',
 });
 
+console.log(__('cat'));
+// or
+console.log(__`cat`);
+
+console.log(__n('one cat', '%d cats', 3));
+// or
+console.log(__n`${3} dogs`);
+
+const i18nDe = i18n.fork({
+    locales: {
+        'de': {...}
+    }
+});
+const __de = i18nDe.bind(__);
+
+console.log(__de`Hello`);
+
+const i18nPi = i18n.fork({
+    processors: [pluralIntervalProcessor]
+});
+const __pi = i18nPi.bind(__n);
+
+console.log(__pi('[0] no dog|[2,5] some dogs|[6,11] many dogs|[12,36] dozens of dogs|a horde of %s dogs|[100,] too many dogs', 3));
 ```
-
-Also it very comfortable to use it with react:
-
-```js
-class App extends React.Component {
-
-	...
-
-	componentDidMount() {
-		__.onLocaleChange(this.forceUpdate.bind(this));
-	}
-
-	...
-
-}
-```
-
-### getLocale()
-
-[See i18n-node.](https://github.com/mashpie/i18n-node#i18ngetlocale)
-
-### getLocales()
-
-Get list of available locales.
-
-### getCatalog(locale)
-
-[See i18n-node.](https://github.com/mashpie/i18n-node#i18ngetcatalog)
-
-### addLocale(locale, catalog)
-
-Dynamically adding/replacing of locale
-
-### removeLocale(locale)
-
-Remove locale by key.
 
 ## Express middleware helper
 
@@ -187,7 +137,7 @@ To provide translations to client from your express app you can use this helper.
 ```js
 import i18nExpressHelper from 'i18n-for-browser/lib/middleware';
 // or 
-// const i18nExpressHelper = require('i18n-for-browser/lib/middleware’);
+const i18nExpressHelper = require('i18n-for-browser/lib/middleware');
 ...
 // Before this `i18n` should already initialized.
 app.use(i18nExpressHelper(i18nNodeConfig));
@@ -207,6 +157,3 @@ app.use(i18nExpressHelper(i18nNodeConfig));
     </body>
 </html>
 ```
-
----
-[![NPM](https://nodei.co/npm/i18n-for-browser.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/i18n-for-browser/)
