@@ -177,9 +177,9 @@ describe('Config', () => {
 		});
 	});
 
-	describe('#onLocaleChange()', () => {
+	describe('#onUnknownPhrase()', () => {
 
-		it('should call handler on locale change', () => {
+		it('should call handler on unknown phrase', () => {
 
 			const fn = jest.fn();
 
