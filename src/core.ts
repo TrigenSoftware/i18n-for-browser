@@ -15,13 +15,22 @@ const DEFAULT_VALUE_SEPARATOR = ':';
 const NOOP = () => null;
 
 /**
+ * Check data type.
+ * @param  maybeStrings - Maybe array of strings.
+ * @return Given data is array of strings.
+ */
+export function isStringsArray(maybeStrings: any): maybeStrings is TemplateStringsArray|string[] {
+	return Array.isArray(maybeStrings);
+}
+
+/**
  * Handling of template literals.
  * @param  text - Text or text parts.
  * @return Processed text.
  */
-export function preProcess<T>(text: T|string[]): T|string {
+export function preProcess<T>(text: T|TemplateStringsArray|string[]): T|string {
 
-	if (Array.isArray(text)) {
+	if (isStringsArray(text)) {
 		return text.join(
 			text.hasOwnProperty('raw')
 				? '%s'

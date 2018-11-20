@@ -10,6 +10,7 @@ import Config, {
 } from './config';
 import {
 	IPlurals,
+	isStringsArray,
 	preProcess,
 	postProcess,
 	getSingularFromPlurals,
@@ -64,7 +65,7 @@ function getConfigFromContext(context: any): Config {
  * @param  values - Values to print.
  * @return Returns translated parsed and substituted string.
  */
-export function __(phraseOrParams: string|IParams, ...values) {
+export function __(phraseOrParams: string|TemplateStringsArray|IParams, ...values) {
 
 	const config = getConfigFromContext(this);
 	const {
@@ -76,7 +77,7 @@ export function __(phraseOrParams: string|IParams, ...values) {
 	let namedValues = null;
 
 	// called like __({ phrase: 'Hello', locale: 'en' })
-	if (typeof phraseOrParams === 'object') {
+	if (typeof phraseOrParams === 'object' && !isStringsArray(phraseOrParams)) {
 
 		phrase = phraseOrParams.phrase;
 
@@ -114,7 +115,7 @@ export function __(phraseOrParams: string|IParams, ...values) {
  * @param  values - Values to print.
  * @return Translate.
  */
-export function __mf(phraseOrParams: string|IParams, ...values) {
+export function __mf(phraseOrParams: string|TemplateStringsArray|IParams, ...values) {
 
 	const config = getConfigFromContext(this);
 	const {
@@ -128,7 +129,7 @@ export function __mf(phraseOrParams: string|IParams, ...values) {
 	let f = null;
 
 	// called like __mf({ phrase: 'Hello', locale: 'en' })
-	if (typeof phraseOrParams === 'object') {
+	if (typeof phraseOrParams === 'object' && !isStringsArray(phraseOrParams)) {
 
 		phrase = phraseOrParams.phrase;
 
@@ -193,13 +194,13 @@ export function __n(
  * Plurals translation of a single phrase.
  * Singular and plural forms will get added to locales if unknown.
  * Returns translated parsed and substituted string based on `count` parameter.
- * @param  singular - Singular form to translate.
+ * @param  singularOrStrings - Singular form to translate, or array of strings.
  * @param  count - Target count.
  * @param  values - Values to print.
  * @return Translate.
  */
 export function __n(
-	singular: string,
+	singularOrStrings: string|TemplateStringsArray,
 	count: string|number,
 	...values
 );
@@ -232,7 +233,7 @@ export function __n(
  * @return Translate.
  */
 export function __n(
-	singularOrParams: string|IPluralParams,
+	singularOrParams: string|TemplateStringsArray|IPluralParams,
 	pluralOrCount?: string|number,
 	count?: string|number,
 	...values
@@ -255,7 +256,7 @@ export function __n(
 	] = tryParseFloat(pluralOrCount);
 
 	// called like __n({ singular: '%s cat', plural: '%s cats', locale: 'en' }, 3)
-	if (typeof singularOrParams === 'object') {
+	if (typeof singularOrParams === 'object' && !isStringsArray(singularOrParams)) {
 
 		values.unshift(count);
 		singular = singularOrParams.singular;
@@ -287,11 +288,11 @@ export function __n(
 
 	} else {
 
-		singular = singularOrParams;
+		singular = preProcess(singularOrParams);
+
 		// called like __n('cat', 3) or __n`cat ${3}`
 		if (pluralOrCountIsNumber) {
 			values.unshift(count);
-			singular = preProcess(singular);
 			// we add same string as default
 			// which efectivly copies the key to the plural.value
 			// this is for initialization of new empty translations

@@ -1,6 +1,6 @@
 {
   "name": "i18n-for-browser",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Implementation of i18n-node designed for client-side.",
   "author": "dangreen",
   "license": "MIT",

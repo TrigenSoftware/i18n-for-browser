@@ -61,6 +61,8 @@ interface IForkLinkedFields {
 	unknownPhraseListener: boolean;
 }
 
+type IFunction = (...args: any[]) => any;
+
 const COOKIES_LIFE_TIME = 3600;
 const IS_BROWSER = typeof document !== 'undefined'
 	&& typeof location !== 'undefined';
@@ -192,6 +194,9 @@ export default class Config implements IConfig {
 		return this;
 	}
 
+	/**
+	 * Destroy instance.
+	 */
 	destroy() {
 		this.isDestroyed = true;
 		this.defaultLocale = null;
@@ -240,6 +245,11 @@ export default class Config implements IConfig {
 		return forkedConfig;
 	}
 
+	/**
+	 * Call given method for all forks.
+	 * @param caller - Function to call method of fork.
+	 * @param flagName - Flag name to check ability to call method.
+	 */
 	private callForkMethod(
 		caller: (fork: Config) => void,
 		flagName: keyof IForkLinkedFields
@@ -260,12 +270,40 @@ export default class Config implements IConfig {
 		});
 	}
 
-	bind<T extends (...args: any[]) => any>(fn: T): T {
+	/**
+	 * Create translate function copy, binded to another config.
+	 * @param  fn - Translate function.
+	 * @return Binded function.
+	 */
+	bind<T extends IFunction>(fn: T): T;
 
-		const { source } = fn as any;
+	/**
+	 * Create translate functions copy, binded to another config.
+	 * @param  fns - Translate functions.
+	 * @return Binded functions.
+	 */
+	bind<
+		A extends IFunction,
+		B extends IFunction,
+		C extends IFunction,
+		D extends IFunction
+	>(fns: [A?, B?, C?, D?]): [A?, B?, C?, D?];
+
+	/**
+	 * Create translate function(s) copy, binded to another config.
+	 * @param  fnOrFns - Translate function(s).
+	 * @return Binded function(s).
+	 */
+	bind(fnOrFns: IFunction|IFunction[]) {
+
+		if (Array.isArray(fnOrFns)) {
+			return fnOrFns.map(fn => this.bind(fn));
+		}
+
+		const { source } = fnOrFns as any;
 		const fnSource = typeof source === 'function'
 			? source
-			: fn;
+			: fnOrFns;
 		const bindedFn = fnSource.bind(this);
 
 		bindedFn.source = fnSource;

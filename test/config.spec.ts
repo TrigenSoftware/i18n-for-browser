@@ -175,6 +175,22 @@ describe('Config', () => {
 			expect(__nl('Hello')).toBe('Hallo');
 			expect(__('Hello')).toBe('Привет');
 		});
+
+		it('should correct bind config to translate function', () => {
+
+			const [
+				__nl,
+				__nln
+			] = i18n.fork({
+				defaultLocale: 'nl'
+			}).bind([__, __n]);
+
+			i18n.setLocale('fr');
+
+			expect(__nl('Hello')).toBe('Hallo');
+			expect(__nln('%s cat', 2)).toBe('2 Katzen');
+			expect(__('Hello')).toBe('Bonjour');
+		});
 	});
 
 	describe('#onUnknownPhrase()', () => {

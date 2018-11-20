@@ -145,6 +145,14 @@ describe('API', () => {
 			expect(__({ phrase: 'Hello {{name}}', locale: 'nl' }, { name: 'Marcus' })).toBe('Hallo Marcus');
 		});
 
+		it('should work as template literal tag', () => {
+			i18n.setLocale('en');
+			expect(__`Hello`).toBe('Hello');
+			expect(
+				__`Hello ${'guest'}, how are you today? How was your ${'day'}.`
+			).toBe('Hello guest, how are you today? How was your day.');
+		});
+
 		describe('objectNotation', () => {
 
 			beforeEach(() => {
@@ -375,6 +383,12 @@ describe('API', () => {
 				one:   'one catto',
 				other: '%d cattos'
 			});
+		});
+
+		it('should work as template literal tag', () => {
+			i18n.setLocale('en');
+			expect(__n`${2} cat`).toBe('2 cats');
+			expect(__n`counts ${2} ${'cat'}`).toBe('2 cats');
 		});
 
 		describe('objectNotation', () => {
