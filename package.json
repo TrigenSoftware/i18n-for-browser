@@ -73,7 +73,7 @@
     "ts-jest": "^23.10.4",
     "tslint": "^5.11.0",
     "tslint-config-trigen": "^3.0.6",
-    "typedoc": "^0.13.0",
+    "typedoc": "^0.14.0",
     "typescript": "^3.1.6"
   },
   "files": [
