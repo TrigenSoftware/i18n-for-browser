@@ -12,8 +12,8 @@
 [deps]: https://david-dm.org/TrigenSoftware/i18n-for-browser.svg
 [deps-url]: https://david-dm.org/TrigenSoftware/i18n-for-browser
 
-[build]: http://img.shields.io/travis/TrigenSoftware/i18n-for-browser.svg
-[build-url]: https://travis-ci.org/TrigenSoftware/i18n-for-browser
+[build]: http://img.shields.io/travis/com/TrigenSoftware/i18n-for-browser.svg
+[build-url]: https://travis-ci.com/TrigenSoftware/i18n-for-browser
 
 [coverage]: https://img.shields.io/coveralls/TrigenSoftware/i18n-for-browser.svg
 [coverage-url]: https://coveralls.io/r/TrigenSoftware/i18n-for-browser

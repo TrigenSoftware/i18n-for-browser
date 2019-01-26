@@ -59,6 +59,7 @@
     "eslint-config-trigen": "^3.2.0",
     "husky": "^1.1.4",
     "jest": "^23.6.0",
+    "lint-staged": "^8.1.0",
     "rollup": "^0.67.1",
     "rollup-plugin-babel": "^4.0.3",
     "rollup-plugin-babel-minify": "^6.1.1",
