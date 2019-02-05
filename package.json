@@ -50,7 +50,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.1.5",
-    "@types/jest": "^23.3.9",
+    "@types/jest": "^24.0.0",
     "babel-preset-trigen": "^1.7.1",
     "browserslist-config-trigen": "^1.1.0",
     "clean-publish": "^1.1.0",
