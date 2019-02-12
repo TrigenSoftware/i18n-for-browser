@@ -37,7 +37,7 @@
     "@babel/runtime": "^7.1.5",
     "@types/js-cookie": "^2.2.0",
     "@types/mustache": "^0.8.32",
-    "@types/node": "^10.12.6",
+    "@types/node": "^11.9.0",
     "@types/sprintf-js": "^1.1.1",
     "assert": "^1.4.1",
     "js-cookie": "^2.2.0",
