@@ -6,7 +6,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/TrigenSoftware/i18n-for-browser.git"
+    "url": "https://github.com/TrigenSoftware/i18n-for-browser"
   },
   "bugs": {
     "url": "https://github.com/TrigenSoftware/i18n-for-browser/issues"
