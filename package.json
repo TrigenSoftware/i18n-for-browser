@@ -15,11 +15,11 @@
   "module": "lib/index.es.js",
   "umd": "lib/umd.js",
   "scripts": {
-    "generateDocs": "typedoc ./src --out ./docs --ignoreCompilerErrors --excludeExternals --mode modules; touch docs/.nojekyll",
     "lint": "tslint -p . -t stylish 'src/**/*.{ts,tsx}' 'test/**/*.{ts,tsx}'",
     "jest": "NODE_ENV=test jest -c jest.config.json",
     "checkSize": "size-limit",
     "test": "npm run lint && npm run jest && npm run build && npm run checkSize",
+    "build:docs": "typedoc ./src --out ./docs --ignoreCompilerErrors --excludeExternals --mode modules; touch docs/.nojekyll",
     "build": "rollup -c",
     "watch": "rollup -c -w",
     "coverage": "cat ./coverage/lcov.info | coveralls",
