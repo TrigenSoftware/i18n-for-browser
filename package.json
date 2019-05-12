@@ -39,7 +39,7 @@
     "@types/mustache": "^0.8.32",
     "@types/node": "^10.12.6",
     "@types/sprintf-js": "^1.1.1",
-    "assert": "^1.4.1",
+    "assert": "^2.0.0",
     "js-cookie": "^2.2.0",
     "make-plural": "^4.0.1",
     "math-interval-parser": "^2.0.0",
