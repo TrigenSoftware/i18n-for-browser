@@ -98,8 +98,8 @@ import i18n, {
 i18n.configure({
     // store of translations
     locales: {
-        'en': {...},
-        'ru': {...}
+        'en': {/* ... */},
+        'ru': {/* ... */}
     },
     // sets a custom cookie name to read/write locale  - defaults to NULL
     cookieName: 'yourcookiename',
@@ -115,7 +115,7 @@ console.log(__n`${3} dogs`);
 
 const i18nDe = i18n.fork({
     locales: {
-        'de': {...}
+        'de': {/* ... */}
     }
 });
 const __de = i18nDe.bind(__);
@@ -138,10 +138,10 @@ To provide translations to client from your express app you can use this helper.
 import i18nExpressHelper from 'i18n-for-browser/lib/middleware';
 // or 
 const i18nExpressHelper = require('i18n-for-browser/lib/middleware');
-...
+// ...
 // Before this `i18n` should already initialized.
 app.use(i18nExpressHelper(i18nNodeConfig));
-...
+// ...
 ```
 
 ```html
