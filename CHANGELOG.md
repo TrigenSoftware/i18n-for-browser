@@ -24,6 +24,13 @@ DO NOT TOUCH. SAVE IT ON TOP.
 
 -->
 
+## [1.1.0] - 2019-06-09
+### Added
+- `trigen-scripts` dev tool.
+
+### Changed
+- Dependencies update.
+
 ## [1.0.1] - 2018-11-20
 ### Fixed
 - Template literal tag typings fix.
