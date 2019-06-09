@@ -1,7 +1,7 @@
 # i18n-for-browser
 
 [![NPM version][npm]][npm-url]
-[![Dependency status][deps]][deps-url]
+[![Dependencies status][deps]][deps-url]
 [![Build status][build]][build-url]
 [![Coverage status][coverage]][coverage-url]
 [![Greenkeeper badge][greenkeeper]][greenkeeper-url]

@@ -1,18 +1,12 @@
 {
-	"moduleFileExtensions": [
-		"ts",
-		"tsx",
-		"js",
-		"jsx",
-		"json"
-	],
-	"testRegex": "/test/.*\\.spec\\.ts$",
+	"testEnvironment": "node",
+	"testRegex": "/test/.*\\.spec\\.(jsx?|tsx?)$",
 	"transform": {
-		"^.+\\.tsx?$": "ts-jest"
+		"^.+\\.(jsx?|tsx?)$": "babel-jest"
 	},
 	"collectCoverage": true,
 	"collectCoverageFrom": [
-		"src/**/*.{ts,tsx}",
+		"src/**/*.{js,jsx,ts,tsx}",
 		"!src/middleware.ts",
 		"!**/*.d.ts",
 		"!**/node_modules/**"
