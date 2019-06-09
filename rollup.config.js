@@ -1,12 +1,15 @@
-import globals from 'rollup-plugin-node-globals';
-import commonjs from 'rollup-plugin-commonjs';
-import resolve from 'rollup-plugin-node-resolve';
-import builtins from 'rollup-plugin-node-builtins';
-import babel from 'rollup-plugin-babel';
-import typescript from 'rollup-plugin-typescript2';
-import minify from 'rollup-plugin-babel-minify';
-import json from 'rollup-plugin-json';
+import {
+	external
+} from '@trigen/scripts-plugin-rollup/helpers';
 import tslint from 'rollup-plugin-tslint';
+import json from 'rollup-plugin-json';
+import commonjs from 'rollup-plugin-commonjs';
+import globals from 'rollup-plugin-node-globals';
+import builtins from 'rollup-plugin-node-builtins';
+import typescript from 'rollup-plugin-typescript2';
+import babel from 'rollup-plugin-babel';
+import resolve from 'rollup-plugin-node-resolve';
+import minify from 'rollup-plugin-babel-minify';
 import { DEFAULT_EXTENSIONS } from '@babel/core';
 import pkg from './package.json';
 
@@ -14,7 +17,7 @@ function getPlugins(standalone) {
 	return [
 		tslint({
 			exclude:    ['**/*.json', 'node_modules/**'],
-			throwError: process.env.ROLLUP_WATCH != 'true'
+			throwError: true
 		}),
 		json({
 			preferConst: true
@@ -38,18 +41,10 @@ function getPlugins(standalone) {
 	].filter(Boolean);
 }
 
-const dependencies = Object.keys(pkg.dependencies);
-
-function external(id) {
-	return dependencies.some(_ =>
-		_ == id || id.indexOf(`${_}/`) == 0
-	);
-}
-
 export default [{
 	input:     'src/index.ts',
 	plugins:   getPlugins(),
-	external,
+	external:  external(pkg, true),
 	output:    [{
 		file:      pkg.main,
 		format:    'cjs',
@@ -71,10 +66,10 @@ export default [{
 		sourcemap: 'inline'
 	}
 }, {
-	input:   'src/middleware.ts',
-	plugins: getPlugins(),
-	external,
-	output:  [{
+	input:    'src/middleware.ts',
+	plugins:  getPlugins(),
+	external: external(pkg, true),
+	output:   [{
 		file:      'lib/middleware.js',
 		format:    'cjs',
 		sourcemap: 'inline'

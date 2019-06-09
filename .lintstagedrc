@@ -1,3 +1,6 @@
 {
-	"(src|test)/**/*.{ts,tsx}": ["tslint -p . -t stylish", "git add"]
+	"src/**/*.{ts,tsx}": [
+		"trigen-scripts lint:ts",
+		"git add"
+	]
 }
