@@ -37,7 +37,9 @@ function getPlugins(standalone) {
 		standalone && resolve({
 			preferBuiltins: false
 		}),
-		standalone && minify()
+		standalone && minify({
+			comments: false
+		})
 	].filter(Boolean);
 }
 
@@ -63,7 +65,7 @@ export default [{
 		format:    'umd',
 		exports:   'named',
 		name:      'i18n',
-		sourcemap: 'inline'
+		sourcemap: true
 	}
 }, {
 	input:    'src/middleware.ts',
