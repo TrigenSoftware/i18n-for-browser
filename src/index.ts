@@ -188,7 +188,7 @@ export function __n(
 	params: IPluralParams,
 	count?: string|number,
 	...values
-);
+): string;
 
 /**
  * Plurals translation of a single phrase.
@@ -203,7 +203,7 @@ export function __n(
 	singularOrStrings: string|TemplateStringsArray,
 	count: string|number,
 	...values
-);
+): string;
 
 /**
  * Plurals translation of a single phrase.
@@ -220,7 +220,7 @@ export function __n(
 	plural: string,
 	count: string|number,
 	...values
-);
+): string;
 
 /**
  * Plurals translation of a single phrase.
