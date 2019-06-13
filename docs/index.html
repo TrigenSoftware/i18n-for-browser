@@ -64,8 +64,8 @@
 			<div class="tsd-panel tsd-typography">
 				<h1 id="i18n-for-browser">i18n-for-browser</h1>
 				<p><a href="https://npmjs.com/package/i18n-for-browser"><img src="https://img.shields.io/npm/v/i18n-for-browser.svg" alt="NPM version"></a>
-					<a href="https://david-dm.org/TrigenSoftware/i18n-for-browser"><img src="https://david-dm.org/TrigenSoftware/i18n-for-browser.svg" alt="Dependency status"></a>
-					<a href="https://travis-ci.org/TrigenSoftware/i18n-for-browser"><img src="http://img.shields.io/travis/TrigenSoftware/i18n-for-browser.svg" alt="Build status"></a>
+					<a href="https://david-dm.org/TrigenSoftware/i18n-for-browser"><img src="https://david-dm.org/TrigenSoftware/i18n-for-browser.svg" alt="Dependencies status"></a>
+					<a href="https://travis-ci.com/TrigenSoftware/i18n-for-browser"><img src="http://img.shields.io/travis/com/TrigenSoftware/i18n-for-browser.svg" alt="Build status"></a>
 					<a href="https://coveralls.io/r/TrigenSoftware/i18n-for-browser"><img src="https://img.shields.io/coveralls/TrigenSoftware/i18n-for-browser.svg" alt="Coverage status"></a>
 				<a href="https://greenkeeper.io/"><img src="https://badges.greenkeeper.io/TrigenSoftware/i18n-for-browser.svg" alt="Greenkeeper badge"></a></p>
 				<p>Modern translation module for web.</p>
@@ -75,7 +75,7 @@
 yarn add i18n-for-browser</code></pre>
 				<h2 id="cdn">CDN</h2>
 				<p><code>i18n-for-browser</code> is also available on <a href="https://unpkg.com/i18n-for-browser">unpkg.com</a> as UMD, which exposes global object <code>i18n</code>.</p>
-				<pre><code class="language-html"><span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"https://unpkg.com/i18n-for-browser?main=umd"</span>&gt;</span><span class="undefined"></span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span></code></pre>
+				<pre><code class="language-html"><span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"https://unpkg.com/i18n-for-browser?main=umd"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span></code></pre>
 				<h2 id="api">API</h2>
 				<p>Module exposes next API:</p>
 				<pre><code class="language-js"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> globalConfig;
@@ -116,8 +116,8 @@ yarn add i18n-for-browser</code></pre>
 i18n.configure({
     <span class="hljs-comment">// store of translations</span>
     locales: {
-        <span class="hljs-string">'en'</span>: {...},
-        <span class="hljs-string">'ru'</span>: {...}
+        <span class="hljs-string">'en'</span>: {<span class="hljs-comment">/* ... */</span>},
+        <span class="hljs-string">'ru'</span>: {<span class="hljs-comment">/* ... */</span>}
     },
     <span class="hljs-comment">// sets a custom cookie name to read/write locale  - defaults to NULL</span>
     cookieName: <span class="hljs-string">'yourcookiename'</span>,
@@ -133,7 +133,7 @@ i18n.configure({
 
 <span class="hljs-keyword">const</span> i18nDe = i18n.fork({
     <span class="hljs-attr">locales</span>: {
-        <span class="hljs-string">'de'</span>: {...}
+        <span class="hljs-string">'de'</span>: {<span class="hljs-comment">/* ... */</span>}
     }
 });
 <span class="hljs-keyword">const</span> __de = i18nDe.bind(__);
@@ -151,16 +151,16 @@ i18n.configure({
 				<pre><code class="language-js"><span class="hljs-keyword">import</span> i18nExpressHelper <span class="hljs-keyword">from</span> <span class="hljs-string">'i18n-for-browser/lib/middleware'</span>;
 <span class="hljs-comment">// or </span>
 <span class="hljs-keyword">const</span> i18nExpressHelper = <span class="hljs-built_in">require</span>(<span class="hljs-string">'i18n-for-browser/lib/middleware'</span>);
-...
+<span class="hljs-comment">// ...</span>
 <span class="hljs-comment">// Before this `i18n` should already initialized.</span>
 app.use(i18nExpressHelper(i18nNodeConfig));
-...</code></pre>
+<span class="hljs-comment">// ...</span></code></pre>
 				<pre><code class="language-html"><span class="hljs-meta">&lt;!DOCTYPE html&gt;</span>
 <span class="hljs-tag">&lt;<span class="hljs-name">html</span>&gt;</span>
     <span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span>
         <span class="hljs-tag">&lt;<span class="hljs-name">title</span>&gt;</span>views/layout.ejs<span class="hljs-tag">&lt;/<span class="hljs-name">title</span>&gt;</span>
         <span class="hljs-tag">&lt;<span class="hljs-name">%-</span> <span class="hljs-attr">initI18nForBrowser</span>() %&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"js-file-with-imported-i18n-for-browser.js"</span>&gt;</span><span class="undefined"></span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"js-file-with-imported-i18n-for-browser.js"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
     <span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span>
     <span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span>
         <span class="hljs-tag">&lt;<span class="hljs-name">%-</span> <span class="hljs-attr">body</span> %&gt;</span>
