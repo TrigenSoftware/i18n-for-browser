@@ -1,6 +1,6 @@
-import MakePlural from 'make-plural/make-plural';
+import MakePlural from 'make-plural-compiler';
 import MessageFormat from 'messageformat';
-import plurals from 'make-plural/data/plurals.json';
+import plurals from 'cldr-core/supplemental/plurals.json';
 import Config, {
 	IConfig,
 	ILocales,
@@ -326,7 +326,7 @@ export function __n(
 			p = pluralsInstanceForLocale[locale];
 		} else {
 			MakePlural.load(plurals);
-			p = new MakePlural(locale);
+			p = new MakePlural(locale).compile();
 			pluralsInstanceForLocale[locale] = p;
 		}
 
