@@ -62,21 +62,30 @@
 	<div class="row">
 		<div class="col-8 col-content">
 			<div class="tsd-panel tsd-typography">
-				<h1 id="i18n-for-browser">i18n-for-browser</h1>
+				<a href="#i18n-for-browser" id="i18n-for-browser" style="color: inherit; text-decoration: none;">
+					<h1>i18n-for-browser</h1>
+				</a>
 				<p><a href="https://npmjs.com/package/i18n-for-browser"><img src="https://img.shields.io/npm/v/i18n-for-browser.svg" alt="NPM version"></a>
 					<a href="https://david-dm.org/TrigenSoftware/i18n-for-browser"><img src="https://david-dm.org/TrigenSoftware/i18n-for-browser.svg" alt="Dependencies status"></a>
-					<a href="https://travis-ci.com/TrigenSoftware/i18n-for-browser"><img src="http://img.shields.io/travis/com/TrigenSoftware/i18n-for-browser.svg" alt="Build status"></a>
+					<a href="https://travis-ci.com/TrigenSoftware/i18n-for-browser"><img src="http://img.shields.io/travis/com/TrigenSoftware/i18n-for-browser/master.svg" alt="Build status"></a>
 					<a href="https://coveralls.io/r/TrigenSoftware/i18n-for-browser"><img src="https://img.shields.io/coveralls/TrigenSoftware/i18n-for-browser.svg" alt="Coverage status"></a>
-				<a href="https://greenkeeper.io/"><img src="https://badges.greenkeeper.io/TrigenSoftware/i18n-for-browser.svg" alt="Greenkeeper badge"></a></p>
+					<a href="https://dependabot.com/"><img src="https://api.dependabot.com/badges/status?host=github&repo=TrigenSoftware/i18n-for-browser" alt="Dependabot badge"></a>
+				<a href="https://trigensoftware.github.io/i18n-for-browser"><img src="https://img.shields.io/badge/API-Documentation-2b7489.svg" alt="Documentation badge"></a></p>
 				<p>Modern translation module for web.</p>
-				<h2 id="install">Install</h2>
+				<a href="#install" id="install" style="color: inherit; text-decoration: none;">
+					<h2>Install</h2>
+				</a>
 				<pre><code class="language-sh">npm i i18n-for-browser
 <span class="hljs-comment"># or</span>
 yarn add i18n-for-browser</code></pre>
-				<h2 id="cdn">CDN</h2>
+				<a href="#cdn" id="cdn" style="color: inherit; text-decoration: none;">
+					<h2>CDN</h2>
+				</a>
 				<p><code>i18n-for-browser</code> is also available on <a href="https://unpkg.com/i18n-for-browser">unpkg.com</a> as UMD, which exposes global object <code>i18n</code>.</p>
 				<pre><code class="language-html"><span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"https://unpkg.com/i18n-for-browser?main=umd"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span></code></pre>
-				<h2 id="api">API</h2>
+				<a href="#api" id="api" style="color: inherit; text-decoration: none;">
+					<h2>API</h2>
+				</a>
 				<p>Module exposes next API:</p>
 				<pre><code class="language-js"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> globalConfig;
 <span class="hljs-keyword">export</span> {
@@ -96,17 +105,29 @@ yarn add i18n-for-browser</code></pre>
 };</code></pre>
 				<p><a href="https://trigensoftware.github.io/i18n-for-browser/index.html">Description of this methods you can find in Documentation.</a></p>
 				<p>Shirt description:</p>
-				<h3 id="i18n"><a href="https://trigensoftware.github.io/i18n-for-browser/modules/_index_.html#globalconfig">i18n</a></h3>
+				<a href="#a-hrefhttpstrigensoftwaregithubioi18n-for-browsermodules_index_htmlglobalconfigi18na" id="a-hrefhttpstrigensoftwaregithubioi18n-for-browsermodules_index_htmlglobalconfigi18na" style="color: inherit; text-decoration: none;">
+					<h3><a href="https://trigensoftware.github.io/i18n-for-browser/modules/_index_.html#globalconfig">i18n</a></h3>
+				</a>
 				<p>Global config. Instanse of <a href="https://trigensoftware.github.io/i18n-for-browser/classes/_config_.config.html"><code>Config</code></a>.</p>
-				<h3 id="__-"><a href="https://trigensoftware.github.io/i18n-for-browser/modules/_index_.html#__">__()</a></h3>
+				<a href="#a-hrefhttpstrigensoftwaregithubioi18n-for-browsermodules_index_html____a" id="a-hrefhttpstrigensoftwaregithubioi18n-for-browsermodules_index_html____a" style="color: inherit; text-decoration: none;">
+					<h3><a href="https://trigensoftware.github.io/i18n-for-browser/modules/_index_.html#__">__()</a></h3>
+				</a>
 				<p>Translates a single phrase and adds it to locales if unknown.</p>
-				<h3 id="__mf-"><a href="https://trigensoftware.github.io/i18n-for-browser/modules/_index_.html#__mf">__mf()</a></h3>
+				<a href="#a-hrefhttpstrigensoftwaregithubioi18n-for-browsermodules_index_html__mf__mfa" id="a-hrefhttpstrigensoftwaregithubioi18n-for-browsermodules_index_html__mf__mfa" style="color: inherit; text-decoration: none;">
+					<h3><a href="https://trigensoftware.github.io/i18n-for-browser/modules/_index_.html#__mf">__mf()</a></h3>
+				</a>
 				<p>Supports the advanced MessageFormat as provided by excellent messageformat module. You should definetly head over to messageformat.github.io for a guide to MessageFormat. <code>i18n-for-browser</code> takes care of <code>new MessageFormat(&#39;en&#39;).compile(msg);</code> with the current msg loaded from it&#39;s json files and cache that complied fn in memory. So in short you might use it similar to <code>__()</code> plus extra object to accomblish MessageFormat&#39;s formating.</p>
-				<h3 id="__n-"><a href="https://trigensoftware.github.io/i18n-for-browser/modules/_index_.html#__n">__n()</a></h3>
+				<a href="#a-hrefhttpstrigensoftwaregithubioi18n-for-browsermodules_index_html__n__na" id="a-hrefhttpstrigensoftwaregithubioi18n-for-browsermodules_index_html__n__na" style="color: inherit; text-decoration: none;">
+					<h3><a href="https://trigensoftware.github.io/i18n-for-browser/modules/_index_.html#__n">__n()</a></h3>
+				</a>
 				<p>Plurals translation of a single phrase. Singular and plural forms will get added to locales if unknown. Returns translated parsed and substituted string based on <code>count</code> parameter.</p>
-				<h3 id="__m-"><a href="https://trigensoftware.github.io/i18n-for-browser/modules/_index_.html#__m">__m()</a></h3>
+				<a href="#a-hrefhttpstrigensoftwaregithubioi18n-for-browsermodules_index_html__m__ma" id="a-hrefhttpstrigensoftwaregithubioi18n-for-browsermodules_index_html__m__ma" style="color: inherit; text-decoration: none;">
+					<h3><a href="https://trigensoftware.github.io/i18n-for-browser/modules/_index_.html#__m">__m()</a></h3>
+				</a>
 				<p>Returns a map of translations for a given phrase in each language.</p>
-				<h2 id="usage-example">Usage example</h2>
+				<a href="#usage-example" id="usage-example" style="color: inherit; text-decoration: none;">
+					<h2>Usage example</h2>
+				</a>
 				<pre><code class="language-js"><span class="hljs-keyword">import</span> i18n, {
     pluralIntervalProcessor,
     __,
@@ -146,7 +167,9 @@ i18n.configure({
 <span class="hljs-keyword">const</span> __pi = i18nPi.bind(__n);
 
 <span class="hljs-built_in">console</span>.log(__pi(<span class="hljs-string">'[0] no dog|[2,5] some dogs|[6,11] many dogs|[12,36] dozens of dogs|a horde of %s dogs|[100,] too many dogs'</span>, <span class="hljs-number">3</span>));</code></pre>
-				<h2 id="express-middleware-helper">Express middleware helper</h2>
+				<a href="#express-middleware-helper" id="express-middleware-helper" style="color: inherit; text-decoration: none;">
+					<h2>Express middleware helper</h2>
+				</a>
 				<p>To provide translations to client from your express app you can use this helper.</p>
 				<pre><code class="language-js"><span class="hljs-keyword">import</span> i18nExpressHelper <span class="hljs-keyword">from</span> <span class="hljs-string">'i18n-for-browser/lib/middleware'</span>;
 <span class="hljs-comment">// or </span>
@@ -210,6 +233,7 @@ app.use(i18nExpressHelper(i18nNodeConfig));
 				<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
 				<li class="tsd-kind-index-signature"><span class="tsd-kind-icon">Index signature</span></li>
 				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
+				<li class="tsd-kind-type-alias tsd-has-type-parameter"><span class="tsd-kind-icon">Type alias with type parameter</span></li>
 			</ul>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
@@ -258,7 +282,7 @@ app.use(i18nExpressHelper(i18nNodeConfig));
 	</div>
 </footer>
 <div class="container tsd-generator">
-	<p>Generated using <a href="http://typedoc.org/" target="_blank">TypeDoc</a></p>
+	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p>
 </div>
 <div class="overlay"></div>
 <script src="assets/js/main.js"></script>
