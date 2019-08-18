@@ -3,7 +3,7 @@ import Cookies from 'js-cookie';
 import { IPlurals } from './core';
 
 export interface ILocales {
-	[key: string]: number|string|ILocales;
+	[key: string]: number|string|ILocales|ILocales[];
 }
 
 export type IFallbacks = Record<string, string>;
