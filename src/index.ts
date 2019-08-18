@@ -326,7 +326,7 @@ export function __n(
 			p = pluralsInstanceForLocale[locale];
 		} else {
 			MakePlural.load(plurals);
-			p = new MakePlural(locale);
+			p = new MakePlural(locale).compile();
 			pluralsInstanceForLocale[locale] = p;
 		}
 
