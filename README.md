@@ -4,7 +4,8 @@
 [![Dependencies status][deps]][deps-url]
 [![Build status][build]][build-url]
 [![Coverage status][coverage]][coverage-url]
-[![Greenkeeper badge][greenkeeper]][greenkeeper-url]
+[![Dependabot badge][dependabot]][dependabot-url]
+[![Documentation badge][documentation]][documentation-url]
 
 [npm]: https://img.shields.io/npm/v/i18n-for-browser.svg
 [npm-url]: https://npmjs.com/package/i18n-for-browser
@@ -12,14 +13,17 @@
 [deps]: https://david-dm.org/TrigenSoftware/i18n-for-browser.svg
 [deps-url]: https://david-dm.org/TrigenSoftware/i18n-for-browser
 
-[build]: http://img.shields.io/travis/com/TrigenSoftware/i18n-for-browser.svg
+[build]: http://img.shields.io/travis/com/TrigenSoftware/i18n-for-browser/master.svg
 [build-url]: https://travis-ci.com/TrigenSoftware/i18n-for-browser
 
 [coverage]: https://img.shields.io/coveralls/TrigenSoftware/i18n-for-browser.svg
 [coverage-url]: https://coveralls.io/r/TrigenSoftware/i18n-for-browser
 
-[greenkeeper]: https://badges.greenkeeper.io/TrigenSoftware/i18n-for-browser.svg
-[greenkeeper-url]: https://greenkeeper.io/
+[dependabot]: https://api.dependabot.com/badges/status?host=github&repo=TrigenSoftware/i18n-for-browser
+[dependabot-url]: https://dependabot.com/
+
+[documentation]: https://img.shields.io/badge/API-Documentation-2b7489.svg
+[documentation-url]: https://trigensoftware.github.io/i18n-for-browser
 
 Modern translation module for web.
 
