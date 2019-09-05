@@ -50,6 +50,7 @@ Module exposes next API:
 ```js
 export default globalConfig;
 export {
+    I18nConfig,
     IConfig,
     ILocales,
     IFallbacks,
