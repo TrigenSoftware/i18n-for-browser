@@ -1193,7 +1193,7 @@
     webpack "^4.39.3"
     webpack-bundle-analyzer "^3.4.1"
 
-"@trigen/scripts-plugin-babel@2.7.0":
+"@trigen/scripts-plugin-babel@^2.7.0":
   version "2.7.0"
   resolved "https://registry.yarnpkg.com/@trigen/scripts-plugin-babel/-/scripts-plugin-babel-2.7.0.tgz#a69f17172dd44bc5ef9432d562d3ab85e25c8692"
   integrity sha512-WxXBn9aGu9UIr5oJZz/QwAVYc2r8cZvcr5wqerwj9AndoxDnIPXoKGJ4ItoudJGZH7/GAsNpHPxhA1YaNyhVOA==
@@ -1205,7 +1205,7 @@
     "@trigen/scripts" "^2.7.0"
     babel-preset-trigen "^2.2.1"
 
-"@trigen/scripts-plugin-eslint@2.7.0":
+"@trigen/scripts-plugin-eslint@^2.7.0":
   version "2.7.0"
   resolved "https://registry.yarnpkg.com/@trigen/scripts-plugin-eslint/-/scripts-plugin-eslint-2.7.0.tgz#11828a8801c953967f1f47e1c131dcf94858013f"
   integrity sha512-Vc1xfKBhqMDcn96vZTTM+NAmOyYjuWTeVB1TNm7Fo39pv1E4UY3F9pt1IbZLVfm2dRgF+kBwtic4hShj3HHidg==
@@ -1214,7 +1214,7 @@
     eslint "^5.15.3"
     eslint-config-trigen "^3.2.3"
 
-"@trigen/scripts-plugin-jest@2.7.0":
+"@trigen/scripts-plugin-jest@^2.7.0":
   version "2.7.0"
   resolved "https://registry.yarnpkg.com/@trigen/scripts-plugin-jest/-/scripts-plugin-jest-2.7.0.tgz#33b1c4220381b0df225c93803c265358c4a3f37e"
   integrity sha512-SnnDAHfuj+hacqwSVV9ddUTUvOq9tre6dOxnam5V5dIgIWgjNOtOffv5e9DinEypi/d/Qguo6Ng1KU37QcRm5w==
@@ -1225,7 +1225,7 @@
     babel-preset-trigen "^2.2.2"
     jest "^24.3.0"
 
-"@trigen/scripts-plugin-rollup@2.7.0":
+"@trigen/scripts-plugin-rollup@^2.7.0":
   version "2.7.0"
   resolved "https://registry.yarnpkg.com/@trigen/scripts-plugin-rollup/-/scripts-plugin-rollup-2.7.0.tgz#7703aef025fb436f764187a9696dee3e48599d0d"
   integrity sha512-ZGqkfGbQ1k0L3HeN92JzgbnHSBeoj/XAZEs87HLEVwd+ysTPpEthyToDtHzc5mhNDXaKXbuh4CNh8ozPL/W0xQ==
@@ -1236,7 +1236,7 @@
     rollup-plugin-babel-minify "^9.0.0"
     rollup-plugin-commonjs "^10.0.0"
 
-"@trigen/scripts-plugin-size-limit@2.7.0":
+"@trigen/scripts-plugin-size-limit@^2.7.0":
   version "2.7.0"
   resolved "https://registry.yarnpkg.com/@trigen/scripts-plugin-size-limit/-/scripts-plugin-size-limit-2.7.0.tgz#a57925a3e45a6d89e29853665c323c6af418e25c"
   integrity sha512-TGSvwAKAhAs9+3NUZ0k5eJ94z/BMPrOwfpPiIIgqwZEYSJH/uwMV+eg+4752zDeL29XaMavtN1z5Fizitz+c4g==
@@ -1244,7 +1244,7 @@
     "@trigen/scripts" "^2.7.0"
     size-limit "^2.0.0"
 
-"@trigen/scripts-plugin-typescript@2.12.0":
+"@trigen/scripts-plugin-typescript@^2.12.0":
   version "2.12.0"
   resolved "https://registry.yarnpkg.com/@trigen/scripts-plugin-typescript/-/scripts-plugin-typescript-2.12.0.tgz#a1cc4383be2f96edd1fc0c9efbd2c6be95bb399b"
   integrity sha512-kKoDYxLKsYSnGs242qUss92pnpG0Pz8YJ3XInaVR0srpEUHcto3qIchwOI8q2FA6QyWlSTGUnFk4aZqXQmqpBg==
@@ -1257,7 +1257,7 @@
     typedoc "^0.15.0"
     typescript "3.6.2"
 
-"@trigen/scripts-preset-lib@2.7.2":
+"@trigen/scripts-preset-lib@^2.7.2":
   version "2.7.2"
   resolved "https://registry.yarnpkg.com/@trigen/scripts-preset-lib/-/scripts-preset-lib-2.7.2.tgz#c6cbd67a5f5640de75f7964c169b6e61e938b1f4"
   integrity sha512-VULYzw8JFb5RMwS/7AC+dmPIiIT5IWs6xzJUNIVGgPRSsbr7r82br20dY+awoxTSp8etxWlHAe/OHjl8bUgpLw==
@@ -1269,7 +1269,7 @@
     husky "^3.0.3"
     lint-staged "^9.2.1"
 
-"@trigen/scripts@2.7.0", "@trigen/scripts@^2.7.0":
+"@trigen/scripts@^2.7.0":
   version "2.7.0"
   resolved "https://registry.yarnpkg.com/@trigen/scripts/-/scripts-2.7.0.tgz#7a36334f65a868f8a424c73c3a36e6bfa0964b67"
   integrity sha512-xvRY6StDwCplpPQK1JzKopnYEQnhxa6mxPJz5D+ut39SblwcZWGcFFDG5QbbBWhurq9Lb0bnKhSfLNbHmWnLpw==
