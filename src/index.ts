@@ -35,6 +35,8 @@ export interface IPluralParams {
 	locale?: string;
 }
 
+export type I18nConfig = Config;
+
 const messageFormatInstanceForLocale: Record<string, MessageFormat> = {};
 const pluralsInstanceForLocale: Record<string, MakePlural> = {};
 const globalConfig = new Config();
