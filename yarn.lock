@@ -1281,6 +1281,18 @@
     rcfile "^1.0.3"
     resolve-cwd "^3.0.0"
 
+"@trigen/scripts@^3.1.0":
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/@trigen/scripts/-/scripts-3.1.0.tgz#d3919aa37c8c3b00a62052ad01a1d8ea8a6cccb4"
+  integrity sha512-1uxpNpQLozhhtypk3v1iwuYmk7MOOFLvU0I7pRaiRqfyIMrBgqygn3Ubc1GXEQ9wa8CYJkEbZ6Y1At7ZHF5SoA==
+  dependencies:
+    "@babel/runtime" "^7.4.2"
+    chalk "^2.4.2"
+    core-js "3"
+    immutability-helper "^3.0.0"
+    rcfile "^1.0.3"
+    resolve-cwd "^3.0.0"
+
 "@types/babel__core@^7.1.0":
   version "7.1.2"
   resolved "https://registry.yarnpkg.com/@types/babel__core/-/babel__core-7.1.2.tgz#608c74f55928033fce18b99b213c16be4b3d114f"
