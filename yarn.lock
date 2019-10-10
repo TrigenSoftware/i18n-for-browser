@@ -1207,12 +1207,12 @@
     rollup-plugin-babel-minify "^9.0.0"
     rollup-plugin-commonjs "^10.0.0"
 
-"@trigen/scripts-plugin-size-limit@^2.7.0":
-  version "2.7.0"
-  resolved "https://registry.yarnpkg.com/@trigen/scripts-plugin-size-limit/-/scripts-plugin-size-limit-2.7.0.tgz#a57925a3e45a6d89e29853665c323c6af418e25c"
-  integrity sha512-TGSvwAKAhAs9+3NUZ0k5eJ94z/BMPrOwfpPiIIgqwZEYSJH/uwMV+eg+4752zDeL29XaMavtN1z5Fizitz+c4g==
+"@trigen/scripts-plugin-size-limit@^3.2.0":
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/@trigen/scripts-plugin-size-limit/-/scripts-plugin-size-limit-3.2.0.tgz#b5473f3cfd9bf605680728e69fa5b19a10ad6850"
+  integrity sha512-2oSLANEAojSstMELJrxHeKiu+ni0oE7SyIVL7rqJB5OOVFYFwucvn6/E9fJZPq9RyZKPo7AbxtiTUnir8zPDjg==
   dependencies:
-    "@trigen/scripts" "^2.7.0"
+    "@trigen/scripts" "^3.2.0"
     size-limit "^2.0.0"
 
 "@trigen/scripts-plugin-typescript@^3.2.0":
@@ -8508,22 +8508,10 @@ sisteransi@^1.0.0:
   resolved "https://registry.yarnpkg.com/sisteransi/-/sisteransi-1.0.0.tgz#77d9622ff909080f1c19e5f4a1df0c1b0a27b88c"
   integrity sha512-N+z4pHB4AmUv0SjveWRd6q1Nj5w62m5jodv+GD8lvmbY/83T/rpbJGZOnK5T149OldDj4Db07BSv9xY4K6NTPQ==
 
-size-limit@2.1.6:
+size-limit@2.1.6, size-limit@^2.0.0:
   version "2.1.6"
   resolved "https://registry.yarnpkg.com/size-limit/-/size-limit-2.1.6.tgz#d0a9ced5a08d1b73eaab149e66f16cb71bcfe985"
   integrity sha512-BXrH1jMA6uXtqyv/9koJQocGn8pHogv5r+zs9eMFI+Qh5oQVmN0GPxK3ok5gkBFJ6AQ5Ug7LM1E8SDp635XG8Q==
-  dependencies:
-    bytes "^3.1.0"
-    chalk "^2.4.2"
-    ci-job-number "^0.3.0"
-    cosmiconfig "^5.2.1"
-    globby "^10.0.1"
-    read-pkg-up "^6.0.0"
-
-size-limit@^2.0.0:
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/size-limit/-/size-limit-2.1.0.tgz#114af8546c363004e6cdc6557f5bcada62359e08"
-  integrity sha512-eoBuVOD8ha/iOh7I8MQZxXe1a1V+NqXW++E114EjvjO65x3k3XA4QebE+wSr4pBnMCPMQtNM8BIcXENLDCZedw==
   dependencies:
     bytes "^3.1.0"
     chalk "^2.4.2"
