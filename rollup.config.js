@@ -17,7 +17,7 @@ import {
 } from '@babel/core';
 import pkg from './package.json';
 
-function getPlugins(standalone) {
+function getPlugins(standalone, transpile = true) {
 	return [
 		tslint({
 			exclude:    ['**/*.json', 'node_modules/**'],
@@ -30,7 +30,7 @@ function getPlugins(standalone) {
 		standalone && globals(),
 		standalone && builtins(),
 		typescript(),
-		babel({
+		transpile && babel({
 			extensions: [
 				...DEFAULT_EXTENSIONS,
 				'ts',
@@ -59,6 +59,15 @@ export default [{
 		format:    'es',
 		sourcemap: 'inline'
 	}]
+}, {
+	input:    'src/index.ts',
+	plugins:  getPlugins(false, false),
+	external: external(pkg, true),
+	output:   {
+		file:      pkg.raw,
+		format:    'es',
+		sourcemap: 'inline'
+	}
 }, {
 	input:   'src/index.ts',
 	plugins: getPlugins(true),

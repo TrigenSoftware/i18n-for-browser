@@ -24,6 +24,13 @@ DO NOT TOUCH. SAVE IT ON TOP.
 
 -->
 
+## [2.0.0] - 2020-03-18
+### Added
+- Babel module.
+
+### Removed
+- Drop Node 8 support.
+
 ## [1.1.0] - 2019-06-09
 ### Added
 - `trigen-scripts` dev tool.
