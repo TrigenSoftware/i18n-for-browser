@@ -9,8 +9,12 @@ import builtins from 'rollup-plugin-node-builtins';
 import typescript from 'rollup-plugin-typescript2';
 import babel from 'rollup-plugin-babel';
 import resolve from 'rollup-plugin-node-resolve';
-import minify from 'rollup-plugin-babel-minify';
-import { DEFAULT_EXTENSIONS } from '@babel/core';
+import {
+	terser
+} from 'rollup-plugin-terser';
+import {
+	DEFAULT_EXTENSIONS
+} from '@babel/core';
 import pkg from './package.json';
 
 function getPlugins(standalone) {
@@ -37,9 +41,7 @@ function getPlugins(standalone) {
 		standalone && resolve({
 			preferBuiltins: false
 		}),
-		standalone && minify({
-			comments: false
-		})
+		standalone && terser()
 	].filter(Boolean);
 }
 
