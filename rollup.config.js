@@ -2,13 +2,13 @@ import {
 	external
 } from '@trigen/scripts-plugin-rollup/helpers';
 import tslint from 'rollup-plugin-tslint';
-import json from 'rollup-plugin-json';
-import commonjs from 'rollup-plugin-commonjs';
+import json from '@rollup/plugin-json';
+import commonjs from '@rollup/plugin-commonjs';
 import globals from 'rollup-plugin-node-globals';
 import builtins from 'rollup-plugin-node-builtins';
 import typescript from 'rollup-plugin-typescript2';
 import babel from 'rollup-plugin-babel';
-import resolve from 'rollup-plugin-node-resolve';
+import resolve from '@rollup/plugin-node-resolve';
 import {
 	terser
 } from 'rollup-plugin-terser';
