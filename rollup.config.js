@@ -7,7 +7,7 @@ import commonjs from '@rollup/plugin-commonjs';
 import globals from 'rollup-plugin-node-globals';
 import builtins from 'rollup-plugin-node-builtins';
 import typescript from 'rollup-plugin-typescript2';
-import babel from 'rollup-plugin-babel';
+import babel from '@rollup/plugin-babel';
 import resolve from '@rollup/plugin-node-resolve';
 import {
 	terser
@@ -36,7 +36,8 @@ function getPlugins(standalone, transpile = true) {
 				'ts',
 				'tsx'
 			],
-			runtimeHelpers: true
+			babelHelpers:       'runtime',
+			skipPreflightCheck: true
 		}),
 		standalone && resolve({
 			preferBuiltins: false
