@@ -59,7 +59,7 @@
     "@rollup/plugin-node-resolve": "^8.0.0",
     "@size-limit/preset-small-lib": "^4.4.0",
     "@trigen/scripts": "^5.1.0",
-    "@trigen/scripts-plugin-babel": "^5.1.0",
+    "@trigen/scripts-plugin-babel": "^6.1.0",
     "@trigen/scripts-plugin-eslint": "^5.1.0",
     "@trigen/scripts-plugin-jest": "^5.1.0",
     "@trigen/scripts-plugin-rollup": "^5.1.3",

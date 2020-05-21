@@ -1390,17 +1390,17 @@
     webpack "^4.43.0"
     webpack-bundle-analyzer "^3.7.0"
 
-"@trigen/scripts-plugin-babel@^5.1.0":
-  version "5.5.0"
-  resolved "https://registry.yarnpkg.com/@trigen/scripts-plugin-babel/-/scripts-plugin-babel-5.5.0.tgz#f08b22acb8f0401bc8eab8b0f2621a044799d8d4"
-  integrity sha512-pCMzIH+JxTCr85yTQ5b9e3RgthtcApyfbMxA6JnZlL9ucJQ6S+NqA6Y3fNo7bah94DmByNvrIIEklE3l1lggAg==
+"@trigen/scripts-plugin-babel@^6.1.0":
+  version "6.1.0"
+  resolved "https://registry.yarnpkg.com/@trigen/scripts-plugin-babel/-/scripts-plugin-babel-6.1.0.tgz#c92f8a186d847b82c20a411d732d7624b25d3bff"
+  integrity sha512-9Ms0J8Sb4EwZLyXq2M4RqQ40pfulskk9O1vGTusMA4CcdfqlwarUjMJ+hU7CwO8nu+2A9EurxF/9q4e9Us0PJA==
   dependencies:
     "@babel/cli" "^7.2.3"
     "@babel/core" "^7.4.0"
     "@babel/node" "^7.0.0"
     "@babel/runtime-corejs3" "^7.9.6"
-    "@trigen/scripts" "^5.5.0"
-    babel-preset-trigen "^4.0.0"
+    "@trigen/scripts" "^6.0.0"
+    babel-preset-trigen "^4.2.1"
 
 "@trigen/scripts-plugin-eslint@^5.1.0":
   version "5.5.0"
@@ -2293,10 +2293,10 @@ babel-preset-jest@^26.0.0:
     babel-plugin-jest-hoist "^26.0.0"
     babel-preset-current-node-syntax "^0.1.2"
 
-babel-preset-trigen@^4.0.0:
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/babel-preset-trigen/-/babel-preset-trigen-4.0.0.tgz#745452c6c4531238121eee4ad38a5be3b05d30de"
-  integrity sha512-aI1k3GMG+iY6iBzX10sfb3VMse6/3AbjC8S4yDocTbDn7XKw/nBeV8xZX4t7nc+u0fKQpx6Uq+TVtZeoBOH8rg==
+babel-preset-trigen@^4.0.0, babel-preset-trigen@^4.2.1:
+  version "4.2.1"
+  resolved "https://registry.yarnpkg.com/babel-preset-trigen/-/babel-preset-trigen-4.2.1.tgz#d58073b66c2373de54f703698fec4358a39a37da"
+  integrity sha512-s4qJd3AmIwx96t8DpKVAl18ze3ay6smbMLtOUqzQaXeLy7VSik6LEZWXw67kM9rqQxt5OC+6dyyW3HVrnj78dw==
   dependencies:
     "@babel/helper-plugin-utils" "^7.8.3"
     "@babel/plugin-proposal-async-generator-functions" "^7.8.3"
