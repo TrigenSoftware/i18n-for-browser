@@ -1669,17 +1669,18 @@
     size-limit "^4.1.1"
 
 "@trigen/scripts-plugin-typescript@^5.1.0":
-  version "5.1.0"
-  resolved "https://registry.yarnpkg.com/@trigen/scripts-plugin-typescript/-/scripts-plugin-typescript-5.1.0.tgz#e26b969e179ac482bdd7f4c379ec99a103344c0c"
-  integrity sha512-Tx0SHx2oJKY12pop4CG8hhY6uUqr8J7kzJVMZnZQtMSDY2FP3O5U2epPZedZ+QQlUwKyv71tx0YBYSnDgqNsjw==
+  version "5.5.0"
+  resolved "https://registry.yarnpkg.com/@trigen/scripts-plugin-typescript/-/scripts-plugin-typescript-5.5.0.tgz#d83402d22c01babe8f63f03d66ada36a62c4a42c"
+  integrity sha512-sjrxkabDrAKcpjrnsyC1gnncemhE7iJ5QOYMTdZyHpijKU6PXbV53hxjXvnIGKiVZFUFElZl9PHw6q93VFHaVg==
   dependencies:
-    "@trigen/scripts" "^5.1.0"
+    "@babel/runtime-corejs3" "^7.9.6"
+    "@trigen/scripts" "^5.5.0"
     ts-node-dev "^1.0.0-pre.39"
     tsconfig-paths "^3.8.0"
     tslint "^6.0.0"
     tslint-config-trigen "^3.0.7"
     typedoc "^0.17.0"
-    typescript "3.8.3"
+    typescript "3.9.2"
 
 "@trigen/scripts-preset-lib@^5.1.0":
   version "5.5.0"
@@ -10079,10 +10080,10 @@ typedoc@^0.17.0:
     shelljs "^0.8.3"
     typedoc-default-themes "^0.8.0"
 
-typescript@3.8.3, typescript@^3.0.0:
-  version "3.8.3"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.8.3.tgz#409eb8544ea0335711205869ec458ab109ee1061"
-  integrity sha512-MYlEfn5VrLNsgudQTVJeNaQFUAI7DkhnOjdpAp4T+ku1TfQClewlbSuTVHiA+8skNBgaf02TL/kLOvig4y3G8w==
+typescript@3.9.2, typescript@^3.0.0:
+  version "3.9.2"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.9.2.tgz#64e9c8e9be6ea583c54607677dd4680a1cf35db9"
+  integrity sha512-q2ktq4n/uLuNNShyayit+DTobV2ApPEo/6so68JaD5ojvc/6GClBipedB9zNWYxRSAlZXAe405Rlijzl6qDiSw==
 
 uglify-js@^3.1.4:
   version "3.8.0"
