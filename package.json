@@ -39,14 +39,13 @@
     "client-side"
   ],
   "dependencies": {
-    "@babel/runtime": "^7.4.5",
+    "@babel/runtime-corejs3": "^7.9.6",
     "@types/js-cookie": "^2.2.2",
     "@types/mustache": "^4.0.1",
     "@types/node": "^14.0.3",
     "@types/sprintf-js": "^1.1.2",
     "assert": "^2.0.0",
     "cldr-core": "^36.0.0",
-    "core-js": "3",
     "js-cookie": "^2.2.0",
     "make-plural-compiler": "^5.0.0",
     "math-interval-parser": "^2.0.1",
