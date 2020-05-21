@@ -58,7 +58,7 @@
     "@rollup/plugin-json": "^4.0.2",
     "@rollup/plugin-node-resolve": "^8.0.0",
     "@size-limit/preset-small-lib": "^4.4.0",
-    "@trigen/scripts": "^5.1.0",
+    "@trigen/scripts": "^6.0.0",
     "@trigen/scripts-plugin-babel": "^6.1.0",
     "@trigen/scripts-plugin-eslint": "^5.1.0",
     "@trigen/scripts-plugin-jest": "^6.1.0",
