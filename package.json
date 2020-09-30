@@ -51,8 +51,7 @@
     "math-interval-parser": "^2.0.1",
     "messageformat": "^2.2.1",
     "mustache": "^4.0.1",
-    "sprintf-js": "^1.1.2",
-    "url": "^0.11.0"
+    "sprintf-js": "^1.1.2"
   },
   "devDependencies": {
     "@rollup/plugin-json": "^4.0.2",

@@ -26,7 +26,6 @@ const CONFIG = {
 };
 
 describe('API', () => {
-
 	beforeEach(() => {
 		i18n.configure({
 			...CONFIG,
@@ -35,7 +34,6 @@ describe('API', () => {
 	});
 
 	describe('__()', () => {
-
 		it('should return en translations as expected', () => {
 			i18n.setLocale('en');
 			expect(__('Hello')).toBe('Hello');
@@ -103,7 +101,6 @@ describe('API', () => {
 		});
 
 		it('should also return translations when iterating thru variables values', () => {
-
 			const greetings = ['Hi', 'Hello', 'Howdy'];
 			const greetingsDE = ['Hi', 'Hallo', 'Hallöchen'];
 			let i = 0;
@@ -120,7 +117,6 @@ describe('API', () => {
 		});
 
 		it('should be possible to use an json object as 1st parameter to specifiy a certain locale for that lookup', () => {
-
 			expect(__({
 				phrase: 'Hello',
 				locale: 'en'
@@ -154,7 +150,6 @@ describe('API', () => {
 		});
 
 		describe('objectNotation', () => {
-
 			beforeEach(() => {
 				i18n.configure({
 					...CONFIG,
@@ -167,7 +162,6 @@ describe('API', () => {
 			});
 
 			it('should return translations as expected, using object traversal notation', () => {
-
 				i18n.setLocale('en');
 
 				expect(__('format.date')).toBe('MM/DD/YYYY');
@@ -203,9 +197,7 @@ describe('API', () => {
 	});
 
 	describe('__n()', () => {
-
 		it('should return singular or plural form based on last parameter', () => {
-
 			i18n.setLocale('en');
 
 			let singular = __n('%s cat', '%s cats', 1);
@@ -223,7 +215,6 @@ describe('API', () => {
 		});
 
 		it('should correctly handle float numbers', () => {
-
 			i18n.setLocale('en');
 
 			expect(__n('%s dollar', 1)).toBe('1 dollar');
@@ -231,7 +222,6 @@ describe('API', () => {
 		});
 
 		it('should return substituted phrases when used nested', () => {
-
 			i18n.setLocale('en');
 
 			let singular = __n('There is one monkey in the %%s', 'There are %d monkeys in the %%s', 1, __('tree'));
@@ -249,7 +239,6 @@ describe('API', () => {
 		});
 
 		it('won\'t return substitutions when not masked by an extra %', () => {
-
 			i18n.setLocale('en');
 
 			let singular = __n('There is one monkey in the %s', 'There are %d monkeys in the %s', 1, __('tree'));
@@ -267,7 +256,6 @@ describe('API', () => {
 		});
 
 		it('should be possible to use an json object as 1st parameter to specifiy a certain locale for that lookup', () => {
-
 			let singular = '';
 			let plural = '';
 
@@ -330,7 +318,6 @@ describe('API', () => {
 		});
 
 		it('should allow two arguments', () => {
-
 			const singular = __n('cat', 1);
 			const plural = __n('cat', 3);
 
@@ -360,7 +347,6 @@ describe('API', () => {
 		});
 
 		it('should correct mutate catalog', () => {
-
 			i18n.setLocale('en');
 
 			expect(__n('one doggo', '%d doggos', 2)).toBe('2 doggos');
@@ -392,7 +378,6 @@ describe('API', () => {
 		});
 
 		describe('objectNotation', () => {
-
 			beforeEach(() => {
 				i18n.configure({
 					...CONFIG,
@@ -401,7 +386,6 @@ describe('API', () => {
 			});
 
 			it('should provide proper pluralization support, using object traversal notation', () => {
-
 				i18n.setLocale('en');
 
 				expect(
@@ -425,7 +409,6 @@ describe('API', () => {
 			});
 
 			it('should correct mutate catalog', () => {
-
 				i18n.setLocale('en');
 
 				expect(__n('doggo:one doggo', 'doggo:%d doggos', 2)).toBe('2 doggos');
@@ -453,9 +436,7 @@ describe('API', () => {
 	});
 
 	describe('__mf()', () => {
-
 		it('should work with simple strings', () => {
-
 			i18n.setLocale('en');
 			expect('Hello').toBe(__mf('Hello'));
 
@@ -466,7 +447,6 @@ describe('API', () => {
 		});
 
 		it('should work with basic replacements', () => {
-
 			i18n.setLocale('en');
 			expect(__mf('Hello {name}', { name: 'Marcus' })).toBe('Hello Marcus');
 
@@ -476,7 +456,6 @@ describe('API', () => {
 		});
 
 		it('should work with plurals', () => {
-
 			let msg = 'In {lang} there {NUM, plural,';
 			msg += 'one{is one for #}';
 			msg += 'other{others for #}}';
@@ -535,9 +514,7 @@ describe('API', () => {
 	});
 
 	describe('__m()', () => {
-
 		it('should return a map of translations', () => {
-
 			const translations = {
 				de: 'Hallo',
 				en: 'Hello',
@@ -546,12 +523,12 @@ describe('API', () => {
 			};
 
 			i18n.setLocale('en');
-			expect(__m('Hello')).toEqual(translations);
-			expect(__m('Hello')).toEqual(translations);
+			expect(__m(__, 'Hello')).toEqual(translations);
+			expect(__m(__, 'Hello')).toEqual(translations);
 
 			i18n.setLocale('fr');
-			expect(__m('Hello')).toEqual(translations);
-			expect(__m('Hello')).toEqual(translations);
+			expect(__m(__, 'Hello')).toEqual(translations);
+			expect(__m(__, 'Hello')).toEqual(translations);
 		});
 	});
 });

@@ -1,93 +1,40 @@
-import { parse as parseUrl } from 'url';
 import Cookies from 'js-cookie';
-import { IPlurals } from './core';
-
-export interface ILocales {
-	[key: string]: number|string|boolean|ILocales|ILocales[];
-}
-
-export type IFallbacks = Record<string, string>;
-
-export type IUnknownPhraseListener = (locale: string, phrase: string, value: string|IPlurals) => void;
-
-export type IProcessor = (text: string, namedValues: any, values: any[], count?: number) => string;
-
-export interface IConfig {
-	/**
-	 * Default locale to use.
-	 */
-	defaultLocale?: string;
-	/**
-	 * Store of translations.
-	 */
-	locales?: ILocales;
-	/**
-	 * Fallbacks map for locales.
-	 */
-	fallbacks?: IFallbacks;
-	/**
-	 * Translate phrases or get phrases by keys.
-	 */
-	objectNotation?: boolean;
-	/**
-	 * Cookie name to store locale.
-	 */
-	cookieName?: string;
-	/**
-	 * Query parameter to get locale.
-	 */
-	queryParameter?: string;
-	/**
-	 * Unknown phrases listener.
-	 */
-	unknownPhraseListener?: IUnknownPhraseListener;
-	/**
-	 * List of post processors.
-	 */
-	processors?: IProcessor[];
-}
-
-type IForkConfig = Pick<
-	IConfig,
-	Exclude<
-		keyof IConfig,
-		'objectNotation'|'cookieName'|'queryParameter'
-	>
->;
-
-interface IForkLinkedFields {
-	defaultLocale: boolean;
-	locales: boolean;
-	unknownPhraseListener: boolean;
-}
-
-type IFunction = (...args: any[]) => any;
+import {
+	I18nConfig,
+	I18nForkConfig,
+	I18nLocales,
+	I18nLangLocales,
+	I18nFallbacks,
+	I18nUnknownPhraseListener,
+	I18nProcessor,
+	I18nForkLinkedFields
+} from './types';
 
 const COOKIES_LIFE_TIME = 3600;
-const IS_BROWSER = typeof document !== 'undefined'
-	&& typeof location !== 'undefined';
+const IS_BROWSER = typeof window !== 'undefined';
 
-export default class Config implements IConfig {
+export default class Config implements I18nConfig {
 
 	defaultLocale = 'en';
-	locales: ILocales = {};
-	fallbacks: IFallbacks = {};
+	locales: I18nLocales = {};
+	fallbacks: I18nFallbacks = {};
 	objectNotation = false;
 	cookieName: string = null;
 	queryParameter = 'locale';
-	unknownPhraseListener: IUnknownPhraseListener = null;
-	processors: IProcessor[] = [];
+	unknownPhraseListener: I18nUnknownPhraseListener = null;
+	processors: I18nProcessor[] = [];
 	isDestroyed = false;
+
 	private readonly isConstructed: boolean = false;
 	private isFork = false;
 	private forks: Config[] = [];
-	private forkLinkedFields: IForkLinkedFields = {
+	private forkLinkedFields: I18nForkLinkedFields = {
 		defaultLocale:         true,
 		locales:               true,
 		unknownPhraseListener: true
 	};
 
-	constructor(config: IConfig = {}, isFork = false) {
+	constructor(config: I18nConfig = {}, isFork = false) {
 		this.onUnknownPhrase = this.onUnknownPhrase.bind(this);
 		this.setLocale = this.setLocale.bind(this);
 		this.getLocale = this.getLocale.bind(this);
@@ -102,8 +49,8 @@ export default class Config implements IConfig {
 
 	/**
 	 * Change config.
-	 * @param  config - Config options.
-	 * @return Config.
+	 * @param config - Config options.
+	 * @returns Config.
 	 */
 	configure({
 		defaultLocale,
@@ -114,8 +61,7 @@ export default class Config implements IConfig {
 		queryParameter,
 		unknownPhraseListener,
 		processors
-	}: IConfig) {
-
+	}: I18nConfig) {
 		const {
 			isConstructed,
 			isFork,
@@ -141,7 +87,6 @@ export default class Config implements IConfig {
 		}
 
 		if (!isFork || !isConstructed) {
-
 			// enable object notation?
 			if (typeof objectNotation === 'boolean') {
 				this.objectNotation = objectNotation;
@@ -154,7 +99,6 @@ export default class Config implements IConfig {
 		}
 
 		if (!isFork) {
-
 			const localeFromCookies = IS_BROWSER && Cookies.get(this.cookieName);
 
 			if (typeof localeFromCookies === 'string') {
@@ -165,11 +109,10 @@ export default class Config implements IConfig {
 			const typeofQueryParameter = typeof queryParameter;
 
 			if (IS_BROWSER && typeofQueryParameter !== 'undefined') {
-
 				const key = typeofQueryParameter === 'string'
 					? queryParameter
 					: 'locale';
-				const localeFromQuery = parseUrl(location.href, true).query[key];
+				const localeFromQuery = new URLSearchParams(location.search).get(key);
 
 				if (typeof localeFromQuery === 'string') {
 					this.defaultLocale = localeFromQuery;
@@ -214,27 +157,26 @@ export default class Config implements IConfig {
 
 	/**
 	 * Copy current config with some overrides.
-	 * @param  config - Config with overrides.
-	 * @return Forked config.
+	 * @param config - Config with overrides.
+	 * @returns Forked config.
 	 */
-	fork(config: IForkConfig, hard?: false): Config;
+	fork(config?: I18nForkConfig, hard?: boolean): Config;
 
 	/**
 	 * Copy current config with some overrides.
-	 * @param  config - Config with overrides.
-	 * @param  hard - Do hard fork without linked fields.
-	 * @return Forked config.
+	 * @param config - Config with overrides.
+	 * @param hard - Do hard fork without linked fields.
+	 * @returns Forked config.
 	 */
-	fork(config: IConfig, hard: true): Config;
+	fork(config: I18nConfig, hard: true): Config;
 
 	/**
 	 * Copy current config with some overrides.
-	 * @param  config - Config with overrides.
-	 * @param  hard - Do hard fork without linked fields.
-	 * @return Forked config.
+	 * @param config - Config with overrides.
+	 * @param hard - Do hard fork without linked fields.
+	 * @returns Forked config.
 	 */
-	fork(config: IConfig, hard = false) {
-
+	fork(config: I18nConfig = {}, hard = false) {
 		const soft = !hard;
 		const forkedConfig = new Config(this, soft).configure(config);
 
@@ -252,10 +194,9 @@ export default class Config implements IConfig {
 	 */
 	private callForkMethod(
 		caller: (fork: Config) => void,
-		flagName: keyof IForkLinkedFields
+		flagName: keyof I18nForkLinkedFields
 	) {
 		this.forks = this.forks.filter((fork) => {
-
 			if (fork.isDestroyed) {
 				return false;
 			}
@@ -272,30 +213,29 @@ export default class Config implements IConfig {
 
 	/**
 	 * Create translate function copy, binded to another config.
-	 * @param  fn - Translate function.
-	 * @return Binded function.
+	 * @param fn - Translate function.
+	 * @returns Binded function.
 	 */
-	bind<T extends IFunction>(fn: T): T;
+	bind<T extends Function>(fn: T): T;
 
 	/**
 	 * Create translate functions copy, binded to another config.
-	 * @param  fns - Translate functions.
-	 * @return Binded functions.
+	 * @param fns - Translate functions.
+	 * @returns Binded functions.
 	 */
 	bind<
-		A extends IFunction,
-		B extends IFunction,
-		C extends IFunction,
-		D extends IFunction
+		A extends Function,
+		B extends Function,
+		C extends Function,
+		D extends Function
 	>(fns: [A?, B?, C?, D?]): [A?, B?, C?, D?];
 
 	/**
 	 * Create translate function(s) copy, binded to another config.
-	 * @param  fnOrFns - Translate function(s).
-	 * @return Binded function(s).
+	 * @param fnOrFns - Translate function(s).
+	 * @returns Binded function(s).
 	 */
-	bind(fnOrFns: IFunction|IFunction[]) {
-
+	bind(fnOrFns: Function | Function[]) {
 		if (Array.isArray(fnOrFns)) {
 			return fnOrFns.map(fn => this.bind(fn));
 		}
@@ -313,11 +253,10 @@ export default class Config implements IConfig {
 
 	/**
 	 * Set function to call when unknown phrase was translated.
-	 * @param  listener - Locale change listener.
-	 * @return Config.
+	 * @param listener - Locale change listener.
+	 * @returns Config.
 	 */
-	onUnknownPhrase(listener: IUnknownPhraseListener) {
-
+	onUnknownPhrase(listener: I18nUnknownPhraseListener) {
 		const {
 			isFork,
 			forkLinkedFields
@@ -337,11 +276,10 @@ export default class Config implements IConfig {
 
 	/**
 	 * Set current locale.
-	 * @param  locale - Locale to set.
-	 * @return Config.
+	 * @param locale - Locale to set.
+	 * @returns Config.
 	 */
 	setLocale(locale: string) {
-
 		const {
 			isFork,
 			forkLinkedFields,
@@ -355,10 +293,9 @@ export default class Config implements IConfig {
 
 		// called like setLocale('en')
 		if (typeof locales[nextLocale] === 'object') {
-
 			this.defaultLocale = nextLocale;
 
-			if (IS_BROWSER && cookieName !== null) {
+			if (IS_BROWSER && cookieName) {
 				Cookies.set(cookieName, nextLocale, {
 					expires: COOKIES_LIFE_TIME,
 					path:    '/'
@@ -376,15 +313,13 @@ export default class Config implements IConfig {
 
 	/**
 	 * Get current locale.
-	 * @param  checkFallback - Flag to use fallback or not.
-	 * @param  localeToCheck - Locale to handle.
-	 * @param  strict - Should fall back to default locale or not.
-	 * @return Current locale.
+	 * @param checkFallback - Flag to use fallback or not.
+	 * @param localeToCheck - Locale to handle.
+	 * @param strict - Should fall back to default locale or not.
+	 * @returns Current locale.
 	 */
 	getLocale(checkFallback?: true, localeToCheck?: string, strict = false): string {
-
 		if (checkFallback === true) {
-
 			const {
 				defaultLocale,
 				locales,
@@ -413,11 +348,10 @@ export default class Config implements IConfig {
 	}
 
 	/**
-	 * Get array of available locales.
-	 * @return Available locales.
+	 * Get available locales.
+	 * @returns Available locales.
 	 */
 	getLocales() {
-
 		const {
 			locales
 		} = this;
@@ -428,12 +362,11 @@ export default class Config implements IConfig {
 	}
 
 	/**
-	 * Returns a whole catalog optionally based on given locale.
-	 * @param  locale - Locale to get sub-catalog.
-	 * @return Catalog.
+	 * Get whole catalog optionally based on given locale.
+	 * @param locale - Locale to get sub-catalog.
+	 * @returns Catalog.
 	 */
 	getCatalog(locale?: string) {
-
 		const {
 			locales
 		} = this;
@@ -454,12 +387,11 @@ export default class Config implements IConfig {
 
 	/**
 	 * Add new translations.
-	 * @param  locale - Locale to add.
-	 * @param  catalog - Catalog for localte to add.
-	 * @return Config.
+	 * @param locale - Locale to add.
+	 * @param catalog - Catalog for localte to add.
+	 * @returns Config.
 	 */
-	addLocale(locale: string, catalog: ILocales) {
-
+	addLocale(locale: string, catalog: I18nLangLocales) {
 		const {
 			isFork,
 			forkLinkedFields,
@@ -477,11 +409,10 @@ export default class Config implements IConfig {
 
 	/**
 	 * Remove translations.
-	 * @param  locale - Locale to remove.
-	 * @return Config.
+	 * @param locale - Locale to remove.
+	 * @returns Config.
 	 */
 	removeLocale(locale: string) {
-
 		const {
 			isFork,
 			forkLinkedFields,
@@ -490,7 +421,7 @@ export default class Config implements IConfig {
 		const linkedField = !isFork;
 
 		forkLinkedFields.locales = linkedField;
-		Reflect.deleteProperty(locales, locale);
+		delete locales[locale];
 
 		// No need `callForkMethod` due to `locales` is object.
 

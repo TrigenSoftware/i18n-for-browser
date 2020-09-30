@@ -1,14 +1,11 @@
-import sprintf from 'sprintf-js';
+import {
+	vsprintf
+} from 'sprintf-js';
+import {
+	I18nLocale,
+	I18nPluralLocale
+} from './types';
 import Config from './config';
-
-const { vsprintf } = sprintf;
-
-export interface IPlurals {
-	one?: string;
-	few?: string;
-	many?: string;
-	other?: string;
-}
 
 const SEPARATOR = '.';
 const DEFAULT_VALUE_SEPARATOR = ':';
@@ -16,20 +13,19 @@ const NOOP = () => null;
 
 /**
  * Check data type.
- * @param  maybeStrings - Maybe array of strings.
- * @return Given data is array of strings.
+ * @param maybeStrings - Maybe array of strings.
+ * @returns Given data is array of strings.
  */
-export function isStringsArray(maybeStrings: any): maybeStrings is TemplateStringsArray|string[] {
+export function isStringsArray(maybeStrings: any): maybeStrings is TemplateStringsArray | string[] {
 	return Array.isArray(maybeStrings);
 }
 
 /**
  * Handling of template literals.
- * @param  text - Text or text parts.
- * @return Processed text.
+ * @param text - Text or text parts.
+ * @returns Processed text.
  */
-export function preProcess<T>(text: T|TemplateStringsArray|string[]): T|string {
-
+export function preProcess<T>(text: T | TemplateStringsArray | string[]): T | string {
 	if (isStringsArray(text)) {
 		return text.join(
 			text.hasOwnProperty('raw')
@@ -43,14 +39,13 @@ export function preProcess<T>(text: T|TemplateStringsArray|string[]): T|string {
 
 /**
  * Handling of templates.
- * @param  text - Text to process.
- * @param  namedValues - Named values for mustache.
- * @param  values - List of values for vsprintf.
- * @param  count - Plural param.
- * @return Processed text.
+ * @param text - Text to process.
+ * @param namedValues - Named values for mustache.
+ * @param values - List of values for vsprintf.
+ * @param count - Plural param.
+ * @returns Processed text.
  */
 export function postProcess(config: Config, text: string, namedValues: any, values: any[], count?: number) {
-
 	let processedText = config.processors.reduce(
 		(text, processor) => processor(text, namedValues, values, count),
 		text
@@ -67,16 +62,15 @@ export function postProcess(config: Config, text: string, namedValues: any, valu
 		processedText = vsprintf(processedText, values);
 	}
 
-	return processedText;
+	return String(processedText);
 }
 
 /**
  * Get singular from plurals object.
- * @param  plurals - Plurals object to get sigular form.
- * @return Singular.
+ * @param plurals - Plurals object to get sigular form.
+ * @returns Singular.
  */
-export function getSingularFromPlurals(plurals: IPlurals) {
-
+export function getSingularFromPlurals(plurals: I18nPluralLocale) {
 	if (typeof plurals.one !== 'undefined') {
 		return plurals.one;
 	}
@@ -90,11 +84,10 @@ export function getSingularFromPlurals(plurals: IPlurals) {
 
 /**
  * Parse float from string, if `num` is `string`.
- * @param  num - Number or string to handle.
- * @return Maybe number and number is or not.
+ * @param num - Number or string to handle.
+ * @returns Maybe number and number is or not.
  */
-export function tryParseFloat(num: string|number): [number, boolean] {
-
+export function tryParseFloat(num: string | number): [number, boolean] {
 	if (typeof num === 'number') {
 		return [
 			num,
@@ -113,14 +106,13 @@ export function tryParseFloat(num: string|number): [number, boolean] {
 
 /**
  * Core translate function.
- * @param  config - Config object.
- * @param  locale - Target locale.
- * @param  singular - Singular form.
- * @param  plural - Plural form.
- * @return Translation.
+ * @param config - Config object.
+ * @param locale - Target locale.
+ * @param singular - Singular form.
+ * @param plural - Plural form.
+ * @returns Translation.
  */
 export function translate(config: Config, locale: string, singular: string, plural?: string) {
-
 	const {
 		objectNotation
 	} = config;
@@ -131,7 +123,6 @@ export function translate(config: Config, locale: string, singular: string, plur
 	let defaultPlural = targetPlural;
 
 	if (objectNotation) {
-
 		let indexOfColon = targetSingular.indexOf(DEFAULT_VALUE_SEPARATOR);
 
 		// We compare against 0 instead of -1 because we don't really expect the string to start with ':'.
@@ -141,7 +132,6 @@ export function translate(config: Config, locale: string, singular: string, plur
 		}
 
 		if (targetPlural && typeof targetPlural !== 'number') {
-
 			indexOfColon = targetPlural.indexOf(DEFAULT_VALUE_SEPARATOR);
 
 			if (indexOfColon > 0) {
@@ -173,10 +163,10 @@ export function translate(config: Config, locale: string, singular: string, plur
 
 /**
  * Get singluar or plurls object.
- * @param  result - Singluar or plurls object.
- * @return Valid result.
+ * @param result - Singluar or plurls object.
+ * @returns Valid result.
  */
-function getValidResult(result: string|IPlurals) {
+function getValidResult(result: I18nLocale) {
 	return typeof result === 'string'
 		|| result !== null && typeof result === 'object'
 		&& (result.hasOwnProperty('one') || result.hasOwnProperty('other'))
@@ -186,14 +176,14 @@ function getValidResult(result: string|IPlurals) {
 
 /**
  * Allows delayed access to translations nested inside objects.
- * @param  config - Config object.
- * @param  locale - The locale to use.
- * @param  singular - The singular term to look up.
- * @param  allowDelayedTraversal - Is delayed traversal of the tree allowed?
+ * @param config - Config object.
+ * @param locale - The locale to use.
+ * @param singular - The singular term to look up.
+ * @param allowDelayedTraversal - Is delayed traversal of the tree allowed?
  * This parameter is used internally. It allows to signal the accessor that
  * a translation was not found in the initial lookup and that an invocation
  * of the accessor may trigger another traversal of the tree.
- * @return A function that, when invoked, returns the current value stored
+ * @returns A function that, when invoked, returns the current value stored
  * in the object at the requested location.
  */
 function localeAccessor(
@@ -201,8 +191,7 @@ function localeAccessor(
 	locale: string,
 	singular: string,
 	allowDelayedTraversal = true
-): () => string|IPlurals {
-
+): () => I18nLocale {
 	const {
 		locales,
 		objectNotation
@@ -217,9 +206,8 @@ function localeAccessor(
 	const indexOfSeparator = objectNotation && singular.lastIndexOf(SEPARATOR);
 
 	if (objectNotation && (indexOfSeparator > 0 && indexOfSeparator < singular.length - 1)) {
-
 		// The accessor we're trying to find and which we want to return.
-		let accessor = null;
+		let accessor;
 		// Do we need to re-traverse the tree upon invocation of the accessor?
 		let reTraverse = false;
 
@@ -261,12 +249,12 @@ function localeAccessor(
  * inside the object, but if part of the branch does not exist yet, it will not be
  * created until the mutator is actually invoked. At that point, re-traversal of the
  * tree is performed and missing parts along the branch will be created.
- * @param  config - Config object.
- * @param  locale - The locale to use.
- * @param  singular - The singular term to look up.
- * @param  allowBranching - Is the mutator allowed to create previously
+ * @param config - Config object.
+ * @param locale - The locale to use.
+ * @param singular - The singular term to look up.
+ * @param allowBranching - Is the mutator allowed to create previously
  * non-existent branches along the requested locale path?
- * @return A function that takes one argument. When the function is
+ * @returns A function that takes one argument. When the function is
  * invoked, the targeted translation term will be set to the given value inside the locale table.
  */
 function localeMutator(
@@ -274,8 +262,7 @@ function localeMutator(
 	locale: string,
 	singular: string,
 	allowBranching = false
-): (input: string|IPlurals) => string|IPlurals {
-
+): (input: I18nLocale) => I18nLocale {
 	const {
 		locales,
 		objectNotation,
@@ -292,9 +279,8 @@ function localeMutator(
 	const indexOfSeparator = objectNotation && singular.lastIndexOf(SEPARATOR);
 
 	if (objectNotation && (indexOfSeparator > 0 && indexOfSeparator < singular.length - 1)) {
-
 		// This will become the function we want to return.
-		let accessor = null;
+		let accessor;
 		// Fix object path.
 		let fixObject = () => ({});
 		// Are we going to need to re-traverse the tree when the mutator is invoked?
@@ -302,7 +288,6 @@ function localeMutator(
 
 		// Split the provided term and run the callback for each subterm.
 		singular.split(SEPARATOR).reduce((prevObject, index) => {
-
 			let object = prevObject;
 
 			// Make the mutator do nothing.

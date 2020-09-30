@@ -1,22 +1,22 @@
 [
 	{
 		"path": "lib/index.js",
-		"limit": "10 KB",
+		"limit": "8.5 KB",
 		"webpack": false
 	},
 	{
 		"path": "lib/index.es.js",
-		"limit": "10 KB",
+		"limit": "8.3 KB",
 		"webpack": false
 	},
 	{
 		"path": "lib/umd.js",
-		"limit": "42 KB",
+		"limit": "35 KB",
 		"webpack": false
 	},
 	{
 		"path": "lib/index.babel.js",
-		"limit": "10 KB",
+		"limit": "7.5 KB",
 		"webpack": false
 	}
 ]
