@@ -75,9 +75,9 @@ export {
 
 Shirt description:
 
-### [i18n](https://trigensoftware.github.io/i18n-for-browser/modules/_index_.html#globalconfig)
+### [i18n](https://trigensoftware.github.io/i18n-for-browser/modules/_src_methods_common_.html#globalconfig)
 
-Global config. Instanse of [`Config`](https://trigensoftware.github.io/i18n-for-browser/classes/_config_.config.html).
+Global config. Instanse of [`Config`](https://trigensoftware.github.io/i18n-for-browser/classes/_src_config_.config.html).
 
 <details>
     <summary>Usage example</summary>
@@ -160,7 +160,7 @@ console.log(
 
 </details>
 
-### [__()](https://trigensoftware.github.io/i18n-for-browser/modules/_index_.html#__)
+### [__()](https://trigensoftware.github.io/i18n-for-browser/modules/_src_methods____.html#__)
 
 Translates a single phrase and adds it to locales if unknown.
 
@@ -200,7 +200,7 @@ __({ phrase: 'Hello', locale: 'ru' })
 
 </details>
 
-### [__mf()](https://trigensoftware.github.io/i18n-for-browser/modules/_index_.html#__mf)
+### [__mf()](https://trigensoftware.github.io/i18n-for-browser/modules/_src_methods___mf_.html#__mf)
 
 Supports the advanced MessageFormat as provided by excellent messageformat module. You should definetly head over to messageformat.github.io for a guide to MessageFormat. `i18n-for-browser` takes care of `new MessageFormat('en').compile(msg);` with the current msg loaded from it's json files and cache that complied fn in memory. So in short you might use it similar to `__()` plus extra object to accomblish MessageFormat's formating.
 
@@ -224,7 +224,7 @@ __mf('Hello {name}, how was your %s?', 'test', { name: 'Marcus' })
 
 </details>
 
-### [__n()](https://trigensoftware.github.io/i18n-for-browser/modules/_index_.html#__n)
+### [__n()](https://trigensoftware.github.io/i18n-for-browser/modules/_src_methods___n_.html#__n)
 
 Plurals translation of a single phrase. Singular and plural forms will get added to locales if unknown. Returns translated parsed and substituted string based on `count` parameter.
 
@@ -252,7 +252,7 @@ __n({ singular: '%s cat', plural: '%s cats', locale: 'nl', count: 3 })
 
 </details>
 
-### [__m()](https://trigensoftware.github.io/i18n-for-browser/modules/_index_.html#__m)
+### [__m()](https://trigensoftware.github.io/i18n-for-browser/modules/_src_methods___m_.html#__m)
 
 Returns a map of translations for a given phrase in each language.
 
