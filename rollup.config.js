@@ -86,6 +86,7 @@ export default [{
 	output:   [{
 		file:      'lib/middleware.js',
 		format:    'cjs',
+		exports:   'default',
 		sourcemap: 'inline'
 	}]
 }];
