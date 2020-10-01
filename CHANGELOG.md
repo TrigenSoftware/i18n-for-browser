@@ -24,6 +24,10 @@ DO NOT TOUCH. SAVE IT ON TOP.
 
 -->
 
+## [3.0.0] - 2020-10-02
+### Changed
+- Types names.
+
 ## [2.1.0] - 2020-05-22
 ### Changed
 - Dependencies update.

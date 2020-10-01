@@ -50,14 +50,18 @@ Module exposes next API:
 ```js
 export default globalConfig;
 export {
+    I18nConfigInstance,
+    I18nPluralLocale,
+    I18nLocale,
+    I18nLangLocales,
+    I18nLocales,
+    I18nFallbacks,
+    I18nUnknownPhraseListener,
+    I18nProcessor,
     I18nConfig,
-    IConfig,
-    ILocales,
-    IFallbacks,
-    IUnknownPhraseListener,
-    IProcessor,
-    IParams,
-    IPluralParams,
+    I18nForkConfig,
+    I18nParams,
+    I18nPluralParams,
     pluralIntervalProcessor,
     mustacheProcessor,
     __,
@@ -75,23 +79,8 @@ Shirt description:
 
 Global config. Instanse of [`Config`](https://trigensoftware.github.io/i18n-for-browser/classes/_config_.config.html).
 
-### [__()](https://trigensoftware.github.io/i18n-for-browser/modules/_index_.html#__)
-
-Translates a single phrase and adds it to locales if unknown.
-
-### [__mf()](https://trigensoftware.github.io/i18n-for-browser/modules/_index_.html#__mf)
-
-Supports the advanced MessageFormat as provided by excellent messageformat module. You should definetly head over to messageformat.github.io for a guide to MessageFormat. `i18n-for-browser` takes care of `new MessageFormat('en').compile(msg);` with the current msg loaded from it's json files and cache that complied fn in memory. So in short you might use it similar to `__()` plus extra object to accomblish MessageFormat's formating.
-
-### [__n()](https://trigensoftware.github.io/i18n-for-browser/modules/_index_.html#__n)
-
-Plurals translation of a single phrase. Singular and plural forms will get added to locales if unknown. Returns translated parsed and substituted string based on `count` parameter.
-
-### [__m()](https://trigensoftware.github.io/i18n-for-browser/modules/_index_.html#__m)
-
-Returns a map of translations for a given phrase in each language.
-
-## Usage example
+<details>
+    <summary>Usage example</summary>
 
 ```js
 import i18n, {
@@ -100,40 +89,184 @@ import i18n, {
     __n
 } from 'i18n-for-browser';
 
+/**
+ * Set global config.
+ */
 i18n.configure({
-    // store of translations
+    /**
+     * Store of translations.
+     */
     locales: {
-        'en': {/* ... */},
-        'ru': {/* ... */}
+        'en': {
+            /**
+             * Simple translation example.
+             */
+            'cat': 'cat',
+            /**
+             * Plutal translation example.
+             */
+            '%s cats': {
+                'one': '%s cat',
+                'other': '%s cats'
+            },
+            /* ... */
+        },
+        'ru': {
+            /**
+             * Пример простого перевода.
+             */
+            'cat': 'кошка',
+            /**
+             * Пример перевода множественного числа.
+             */
+            '%s cats': {
+                'one': '%s кошка',
+                'few': '%s кошки',
+                'many': '%s кошек',
+                'other': '%s кошка'
+            },
+            /* ... */
+        }
     },
-    // sets a custom cookie name to read/write locale  - defaults to NULL
-    cookieName: 'yourcookiename',
+    /**
+	 * Cookie name to store locale.
+	 */
+    cookieName: 'yourcookiename'
 });
 
-console.log(__('cat'));
-// or
-console.log(__`cat`);
+console.log(__('cat')); // Uses global config.
 
-console.log(__n('one cat', '%d cats', 3));
-// or
-console.log(__n`${3} dogs`);
-
-const i18nDe = i18n.fork({
-    locales: {
-        'de': {/* ... */}
-    }
-});
-const __de = i18nDe.bind(__);
-
-console.log(__de`Hello`);
-
-const i18nPi = i18n.fork({
+/**
+ * Create config fork with some overrides. 
+ */
+const i18nFork = i18n.fork({
+    /**
+	 * List of post processors.
+	 */
     processors: [pluralIntervalProcessor]
 });
-const __pi = i18nPi.bind(__n);
+/**
+ * Bind new config to method.
+ */
+const __pi = i18nFork.bind(__n);
 
-console.log(__pi('[0] no dog|[2,5] some dogs|[6,11] many dogs|[12,36] dozens of dogs|a horde of %s dogs|[100,] too many dogs', 3));
+/**
+ * Now you able to use plural intervals.
+ */
+console.log(
+    __pi('[0] no dog|[2,5] some dogs|[6,11] many dogs|[12,36] dozens of dogs|a horde of %s dogs|[100,] too many dogs', 3) // Uses bound config.
+);
 ```
+
+</details>
+
+### [__()](https://trigensoftware.github.io/i18n-for-browser/modules/_index_.html#__)
+
+Translates a single phrase and adds it to locales if unknown.
+
+<details>
+    <summary>Usage example</summary>
+
+```js
+/**
+ * Basic usage 
+ */
+__('cat')
+/**
+ * As template string
+ */
+__`cat`
+/**
+ * Supports sprintf formatting
+ */
+__('%d cats', 3)
+/**
+ * Sprintf formatting with template string
+ */
+__`${3} cats`
+/**
+ * Sprintf formatting with few arguments
+ */
+__('%d cats with %s', 3, 'long tails')
+/**
+ * Mustache templates are supported with `mustacheProcessor`
+ */
+__('Hello {{name}}', { name: 'Marcus' })
+/**
+ * First argument as object with specified locale
+ */
+__({ phrase: 'Hello', locale: 'ru' })
+```
+
+</details>
+
+### [__mf()](https://trigensoftware.github.io/i18n-for-browser/modules/_index_.html#__mf)
+
+Supports the advanced MessageFormat as provided by excellent messageformat module. You should definetly head over to messageformat.github.io for a guide to MessageFormat. `i18n-for-browser` takes care of `new MessageFormat('en').compile(msg);` with the current msg loaded from it's json files and cache that complied fn in memory. So in short you might use it similar to `__()` plus extra object to accomblish MessageFormat's formating.
+
+<details>
+    <summary>Usage example</summary>
+
+```js
+/**
+ * Basic usage, also works as raw `__` method
+ */
+__mf('cat')
+/**
+ * Basic replacement
+ */
+__mf('Hello {name}', { name: 'Marcus' })
+/**
+ * Also work with sprintf formatting
+ */
+__mf('Hello {name}, how was your %s?', 'test', { name: 'Marcus' })
+```
+
+</details>
+
+### [__n()](https://trigensoftware.github.io/i18n-for-browser/modules/_index_.html#__n)
+
+Plurals translation of a single phrase. Singular and plural forms will get added to locales if unknown. Returns translated parsed and substituted string based on `count` parameter.
+
+<details>
+    <summary>Usage example</summary>
+
+```js
+/**
+ * Basic usage
+ */
+__('%s cats', 2)
+/**
+ * As template string
+ */
+__`${3} cats`
+/**
+ * Can work without translation in config
+ */
+__('%d dog', '%d dogs', 3)
+/**
+ * First argument as object with specified locale
+ */
+__n({ singular: '%s cat', plural: '%s cats', locale: 'nl', count: 3 })
+```
+
+</details>
+
+### [__m()](https://trigensoftware.github.io/i18n-for-browser/modules/_index_.html#__m)
+
+Returns a map of translations for a given phrase in each language.
+
+<details>
+    <summary>Usage example</summary>
+
+```js
+/**
+ * Basic usage
+ */
+__m(__, 'Hello')
+```
+
+</details>
 
 ## Express middleware helper
 

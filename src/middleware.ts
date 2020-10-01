@@ -1,16 +1,15 @@
 import {
-	IConfig,
-	ILocales
-} from './config';
+	I18nConfig,
+	I18nLocales
+} from './types';
 
 /**
  * Express middleware
- * @param  config - i18n-node config
- * @return Express middleware function.
+ * @param config - i18n-node config
+ * @returns Express middleware function.
  */
 export default function i18nForBrowser(config: any) {
-
-	const configForBrowser: IConfig = {
+	const configForBrowser: I18nConfig = {
 		locales:        {},
 		fallbacks:      config.fallbacks,
 		cookieName:     config.cookie,
@@ -19,11 +18,10 @@ export default function i18nForBrowser(config: any) {
 	};
 
 	return (request, response, next) => {
-
 		response.locals.initI18nForBrowser = () => {
 
 			const targetLocale: string = request.locale;
-			const targetCatalog: ILocales = {};
+			const targetCatalog: I18nLocales = {};
 
 			request.locale = false;
 
@@ -31,7 +29,7 @@ export default function i18nForBrowser(config: any) {
 
 			request.locale = targetLocale;
 
-			Object.entries(fullCatalog).forEach(([locale, catalog]: [string, ILocales]) => {
+			Object.entries(fullCatalog).forEach(([locale, catalog]: [string, I18nLocales]) => {
 				targetCatalog[locale] = locale === targetLocale
 					? catalog
 					: {};

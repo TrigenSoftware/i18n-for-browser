@@ -19,13 +19,11 @@ const CONFIG = {
 };
 
 describe('Config', () => {
-
 	beforeEach(() => {
 		i18n.configure(CONFIG);
 	});
 
 	describe('#configure()', () => {
-
 		it('should set fallback locale', () => {
 			i18n.configure({
 				...CONFIG,
@@ -36,7 +34,6 @@ describe('Config', () => {
 	});
 
 	describe('#setLocale() and #getLocale()', () => {
-
 		it('getLocale should return default setting', () => {
 			expect(i18n.getLocale()).toBe('en');
 		});
@@ -53,9 +50,7 @@ describe('Config', () => {
 	});
 
 	describe('#getCatalog()', () => {
-
 		it('should return all catalogs when invoked with empty parameters', () => {
-
 			const catalogs = i18n.getCatalog();
 
 			expect(catalogs).toHaveProperty('en');
@@ -82,9 +77,7 @@ describe('Config', () => {
 	});
 
 	describe('#fork()', () => {
-
 		it('should create correct fork', () => {
-
 			const nlI18n = i18n.fork({
 				fallbacks: { 'nl': 'en' }
 			});
@@ -96,7 +89,6 @@ describe('Config', () => {
 		});
 
 		it('should unlink fields from fork by config', () => {
-
 			const nlI18n = i18n.fork({
 				defaultLocale: 'nl',
 				fallbacks:     { 'nl': 'en' }
@@ -116,7 +108,6 @@ describe('Config', () => {
 		});
 
 		it('should unlink fields from fork by methods', () => {
-
 			const nlI18n = i18n.fork({
 				fallbacks: { 'nl': 'en' }
 			});
@@ -146,7 +137,6 @@ describe('Config', () => {
 		});
 
 		it('should create correct hard fork', () => {
-
 			const nlI18n = i18n.fork({
 				defaultLocale: 'nl',
 				fallbacks:     { 'nl': 'en' },
@@ -161,9 +151,7 @@ describe('Config', () => {
 	});
 
 	describe('#bind()', () => {
-
 		it('should correct bind config to translate function', () => {
-
 			const nlI18n = i18n.fork({
 				defaultLocale: 'nl'
 			});
@@ -177,7 +165,6 @@ describe('Config', () => {
 		});
 
 		it('should correct bind config to translate function', () => {
-
 			const [
 				__nl,
 				__nln
@@ -194,9 +181,7 @@ describe('Config', () => {
 	});
 
 	describe('#onUnknownPhrase()', () => {
-
 		it('should call handler on unknown phrase', () => {
-
 			const fn = jest.fn();
 
 			i18n.setLocale('en');
