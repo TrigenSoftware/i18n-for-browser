@@ -129,8 +129,8 @@ i18n.configure({
         }
     },
     /**
-	 * Cookie name to store locale.
-	 */
+     * Cookie name to store locale.
+     */
     cookieName: 'yourcookiename'
 });
 
@@ -141,8 +141,8 @@ console.log(__('cat')); // Uses global config.
  */
 const i18nFork = i18n.fork({
     /**
-	 * List of post processors.
-	 */
+     * List of post processors.
+     */
     processors: [pluralIntervalProcessor]
 });
 /**
