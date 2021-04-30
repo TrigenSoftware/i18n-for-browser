@@ -2932,10 +2932,10 @@ class-utils@^0.3.5:
     isobject "^3.0.0"
     static-extend "^0.1.1"
 
-cldr-core@^36.0.0:
-  version "36.0.0"
-  resolved "https://registry.yarnpkg.com/cldr-core/-/cldr-core-36.0.0.tgz#1d2148ed6802411845baeeb21432d7bbfde7d4f7"
-  integrity sha512-QLnAjt20rZe38c8h8OJ9jPND+O4o5O8Nw0TK/P3KpNn1cmOhMu0rk6Kc3ap96c5OStQ9gAngs9+Be2sum26NOw==
+cldr-core@^39.0.0:
+  version "39.0.0"
+  resolved "https://registry.yarnpkg.com/cldr-core/-/cldr-core-39.0.0.tgz#e2e84f072bad6d845015d18ffece8547dc8e27fa"
+  integrity sha512-ZSElD4Ckl2W3ApP+jz8XXOWen+UqELaO76P0J1H6SKxWuwkba1zmE5gU0grNyuI1RAYwBRUhbeIV+YTsJ7yw3g==
 
 clean-publish@^1.1.0:
   version "1.1.8"
