@@ -55,7 +55,7 @@
   },
   "devDependencies": {
     "@rollup/plugin-json": "^4.0.2",
-    "@rollup/plugin-node-resolve": "^9.0.0",
+    "@rollup/plugin-node-resolve": "^13.0.4",
     "@size-limit/preset-small-lib": "^4.4.0",
     "@trigen/scripts": "^6.0.0",
     "@trigen/scripts-plugin-babel": "^6.1.1",
